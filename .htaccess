@@ -1,0 +1,13 @@
+# Google Analytics Integration - Added by cPanel.
+<IfModule mod_substitute.c>
+AddOutputFilterByType SUBSTITUTE text/html
+Substitute "s|(<script src='/google_analytics_auto.js'></script>)?</head>|<script src='/google_analytics_auto.js'></script></head>|i"
+</IfModule>
+# END Google Analytics Integration
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^rangeenroute.com$
+RewriteRule (.*) http://www.rangeenroute.com/$1 [R=301,L] 
+
+RewriteCond %{HTTPS} on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}

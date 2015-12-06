@@ -1,0 +1,100 @@
+.submitButton{
+    font-weight: 600;
+    color: white;
+    background-color: #FF6520;
+    float: none;
+    padding: 10px;
+    margin-left: 10px;
+    border-radius: 0px 0px 0px 0px !important;
+    height: inherit !important;
+}
+
+.help-box{
+    padding: 10px;
+    
+    box-shadow: 0 -1px 0 #EDF2F7,0 0 1px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+    border-color: #FF4F03;
+    margin-top: 5px;
+   }
+   
+   .help_title{
+   font-weight: 600;
+   }
+   
+   .help-box a{
+   text-decoration: none; 
+   color: initial;
+   }
+   
+   .help_content{
+   margin-top: 10px;
+   }
+   
+   
+   .recent-project-item.index{
+   box-shadow: 0 -1px 0 #EDF2F7,0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+   border: none;
+   margin-right: 10px;
+   height: 257px;
+   }
+   
+   .project-bottom-details.index{
+   border-top: rgb(208, 208, 208) solid 1px;
+    border-bottom: rgb(208, 208, 208) solid 1px;
+    }
+    
+    .recent-project-title.index{
+    border-right: rgb(209, 209, 209) solid 1px;
+    }
+    
+    h2.home-welcome{
+    font-family: 'museo_sans100';
+    font-size: 25px;
+    color: #ff4f00;
+    padding: 10px;
+    }
+    
+    .line.index{
+    	width: 100%;
+    	float: left;
+    	height: 1px;
+    	background-color:#dcdede;
+    	margin: 30px auto;
+    }
+    
+    .feature-list{
+    	width: 45%;
+    	float: left;
+    	margin-bottom: 10px;
+    	height: 100px;
+    }
+    
+    .feat-box{
+    	margin-top: 20px;
+    	margin-bottom: 50px;
+    }
+    
+    .feat-box a{
+    color: initial;
+    }
+    
+    .feat-img{
+    width: 80px;
+    height: 80px;
+    }
+    
+    .feat-text{
+    margin-left: 120px;
+    margin-top: -60px;
+    font-size: 30px;
+    }
+    
+    .tagline-box{
+    	width: 330px;
+    border: 1px solid #FF6520;
+    padding: 10px;
+    color: #FF6520;
+    margin: 20px auto;
+    text-align: center;
+    font-size: 22px;   
+    }
