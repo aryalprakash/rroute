@@ -12,7 +12,6 @@ $ideas = getIdeas('all');
 
 
 if ($ideas) {
-	
      foreach ($ideas as $idea) {
 	$title = $idea['ideathread_title'];
 	$description = $idea['description'];
