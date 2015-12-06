@@ -36,6 +36,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 	<h1 class="home-welcome" style="margin-bottom: 20px;">Welcome to Rangeenroute.</h1>
 	<div class="tagline-box">
 		One stop platform for Startups
+		and also this.
 	</div>
 		<div class="feat-box">
 		<a href="/help.php"><div class="feature-list"><img src="./images/icons/Share-your-ideas.png" class="feat-img"><div class="feat-text">Share your idea.</div></div></a>
