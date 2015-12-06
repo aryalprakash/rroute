@@ -32,20 +32,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 	<h3><?php echo $msg; ?></h3>
 	</div>
 	
-	
-	<!-- <div class="signup-tabs">
-	<ul>
-		<li class="signup-tab1">Create - <span>Ideas</span></li>
-		<li class="signup-tab2">Connect - <span>Resources</li>
-		<li class="signup-tab3 active">Conquer - <span>Needs</span></li>
-	</div> -->
-	
 	<div class="tagline-home" style=" height: 460px; width: 100%;">
 	<h1 class="home-welcome" style="margin-bottom: 20px;">Welcome to Rangeenroute.</h1>
 	<div class="tagline-box">
-		One stop platform for Startups <?php
-		for ($i = 1; $i<5; $i++){
-			echo "testing xdebug ";} ?>
+		One stop platform for Startups
 	</div>
 		<div class="feat-box">
 		<a href="/help.php"><div class="feature-list"><img src="./images/icons/Share-your-ideas.png" class="feat-img"><div class="feat-text">Share your idea.</div></div></a>
