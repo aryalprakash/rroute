@@ -73,15 +73,15 @@
 
                         <div class="popup-alerts">
                             <?php
-                           
+                           global $last_date;
                             if ($notifications) {
                                 foreach ($notifications as $n) {
 
                                     $date = date('m/d/Y', strtotime($n['created_on']));
                                     if ($date == date('m/d/Y', time()))
-                                        $date = 'Today';
+                                        $last_date = 'Today';
                                     ?>
-                                    <div class="notify-item" <?php if ($date == $last_date) echo 'style="border: none;"'; ?> data-id="<?php echo $n['notify_id']; ?>">
+                                    <div class="notify-item" <?php  if ($date==$last_date ) echo 'style="border: none;"'; ?> data-id="<?php echo $n['notify_id']; ?>">
                                         <div class="notify-date"><?php if (!isset($last_date) || $date != $last_date) echo $date ?></div>
                                         <div class="notify-text" id="notifytext_<?php echo $n['notify_id']; ?>"><?php echo $n['text'] ?></div>
                                     </div>
