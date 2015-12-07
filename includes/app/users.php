@@ -22,7 +22,7 @@ function checkPassword($password) {
 
 function registerUser($data) {
     global $db_con;
-    print_r($data);
+    //print_r($data);
     if (checkdate(intval($data['month']), intval($data['day']), intval($data['year'])))
         $date = $data['year'] . '-' . $data['month'] . '-' . $data['day'];
     else
@@ -115,12 +115,12 @@ function updateUser($data) {
 		`alt_email` = '" . $db_con->escape($data['alt_email']) . "',
 		`social_network` = '" . $db_con->escape($data['social_network']) . "',
 		`phone` = '" . $db_con->escape($data['phone']) . "',
-		`quotes` = '" . $db_con->escape($data['quotes']) . "',
+
 		`about_me` = '" . $db_con->escape($data['about_me']) . "',
 		`photo` = '" . $photo . "'
 		 WHERE `user_id` = " . $data['user_id'];
 
-
+    #removed https://www.youtube.com/playlist?list=PLfdtiltiRHWEbLm0ErHe7HgEOVIO26R_o
     return $db_con->query($q);
 }
 
