@@ -97,7 +97,7 @@ switch ($action) {
             $sent_to = getProjectAuthor($_POST['project_id']);
             $author = getUserNameById($_SESSION['uid']);
 
-            $text = $author . ' liked project ' . $project_title;
+            $text =ucwords( $author) .' liked project ' . $project_title;
             addNotification($sent_to, $text, $_SESSION['uid']);
             
             addInteraction($_SESSION['uid'], 'like', $sent_to, 'project', $_POST['project_id']);
@@ -124,7 +124,7 @@ switch ($action) {
             $author = getUserNameById($sent_to);
             $user = getUserNameById($_SESSION['uid']);
 
-            $text = $user . ' liked your ideathread ' . $ideathread_title;
+            $text = '<i>'.ucwords($user) .'</i>'. ' liked your ideathread ' . '<b>'.$ideathread_title.'</b>';
             
             addNotification($sent_to, $text, $_SESSION['uid']);
             plusInteraction($_POST['ideathread_id']);
