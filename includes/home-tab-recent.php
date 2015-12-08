@@ -2,8 +2,15 @@
 include_once('config.php');
 include_once('app/projects.php');
 include_once('app/users.php');
+if (empty($_SESSION['logged_in']))
+    redirect('index.php');
 
-$projects = getAllRecentProjects();
+if (isset($_GET['uid']))
+    $uid = intval($_GET['uid']);
+else
+    $uid = $_SESSION['uid'];
+
+$projects = getAllRecentProjects($uid);
 
 if ($projects) {
 

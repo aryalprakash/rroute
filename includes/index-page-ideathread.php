@@ -82,7 +82,8 @@ if ($ideas) {
 	        			<div class="idea-stats"><a href="#">
 	        			<img src="./images/icons/like.png" /></a><div class="stat-no"><?php echo $likes ?></div></div>
 	        			<div class="idea-stats"><a href="#">
-	        			<img src="./images/icons/comment.jpg"/></a><div class="stat-no"><?php echo $comments ?></div></div> 
+	        			<img src="./images/icons/comment.jpg"/></a><div class="stat-no"><?php echo $comments ?></div></div>
+
         			</div>
         			<div style=" float: right">
         			
