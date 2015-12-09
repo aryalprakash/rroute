@@ -354,12 +354,13 @@ function getVerified() {
     }
 }
 
-function addNotification($sent_to, $text, $created_by) {
+function addNotification($sent_to, $text, $created_by,$url='') {
     global $db_con;
     
     $insert = "INSERT INTO `notifications` SET
                `sent_to` = " . $sent_to . ",
                `text` = '" . $text . "',
+               `url`='".$url."',
                `created_by` = " . $created_by;
 
     $db_con->query($insert);
