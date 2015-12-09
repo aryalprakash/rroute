@@ -46,11 +46,11 @@ function addIdea($data){
 
 
 		
-		
+
     global $db_con;
     
     $query = "INSERT INTO `ideathreads`(`ideathread_title`,`description`,`source_url`,`original_creator`,`created_by`,`status`,`thumbnail_img`)
-                VALUES('".$db_con->escape($data['ideathread_title'])."','".$db_con->escape($data['description'])."','".$db_con->escape($data['source_url'])."','".$db_con->escape($data['original_creator'])."'," . $_SESSION['uid'] . ",'".notapproved."','".$target_file."')";
+                VALUES('".$db_con->escape($data['ideathread_title'])."','".$db_con->escape($data['description'])."','".$db_con->escape($data['source_url'])."','".$db_con->escape($data['original_creator'])."'," . $_SESSION['uid'] . ",'notapproved','".$target_file."')";
 
     $db_con->query($query);
     $message = 'Status: Received, In-Review';
@@ -194,8 +194,8 @@ function updateProject($data, $id, $step) {
 
 function getProjectById($project_id) {
     global $db_con;
-
-    $res = $db_con->query("SELECT * FROM `projects` WHERE `project_id` = " . $project_id . " LIMIT 1");
+    $pid= $project_id;
+    $res = $db_con->query("SELECT * FROM `projects` WHERE (`project_id` = $pid) LIMIT 1");
 
     return $db_con->fetch_array($res);
 }
@@ -310,11 +310,11 @@ function searchUser($search){
     return $db_con->sql2array($query);
 }
 
-
-function getAllRecentProjects($limit = '') {
+//function getAllRecentProjects($id,$limit = '')
+function getAllRecentProjects($id) {
     global $db_con;
-
-    $query = 'SELECT `project_id`, `project_title`, `created_on`, `created_by` FROM `projects` WHERE `status` = 1 ORDER BY `project_id` DESC';
+    $uid = $id;
+    $query = 'SELECT `project_id`, `project_title`, `created_on`, `created_by` FROM `projects` WHERE (`status`=1,`created_by` =$uid) ORDER BY `project_id` DESC';
 
     return $db_con->sql2array($query);
 }
@@ -322,7 +322,7 @@ function getAllRecentProjects($limit = '') {
 function getAllUserProjects($created_by) {
     global $db_con;
 
-    $query = 'SELECT `project_id`, `project_title`, `created_on` FROM `projects` WHERE `created_by`=' . $created_by . ' ORDER BY `project_id` DESC';
+    $query = 'SELECT `project_id`, `project_title`, `created_on`,`created_by` FROM `projects` WHERE `created_by`=' . $created_by . ' ORDER BY `project_id` DESC';
 
     return $db_con->sql2array($query);
 }
@@ -491,10 +491,10 @@ function createCampaign($data) {
 function editCampaign($data, $id) {
     global $db_con;
     
-    //$type = $data['thematic_type'];
+    $type = $data['thematic_type'];
     
-    //if (empty($type))
-    //    $type = 'video';
+    if (empty($type))
+        $type = 'video';
     
     $query = "UPDATE `advertisement` SET
 			 
@@ -1453,8 +1453,8 @@ function calculateRegression($project_id, $time, $trend_value) {
     $sx = stats_standard_deviation($times);
     $sy = stats_standard_deviation($trends);
     
-    $r = Corr($x, $y);
-    
+    //$r = Corr($x, $y);//removed to check error can be uncomment later.
+    $r = 2;//random value need to remove
     $b = $r * ($sy / $sx);
     
     $a = $trend_value - $b * $time;
@@ -1502,7 +1502,7 @@ function getAdThematic($type, $id) {
         $res = $db_con->query($query);
         $description = $db_con->fetch_array($res);
         
-        return '<img alt="" src="uploads/images/thumbs/01092013046'.$description['file_name'].'">';
+        return '<img alt="" src='.SITE_URL.'"/uploads/images/thumbs/01092013046'.$description['file_name'].'">';
     }
 }
 
@@ -1605,14 +1605,28 @@ function getIdeas($user){
 	global $db_con;
 
 	if($user =='all'){
-	$query = "SELECT * FROM `ideathreads` WHERE `status` = 'approved' ORDER BY `interactions` DESC";
+	$query = "SELECT * FROM `ideathreads` WHERE `status` = 'approved' ORDER BY `interactions` DESC LIMIT 0 ,10";
     	 $a = $db_con->sql2array($query);
 	}
-	else 
-	{
-	$query = "SELECT * FROM `ideathreads` WHERE `created_by` = '" .$user. "'";
-    	 $a = $db_con->sql2array($query);
-     	}
+//    else if($user='count') {
+//        $q = 'SELECT COUNT(`ideathread_id`) as c FROM `ideathreads`';
+//        $res = $db_con->query($q);
+//
+//        $notifs = $db_con->fetch_array($res);
+//
+//        $notifs_count = $notifs['c'];
+//
+//        if ($notifs_count == 0)
+//            return '';
+//        else
+//            return $notifs_count;
+//    }
+    else{
+        //$query = "SELECT * FROM `ideathreads` WHERE `created_by` = '" .$user. "'";
+        $use =$user;
+        $query = "SELECT * FROM `ideathreads` WHERE (`created_by` = $use)";
+        $a = $db_con->sql2array($query);
+    }
 
      return $a;
 }
