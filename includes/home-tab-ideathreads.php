@@ -16,7 +16,7 @@ else
 	$user_id = $_SESSION['uid'];
 
 
-$ideas = getIdeas($user_id);
+$ideas = getIdeas('all');
 
 
 if ($ideas) {
