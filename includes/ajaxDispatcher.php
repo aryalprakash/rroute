@@ -43,9 +43,9 @@ switch ($action) {
             $project_title = getProjectTitle($_POST['project_id']);
             $sent_to = getProjectAuthor($_POST['project_id']);
             $author = getUserNameById($_POST['user_id']);
-
+            $url = SITE_URL.'/home.php?iid='.$_POST['project_id'];
             $text = $author . ' rated project ' . $project_title;
-            addNotification($sent_to, $text, $_POST['user_id']);
+            addNotification($sent_to, $text, $_POST['user_id'],$url);
             addInteraction($_SESSION['uid'], 'rate', $sent_to, 'project', $_POST['project_id']);
             
         } else
@@ -85,7 +85,7 @@ switch ($action) {
         require_once(DIR_APP . 'projects.php');
         require_once(DIR_APP . 'users.php');
         $id = AddProjectLike($_POST['project_id'], $_SESSION['uid']);
-
+        
         if (!empty($id)) {
             $likes = getLikes($_POST['project_id']);
 
@@ -96,12 +96,12 @@ switch ($action) {
             $project_title = getProjectTitle($_POST['project_id']);
             $sent_to = getProjectAuthor($_POST['project_id']);
             $author = getUserNameById($_SESSION['uid']);
-
+            $url = SITE_URL.'/home.php?pid='.$_POST['project_id'];
             $text =ucwords( $author) .' liked project ' . $project_title;
-            addNotification($sent_to, $text, $_SESSION['uid']);
-            
+            addNotification($sent_to, $text, $_SESSION['uid'],$url);
+
             addInteraction($_SESSION['uid'], 'like', $sent_to, 'project', $_POST['project_id']);
-            
+
         } else
             $responce['result'] = '';
 
@@ -123,10 +123,10 @@ switch ($action) {
             $sent_to = getIdeaAuthor($_POST['ideathread_id']);
             $author = getUserNameById($sent_to);
             $user = getUserNameById($_SESSION['uid']);
-
+            $url = SITE_URL.'/home.php?iid='.$_POST['ideathread_id'];
             $text = '<i>'.ucwords($user) .'</i>'. ' liked your ideathread ' . '<b>'.$ideathread_title.'</b>';
             
-            addNotification($sent_to, $text, $_SESSION['uid']);
+            addNotification($sent_to, $text, $_SESSION['uid'],$url);
             plusInteraction($_POST['ideathread_id']);
             
            
@@ -137,6 +137,7 @@ switch ($action) {
             $responce['result'] = '';
 
         echo json_encode($responce);
+        print_r(json_encode($response));
         break;
 
     case 'remove-like-project':
@@ -200,9 +201,9 @@ switch ($action) {
             $project_title = getProjectTitle($_POST['project_id']);
             $sent_to = getProjectAuthor($_POST['project_id']);
             $author = getUserNameById($_SESSION['uid']);
-
+            $url = SITE_URL.'/home.php?pid='.$_POST['project_id'];
             $text = $author . ' commented project ' . $project_title;
-            addNotification($sent_to, $text, $_SESSION['uid']);
+            addNotification($sent_to, $text, $_SESSION['uid'],$url);
             addInteraction($_SESSION['uid'], 'comment', $sent_to, 'project', $_POST['project_id']);
 
             $messages = getComments($_POST['project_id']);
@@ -258,9 +259,9 @@ switch ($action) {
             $ideathread_title = getIdeaTitle($_POST['ideathread_id']);
             $sent_to = getIdeaAuthor($_POST['ideathread_id']);
             $author = getUserNameById($_SESSION['uid']);
-
+            $url = SITE_URL.'/home.php?iid='.$_POST['ideathread_id'];
             $text = $author . ' commented ideathread ' . $ideathread_title;
-            addNotification($sent_to, $text, $_SESSION['uid']);
+            addNotification($sent_to, $text, $_SESSION['uid'],$url);
             addInteraction($_SESSION['uid'], 'comment', $sent_to, 'ideathread', $_POST['ideathread_id']);
 
             $messages = getIdeaComments($_POST['ideathread_id']);
@@ -373,9 +374,9 @@ switch ($action) {
             
             $project_title = getProjectTitle($_POST['project_id']);            
             $author = getUserNameById($_SESSION['uid']);
-
+            $url = SITE_URL.'/home.php?pid='.$_POST['project_id'];
             $text = $author . ' suggested project ' . $project_title;
-            addNotification($_POST['sent_to'], $text, $_SESSION['uid']);
+            addNotification($_POST['sent_to'], $text, $_SESSION['uid'],$url);
         }
         else
             deleteSuggestion($_POST['project_id'], $_POST['sent_to'], $_SESSION['uid']);
@@ -412,10 +413,10 @@ switch ($action) {
 			$user_id = $_SESSION['uid'];
 			$author_id = $_POST['created_by'];
 			$user_name = getUserNameById($_SESSION['uid']);
-			
+            $url = SITE_URL.'/home.php?iid='.$project_id;
 			$text = $user_name. ' wants to view your project '. $project_title;
 			
-		addNotification($author_id, $text, $user_id);
+		addNotification($author_id, $text, $user_id,$url);
 		
 	$responce['result'] = 'OK';
 
