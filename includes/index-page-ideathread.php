@@ -4,8 +4,40 @@ include_once('app/users.php');
 include_once('app/projects.php');
 
 
+//
+////for pagination
+//$count = getIdeas('count');//added 12-9
+//if(isset($_GET['page'])){
+//     $page=preg_replace("#[^0-9]#","",$_GET['page']);
+//
+//}else{
+//     $page = 1;
+//}
+//$perPage=2;
+//$lastPage=ceil($count/$perPage);
+//
+//if($page<1){
+//     $page=1;
+//}else if($page>$lastPage){
+//     $page=$lastPage;
+//}
+//
+//$limit ="LIMIT".($page-1)*$perPage.",$perPage";
+//if ($lastPage != 1) {
+//
+//    if ($page != $lastPage) {
+//        $next = $page + 1;
+//        $pagination ='<a href="index.php?page=' . $next . '">Next</a>';
+//    }
+//    if ($page != 1) {
+//        $prev = $page - 1;
+//        $pagination = '<a href="index.php?page=' . $prev . '">Previous</a>';
+//    }
+//
+//}
 
-$ideas = getIdeas('all');
+
+$ideas = getIdeas('all');//added
 global $project_exists;//aded to remove error random line code
 if ($ideas) {
 	
@@ -107,3 +139,4 @@ if ($ideas) {
 echo '<div class="project-title" style="font-size: 20px; margin-left: 10px;">No Ideathreads available right now.</div>';
 }
 ?>
+
