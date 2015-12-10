@@ -85,7 +85,7 @@ switch ($action) {
         require_once(DIR_APP . 'projects.php');
         require_once(DIR_APP . 'users.php');
         $id = AddProjectLike($_POST['project_id'], $_SESSION['uid']);
-        
+
         if (!empty($id)) {
             $likes = getLikes($_POST['project_id']);
 
@@ -124,7 +124,7 @@ switch ($action) {
             $author = getUserNameById($sent_to);
             $user = getUserNameById($_SESSION['uid']);
             $url = SITE_URL.'/home.php?iid='.$_POST['ideathread_id'];
-            $text = '<i>'.ucwords($user) .'</i>'. ' liked your ideathread ' . '<b>'.$ideathread_title.'</b>';
+            $text = '<i>'.ucwords($user) .'</i>'. ' liked your ideathread ' . '<i>'.$ideathread_title.'</i>';
             
             addNotification($sent_to, $text, $_SESSION['uid'],$url);
             plusInteraction($_POST['ideathread_id']);
@@ -202,7 +202,7 @@ switch ($action) {
             $sent_to = getProjectAuthor($_POST['project_id']);
             $author = getUserNameById($_SESSION['uid']);
             $url = SITE_URL.'/home.php?pid='.$_POST['project_id'];
-            $text = $author . ' commented project ' . $project_title;
+            $text = $author . ' commented on your project ' . $project_title;
             addNotification($sent_to, $text, $_SESSION['uid'],$url);
             addInteraction($_SESSION['uid'], 'comment', $sent_to, 'project', $_POST['project_id']);
 
@@ -260,7 +260,7 @@ switch ($action) {
             $sent_to = getIdeaAuthor($_POST['ideathread_id']);
             $author = getUserNameById($_SESSION['uid']);
             $url = SITE_URL.'/home.php?iid='.$_POST['ideathread_id'];
-            $text = $author . ' commented ideathread ' . $ideathread_title;
+            $text = ucwords($author) . ' commented on your ideathread ' . $ideathread_title;
             addNotification($sent_to, $text, $_SESSION['uid'],$url);
             addInteraction($_SESSION['uid'], 'comment', $sent_to, 'ideathread', $_POST['ideathread_id']);
 
