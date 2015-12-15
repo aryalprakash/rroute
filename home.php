@@ -44,7 +44,7 @@ require_once(DIR_APP . 'users.php');
                 } 
                 
                 else if (isset($_GET['pid'])) {
-                
+
                     $project = getProjectById(intval($_GET['pid']));
                     $user = getUserData($project['created_by']);
                     if(!empty($project)){$showProject = true;}
@@ -240,8 +240,16 @@ require_once(DIR_APP . 'users.php');
                             <a href="#" class="project-action-btn" id="like_project" data-id="<?php echo $project['project_id'] ?>">Like &nbsp;<span class="totalLikes"><?php  echo getLikes($project['project_id']); ?></span></a>
                         <?php } ?>
                         <a href="#" class="project-action-btn" id="report_project" data-id="<?php echo $project['project_id'] ?>">Report</a>
+                        <ul id ="h">
+                            <a href="" class="project-action-btn" id="share" data-id="">
+                                <img src="<?php echo SITE_URL; ?>/images/shareicon.png" width="30" height="20" align="center"/></a>
+                            <a class="project-action-btns" href="http://www.facebook.com/sharer.php?u=<?php echo SITE_URL.'/home.php?iid='.$project['project_id']; ?>" target="_blank" title="Click to share"><img src="./images/icons/facebook.png" width="40"height="40"></a>
+                            <a class="project-action-btns" href="https://plus.google.com/share?url=<?php echo SITE_URL.'/home.php?iid='.$project['project_id']; ?>" target="_blank" title="Click to share"><img src="./images/icons/gplus.png" width="40" height="40"></a>
+                            <a class="project-action-btns" href="http://twitter.com/share?text=Rangeenroute&url=<?php echo SITE_URL.'/home.php?iid='.$project['project_id']; ?>" target="_blank" title="Click to share"><img src="./images/icons/twitter.png" width="40" height="40"></a>
 
-                        <a href="#" class="project-action-btn" id="report_project" data-id="<?php echo $project['project_id'] ?>"><img src = "images/shareicon.png" width = "18" height = "18"></a>
+                        </ul>
+
+
 
                     </div>
 

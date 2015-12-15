@@ -1,4 +1,5 @@
-<?php
+
+<?php include_once ('config.php');
 $idea = getIdeaById(intval($_GET['iid']));
 $title = $idea['ideathread_title'];
 $description = $idea['description'];
@@ -148,9 +149,18 @@ else
 
 
     <a href="#" class="project-action-btn" id="report_project" data-id="<?php echo $ideathread_id; ?>">Report</a>
+    <ul id ="h">
+    <a href="" class="project-action-btn" id="share" data-id="">
+        <img src="<?php echo SITE_URL; ?>/images/shareicon.png" width="30" height="20" align="center"/></a>
 
+        <a class="project-action-btns" href="http://www.facebook.com/sharer.php?u=<?php echo SITE_URL.'/home.php?iid='.$ideathread_id; ?>" target="_blank" title="Click to share"><img src="./images/icons/facebook.png" width="40"height="40"></a>
+    <a class="project-action-btns" href="https://plus.google.com/share?url=<?php echo SITE_URL.'/home.php?iid='.$ideathread_id; ?>" target="_blank" title="Click to share"><img src="./images/icons/gplus.png" width="40" height="40"></a>
+    <a class="project-action-btns" href="http://twitter.com/share?text=Rangeenroute&url=<?php echo SITE_URL.'/home.php?iid='.$ideathread_id; ?>" target="_blank" title="Click to share"><img src="./images/icons/twitter.png" width="40" height="40"></a>
+
+    </ul>
 
 </div>
+
 
 
 <div class="comment-area">
