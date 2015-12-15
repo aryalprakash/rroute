@@ -100,7 +100,7 @@ $("#rewardType" )
 
 $('.allNotifications').click(function(){
 	var user_id = $(this).attr('user-id');
-	console.log(user_id);
+	//console.log(user_id);
 	$.ajax({
             type: 'POST',
             url: "includes/ajaxDispatcher.php",
@@ -110,7 +110,7 @@ $('.allNotifications').click(function(){
             },
             success: function (data) {
                 if (data['result'] == 'OK') {
-                    console.log(data);
+                    //console.log(data);
                     $('.notifyNo').css('display','none');
                 }
             },
@@ -118,7 +118,16 @@ $('.allNotifications').click(function(){
         });
         return false; 
 });
-    
-    
-    
+
+//for sliding social sharing icons
+    $( "#h" ).hover(function () {
+        if ( $( ".project-action-btns" ).is( ":hidden" ) ) {
+            $( ".project-action-btns" ).toggle( "slow" );
+        } else {
+            $( ".project-action-btns" ).hide();
+        }
+    });
+
+
+
 });
