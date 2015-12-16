@@ -324,7 +324,7 @@ function getThumbnailImage($ideathread_id) {
 function searchUser($search){
     global $db_con;
 
-    $query = "SELECT `user_id`, `display_name`, `photo`, `location`,`email` FROM `users` WHERE ( `display_name` LIKE '%".$search."%') ORDER BY `user_id` DESC";
+    $query = "SELECT `user_id`, `display_name`, `photo`, `location`,`email` FROM `users` WHERE ( `display_name` LIKE '%".$search."%' OR `email` LIKE '%".$search."%' ) ORDER BY `user_id` DESC";
 
     return $db_con->sql2array($query);
 }
