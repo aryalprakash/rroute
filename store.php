@@ -87,7 +87,7 @@ foreach ($categories as $ix=>$cat) {
 
 <div class="content-block">
 
-
+    <div class ="content-title">My Store</div>
 <?php $projects = getAllRecentProjectsWithFilter($_POST);
 
 if ($projects) {

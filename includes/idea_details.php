@@ -149,8 +149,10 @@ else
 
     <a href="#" class="project-action-btn" id="report_project" data-id="<?php echo $ideathread_id; ?>">Report</a>
     <ul id="h">
-        <a href="" class="project-action-btn" id="share" data-id="">
+        <a href="" class="project-action-btn " id="share" data-id="">
             <img src="<?php echo SITE_URL; ?>/images/shareicon.png" width="30" height="20" align="center"/></a>
+
+
         <a class="project-action-btns"
            href="http://www.facebook.com/sharer.php?u=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>"
            target="_blank" title="Click to share"><img src="./images/icons/facebook.png" width="40" height="40"
@@ -167,7 +169,7 @@ else
         <a class="project-action-btns"
            href="http://reddit.com/submit?url=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>&title=<?php echo $title; ?>"
            target="_blank" title="Click to share"><img src="./images/icons/reddit.png" width="40"
-                                                       height="40"></a>
+                                                     height="40"></a>
         <a class="project-action-btns"
            href="mailto:?Subject=<?php echo $title;?>&Body=<?php echo substr ($description,0,50).' for more visit. '.SITE_URL . '/home.php?iid=' . $ideathread_id;
                                 ?>"
