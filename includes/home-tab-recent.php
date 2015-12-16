@@ -12,6 +12,7 @@ else
 
 $projects = getAllRecentProjects($uid);
 
+
 if ($projects) {
 
     foreach ($projects as $project) {

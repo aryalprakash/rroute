@@ -1609,7 +1609,7 @@ function getIdeas($user){
     	 $a = $db_con->sql2array($query);
 	}
 //    else if($user='count') {
-//        $q = 'SELECT COUNT(`ideathread_id`) as c FROM `ideathreads`';
+//        $q = "SELECT COUNT(`ideathread_id`) as c FROM `ideathreads`";
 //        $res = $db_con->query($q);
 //
 //        $notifs = $db_con->fetch_array($res);

@@ -25,10 +25,10 @@ if (!$user)
 
 if (isset($_GET['action']) && $_GET['action'] == 'add_router') {
     AddRouter($uid, $_SESSION['uid']);
-    redirect('user.php?uid=' . $uid);
+    redirect(SITE_URL.'user.php?uid=' . $uid);
 } else if (isset($_GET['action']) && $_GET['action'] == 'remove_router') {
     DeleteRouter($uid, $_SESSION['uid']);
-    redirect('user.php?uid=' . $uid);
+    redirect(SITE_URL.'user.php?uid=' . $uid);
 }
 
 if (isset($_POST['add_foonote']))
@@ -54,12 +54,12 @@ if (isset($_POST['add_foonote']))
                                     $status = checkRouter($uid, $_SESSION['uid']);
                                     if ($status == -1) {
                                         ?>
-                                        <a href="user.php?action=add_router&uid=<?php echo $uid; ?>"><img
-                                                src="images/add_route.png" alt="" title="Click to add router"></a>
+                                        <a href="<?php echo SITE_URL; ?>/user.php?action=add_router&uid=<?php echo $uid; ?>"><img
+                                                src="<?php echo SITE_URL; ?>/images/add_route.png" alt="" title="Click to add router"></a>
                                     <?php } else if ($status == 1) {
                                         ?>
-                                        <a href="user.php?action=remove_router&uid=<?php echo $uid; ?>"><img
-                                                src="images/routed.png" alt="" title="Click to remove router"></a>
+                                        <a href="<?php echo SITE_URL; ?>/user.php?action=remove_router&uid=<?php echo $uid; ?>"><img
+                                                src="<?php echo SITE_URL; ?>/images/routed.png" alt="" title="Click to remove router"></a>
                                         <?php
                                     } else if ($status == 0) {
                                         ?>
@@ -75,9 +75,9 @@ if (isset($_POST['add_foonote']))
                             <div class="user-photo">
                                 <?php
                                 if (empty($user['photo'])) {
-                                    echo '<img src="uploads/avatars/nophoto.jpg" alt="">';
+                                    echo '<img src='.SITE_URL.'/uploads/avatars/nophoto.jpg.'.' alt="">';
                                 } else {
-                                    echo '<img src="uploads/avatars/' . $user['photo'] . '" alt="">';
+                                    echo '<img src='.SITE_URL.'/uploads/avatars/' . $user['photo'] .' alt="">';
                                 }
                                 ?>
                                 <div class="name-block"><?php echo $user['display_name']; ?></div>
@@ -87,7 +87,7 @@ if (isset($_POST['add_foonote']))
                         <div class="content-right-col project-details">
                             <div class="form-item no-height">
                                 <ul class="user-info-left">
-                                    <li><label>Name:</label><?php echo $user['display_name'] ?></li>
+                                    <li><label>Name:</label><?php echo ucwords($user['display_name']); ?></li>
                                     <li><label>Current City:</label><?php echo $user['location'] ?></li>
                                 </ul>
 
@@ -115,7 +115,7 @@ if (isset($_POST['add_foonote']))
                         <div class="my-projects-list">
                             <?php
                             $projects = getAllUserProjects($uid);
-
+                            //print_r($projects);
                             if (!empty($projects)) {
                                 foreach ($projects as $project) {
 
@@ -131,7 +131,7 @@ if (isset($_POST['add_foonote']))
                                         <?php $image = getFeaturingImage($project['project_id']);
                                         if (!empty($image)) {
                                             ?>
-                                            <a href="home.php?pid=<?php echo $project['project_id']; ?>"
+                                            <a href="<?php echo SITE_URL; ?>/home.php?pid=<?php echo $project['project_id']; ?>"
                                                class="recent-project-title" title="<?php echo $title; ?>"><img
                                                     src="<?php echo SITE_URL . '/uploads/images/thumbs/' . $image; ?>"
                                                     alt=""></a>
@@ -152,12 +152,11 @@ if (isset($_POST['add_foonote']))
 
                                         <div
                                             class="project-author"><?php echo TimeAgo(date('Y-m-d', strtotime($project['created_on']))); ?>
-                                            by <a
-                                                href="user.php?uid=<?php echo $project['created_by']; ?>"><?php echo $user['display_name']; ?></a>
+                                            by <a href="<?php echo SITE_URL; ?>/user.php?uid=<?php echo $project['created_by']; ?>"><?php echo ucwords($user['display_name']); ?></a>
                                         </div>
                                         <?php if ($own_profile) {
                                             echo '
-            <div class="project-bottom-details"><a href="upload.php?step=1&id=' . $project[project_id] . '" class="project-action-btn" style="width:100%; padding:0px 0px; border-radius: 0;">Edit Project</a></div>';
+            <div class="project-bottom-details"><a href="upload.php?step=1&id=' . $project['project_id'] . '" class="project-action-btn" style="width:100%; padding:0px 0px; border-radius: 0;">Edit Project</a></div>';
                                         } ?>
 
                                     </div>
@@ -173,18 +172,18 @@ if (isset($_POST['add_foonote']))
                             if ($own_profile)
                                 echo 'My';
                             else
-                                echo $user['first_name'] . "'s";
+                                echo ucwords($user['first_name']) . "'s";
                             ?> Activity Logs
                         </div>
 
                         <div id="home-tabs">
                             <ul>
-                                <li><a href="includes/user-tab-activities.php?uid=<?php echo $_GET['uid']; ?>">Interactions</a>
+                                <li><a href="includes/user-tab-activities.php?uid=<?php echo $uid/*$_GET['uid']*/; ?>">Interactions</a>
                                 </li>
                                 <li>
-                                    <a href="includes/user-tab-commented.php?uid=<?php echo $_GET['uid']; ?>">Projects</a>
+                                    <a href="includes/user-tab-commented.php?uid=<?php echo $uid/*$_GET['uid']*/; ?>">Projects</a>
                                 </li>
-                                <li><a href="includes/user-tab-ideathread.php?uid=<?php echo $_GET['uid']; ?>">IdeaThreads</a>
+                                <li><a href="includes/user-tab-ideathread.php?uid=<?php echo $uid/*$_GET['uid']*/; ?>">IdeaThreads</a>
                                 </li>
 
                             </ul>
@@ -211,10 +210,10 @@ if (isset($_POST['add_foonote']))
                                     <div class="router-user-photo">
                                         <a href="user.php?uid=<?php echo $u['user_id']; ?>">
                                             <?php if (empty($u['photo'])) { ?>
-                                                <img src="uploads/avatars/nophoto.jpg" alt="">
+                                                <img src="<?php echo SITE_URL; ?>/uploads/avatars/nophoto.jpg" alt="">
                                             <?php } else {
                                                 ?>
-                                                <img src="uploads/avatars/<?php echo $u['photo']; ?>" alt="">
+                                                <img src="<?php echo SITE_URL; ?>/uploads/avatars/<?php echo $u['photo']; ?>" alt="">
                                             <?php } ?>
                                         </a>
 

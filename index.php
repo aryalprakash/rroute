@@ -1,7 +1,7 @@
 <?php
 require_once ('includes/header.php');
 require_once(DIR_APP.'users.php');
-
+require_once 'Paginator.class.php';
 if (!empty($_SESSION['logged_in']))
 	redirect('home.php');
 
@@ -55,9 +55,17 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 	
 	<div class="homepage-showcase" style="width: 100%; margin-top: 20px; float: left;">
 	<h2 class="home-welcome">Trending Ideathreads </h2>
-	<?php include 'includes/index-page-ideathread.php'; ?> 
+
+	<?php include 'includes/index-page-ideathread.php'; ?>
+
 	</div>
-	
+		<?php
+		$reload = $_SERVER['PHP_SELF'] . "?tpages=" . $tpages;
+		echo '<div class="pagination"><ul>';
+		if ($total_pages > 1) {
+			echo paginate($reload, $show_page, $total_pages);
+		}
+		echo "</ul></div>";?>
 	<div class="signup-line" style="width: 100%; float: left; margin-top: -30px;"></div>
 	<h2 class="home-signup" style="width: 100%; float: left;"><span>Sign up.</span> Together we bring the stuffs - dreams are made of.</h2>
 	

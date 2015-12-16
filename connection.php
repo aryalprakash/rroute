@@ -13,7 +13,7 @@ if (empty($_SESSION['logged_in']))
 <div class="connection inner-page content">
 
 <?php include (DIR_INCLUDE.'left_nav.php'); 
-
+$search_str = '';
 $routers = getRoutersForUser($_SESSION['uid'], $search_str);
 
 if (!empty($routers))

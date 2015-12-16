@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2012 Maarten Claes 
+ * Copyright 2012 Maarten Claes
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@ include 'src/DenseStrategy.php';
 include 'src/OrdinalStrategy.php';
 
 class Ranker {
-  
+
   // Ranking strategy
-  private $strategyName = 'ordinal'; 
+  private $strategyName = 'ordinal';
   private $strategy;
   // Options
   private $rankingProperty = 'ranking';
@@ -33,9 +33,9 @@ class Ranker {
   public function __construct() {
     $this->strategy = new OrdinalStrategy();
   }
-  
+
   /**
-   * Sets a ranking strategy. The possibilities are:  
+   * Sets a ranking strategy. The possibilities are:
    * - 'competition' : Standard Competition Ranking ( 1224 )
    * - 'modified'    : Modified Competition Ranking ( 1334 )
    * - 'dense'       : Dense Ranking                ( 1223 )
@@ -59,7 +59,7 @@ class Ranker {
         break;
       default:
         throw new UnknownRankingStrategyException("Ranking strategy '$strategyName' not found!");
-    } 
+    }
     $this->strategyName = $strategyName;
     return $this;
   }
@@ -89,7 +89,7 @@ class Ranker {
   }
 
   /**
-   * Ranks and sorts the provided array. The ranking number will be added to 
+   * Ranks and sorts the provided array. The ranking number will be added to
    * the 'ranking' property of the objects.
    * @param Array &$rankables Array of objects to rank
    * @param Boolean $sortBeforeRanking Whether or not to sort the rankables before asigning ranks
@@ -104,7 +104,7 @@ class Ranker {
   }
 
   /**
-   * Sort the provided array without assigning rankings. 
+   * Sort the provided array without assigning rankings.
    * @param Array &$rankables Array of objects to sort.
    * @param Boolean $descending Ascending or descending.
    */

@@ -5,15 +5,11 @@ require_once(DIR_APP.'users.php');
 
 if (empty($_SESSION['logged_in']))
 	redirect('index.php');
-	
 
-		
 	if(isset($_POST['ideathread_title'])){
-		$_POST['filename'] = $filename;
+//		$_POST['filename'] = $filename;
 		$message = addIdea($_POST);
-		
 	}
-
 
 ?>
 
