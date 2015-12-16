@@ -10,7 +10,7 @@ body {
 
 .main-wrapper { min-width: 1030px; }
 .header-wrapper { height: 57px;background: url('../images/header_bg.jpg') repeat-x; min-width: 1257px;}
-.header-container { width: 1020px; margin: 0 auto; height: 57px; padding-top: 9px; position: relativbe;}
+.header-container { width: 1020px; margin: 0 auto; height: 57px; padding-top: 9px; position: relative;}
 .header-container .site-logo { float: left;}
 
 .login-top-form { float: right; position: relative; width: 425px;}
@@ -137,7 +137,8 @@ h2.home-signup span { font-family: 'museo_sans900'; }
 
 
 .content-block { background: #fff; margin-bottom: 10px; padding: 30px; overflow: hidden;}
-.content-title, .content-title .project-title { font-family: 'museo_sans100'; font-size: 35px;  color: #181818; margin-bottom: 25px; text-decoration: none; }
+.content-titles{ font-family: 'museo_sans100'; font-size: 18px;font-weight: bold;  color: #181818; margin-bottom: 20px; text-decoration: none; }
+.content-title .project-title { font-family: 'museo_sans100'; font-size: 35px;  color: #181818; margin-bottom: 25px; text-decoration: none; }
 .content-title .project-title:hover { text-decoration: underline; }
 .right-pull { float: right; }
 .left-pull { float: left; }
@@ -163,9 +164,9 @@ h2.home-signup span { font-family: 'museo_sans900'; }
 .content-block.personal-details .content-left-col { padding: 20px 0 10px 0; }
 .content-block.personal-details .content-right-col label { width: 90px; }
 .content-block .avatar-img { float: right; max-width: 311px; max-height: 252px; }
-.content-block .user-photo { width: 208px; height: 172px; overflo: hidden; position: relative; overflow: hidden;}
+.content-block .user-photo { width: 208px; height: 172px; overflow: hidden; position: relative; overflow: hidden;}
 .content-block .user-photo img { width: 208px;}
-.content-block .user-photo .name-block { height: 33; line-height: 33px; position: absolute; left: 0; bottom: 0; background: #000; opacity: 0.6; color: #fff;  font-size: 13px; font-family: 'museo_sans700'; padding-left: 15px; width: 193px;}
+.content-block .user-photo .name-block { height: 33px; line-height: 33px; position: absolute; left: 0; bottom: 0; background: #000; opacity: 0.6; color: #fff;  font-size: 13px; font-family: 'museo_sans700'; padding-left: 15px; width: 193px;}
 .content-block .middle-label a { color: #ff4f00; font-size: 11px; font-family: 'museo_sans300'; margin-top: 10px; display: block; }
 .middle-label.photo-label { margin-top: 100px; }
 .content-block p { line-height: 1.5; font-size: 16px; font-family: 'museo_sans300'; margin-bottom: 29px; }
@@ -212,7 +213,7 @@ label.post_description {width: 206px; height: 103px; text-align: center; padding
 
 .upload-video.details { float: left; margin-right: 0; margin-top: 20px; background: url("../images/upload_video2.jpg") no-repeat;}
 a.upload-picture { display: block; width: 144px; height: 93px; background: url('../images/upload_picture2.jpg') no-repeat; float: left; margin-right: 25px; margin-top: 20px; }
-form-item no-height a.upload-picture:last-child { margin-right: 0; }
+.form-item .no-height a.upload-picture:last-child { margin-right: 0; }
 
 #upload_step_5 textarea { width: 67%; margin-bottom: 5px; }
 
@@ -370,10 +371,11 @@ li.logout a { font-family: 'museo_sans300'; font-size: 13px; color: #454545; pad
 .store .recent-project-item img { width: 180px; height: 180px; }
 
 .store-search { width: 100%; overflow: hidden; margin-bottom: 15px; padding-left: 10px; font-family: 'museo_sans700'; font-size: 13px; }
-.store-search div { diaply: inline-block; float: left; margin-right: 15px; }
+.store-search div { display: inline-block; float: left; margin-right: 15px; }
 .store-search div select { background: #e0e5eb; border: 1px solid #d6dbe2; border-radius: 3px; height: 33px; line-height: 33px; padding: 7px 0; padding-left: 7px; }
-.store-search div select { width: 110px; }
-.store-search div.search-category select { width: 180px; }
+.store-search div select { width: 100px; }
+.store-search div.search-category select { width: 130px; }
+.store-search>.content-titles { background: #e0e5eb; border: 1px solid #FF4F03; border-radius: 3px; height: 15px; line-height: 15px; padding: 7px 0; padding-left: 5px;padding-right: 5px }
 
 .account .report-content-title { margin-bottom: 10px; }
 .content-block .account-checkbox-label  { width: auto;}
