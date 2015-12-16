@@ -138,7 +138,7 @@ h2.home-signup span { font-family: 'museo_sans900'; }
 
 .content-block { background: #fff; margin-bottom: 10px; padding: 30px; overflow: hidden;}
 .content-titles{ font-family: 'museo_sans100'; font-size: 18px;font-weight: bold;  color: #181818; margin-bottom: 20px; text-decoration: none; }
-.content-title .project-title { font-family: 'museo_sans100'; font-size: 35px;  color: #181818; margin-bottom: 25px; text-decoration: none; }
+.content-title,.content-title .project-title { font-family: 'museo_sans100'; font-size: 35px;  color: #181818; margin-bottom: 25px; text-decoration: none; }
 .content-title .project-title:hover { text-decoration: underline; }
 .right-pull { float: right; }
 .left-pull { float: left; }
