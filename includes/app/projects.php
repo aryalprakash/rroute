@@ -301,11 +301,30 @@ function searchProjects($search) {
     
     return $db_con->sql2array($query);
 }
+//added for searching all ideas 2015-12-16
+function searchIdeathreads($search) {
+    global $db_con;
 
+    $query = "SELECT `ideathread_id`, `ideathread_title`, `created_on`, `created_by` FROM `ideathreads` WHERE `status` = 'approved' AND ( `ideathread_title` LIKE '%".$search."%'  OR `description` LIKE '%".$search."%')  ORDER BY `ideathread_id` DESC";
+    return $db_con->sql2array($query);
+
+
+}
+
+function getThumbnailImage($ideathread_id) {
+    global $db_con;
+
+    $query = 'SELECT `thumbnail_img` FROM `ideathreads` WHERE `ideathread_id` ='.$ideathread_id.'';
+    $res =$db_con->query($query);
+    $image = $db_con->fetch_array($res);
+    return $image['thumbnail_img'];
+
+}
+//--------------------
 function searchUser($search){
     global $db_con;
 
-    $query = "SELECT `user_id`, `display_name`, `photo`, `location` FROM `users` WHERE ( `display_name` LIKE '%".$search."%') ORDER BY `user_id` DESC";
+    $query = "SELECT `user_id`, `display_name`, `photo`, `location`,`email` FROM `users` WHERE ( `display_name` LIKE '%".$search."%') ORDER BY `user_id` DESC";
 
     return $db_con->sql2array($query);
 }

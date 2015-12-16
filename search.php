@@ -17,21 +17,28 @@ if (empty($_SESSION['logged_in']))
 
             <form action="" method="post">
 
+                <?php if(!empty($_POST['search_text'])){
+                        $search=$_POST['search_text'];}
+                       else{$search='search';}
 
+                ?>
 
                 <div class="content-block">
-                    <div class="content-title">Search for "<?php echo $_POST['search_text']; ?>":</div>
+                    <div class="content-title">Search for "<?php echo $search;//$_POST['search_text']; ?>":</div>
 
                             <?php
-                            $projects = searchProjects($_POST['search_text']);  
-                            $users = searchUser($_POST['search_text']);                  
+                            $projects = searchProjects($search/*$_POST['search_text']*/);
+                            $ideathreads = searchIdeathreads($search/*$_POST['search_text']*/);
+
+                            $users = searchUser($search/*$_POST['search_text']*/);
                             
                             if ($projects) {
 
                             foreach ($projects as $project) {
-                                
+
                                 $user = getUserData($project['created_by']);
-                                $title = $project['project_title'];
+                                //$user_email = getUserData($project['created_by']);
+                                $title =$project['project_title'];
 
                                 if (strlen($title) < 20)
                                     $short_title = $title;
@@ -49,7 +56,7 @@ if (empty($_SESSION['logged_in']))
                                 <a href="home.php?pid=<?php echo $project['project_id']; ?>" class="recent-project-title" title="<?php echo $title; ?>"><img src="<?php echo SITE_URL . '/uploads/avatars/nophoto.jpg'; ?>" alt=""></a>
     <?php } ?>
 
-                            <div class="project-bottom-details">    
+                            <div class="project-bottom-details">
                                 <a href="home.php?pid=<?php echo $project['project_id']; ?>" class="recent-project-title" title="<?php echo $title; ?>"><?php echo $short_title; ?></a>
                                 <span class="project-rating"><?php echo calculateRating($project['project_id']); ?></span>
                             </div> <!-- project-bottom-details -->
@@ -58,18 +65,57 @@ if (empty($_SESSION['logged_in']))
 
 
                         </div>
-                            <?php } 
+                            <?php }
                             }
 
+                    else if ($ideathreads) {
+
+                            foreach ($ideathreads as $idea) {
+
+                                $user = getUserData($idea['created_by']);
+                                //$user_email = getUserData($idea['created_by']);
+                                $title =$idea['ideathread_title'];
+
+                                if (strlen($title) < 20)
+                                    $short_title = $title;
+                                else
+                                    $short_title = substr($title, 0, 19) . '...';
+                                ?>
+                        <div class="recent-project-item">
+
+                            <?php
+
+                            $image = getThumbnailImage($idea['ideathread_id']);
+                            if (!empty($image)) {
+                                ?>
+                                <a href="home.php?iid=<?php echo $idea['ideathread_id']; ?>" class="recent-project-title" title="<?php echo $title; ?>"><img src="<?php echo SITE_URL . '/' . $image; ?>" alt=""></a>
+                            <?php } else { ?>
+                                <a href="home.php?iid=<?php echo $idea['ideathread_id']; ?>" class="recent-project-title" title="<?php echo $title; ?>"><img src="<?php echo SITE_URL . '/uploads/avatars/nophoto.jpg'; ?>" alt=""></a>
+    <?php } ?>
+
+                            <div class="project-bottom-details">
+                                <a href="home.php?iid=<?php echo $idea['ideathread_id']; ?>" class="recent-project-title" title="<?php echo $title; ?>"><?php echo $short_title; ?></a>
+                                <span class="project-rating"><?php echo calculateRating($idea['ideathread_id']); ?></span>
+                            </div> <!-- project-bottom-details -->
+
+                            <div class="project-author"><?php echo TimeAgo(date('Y-m-d', strtotime($idea['created_on']))); ?> by <a href="user.php?uid=<?php echo $idea['created_by']; ?>"><?php echo $user['display_name']; ?></a></div>
+
+
+                        </div>
+                            <?php }
+                            }
+
+
+
                             else if($users){
-                               
+
                                 foreach ($users as $user) {
                                     # code...
                                     echo '<div style="width:100%; height:200px;">
 
                         <div class="left" style="width:250px; float:left;">
                             <div class="user-photo">';?>
-                            
+
                                 <?php
                                 if (empty($user['photo'])) {
                                     echo '<img src="uploads/avatars/nophoto.jpg" style="width:200px;" alt="">';
@@ -86,6 +132,7 @@ if (empty($_SESSION['logged_in']))
                                 <ul class="user-info-left">
                                 <li><div class="content-title" style="font-size:30px;"><a href="user.php?uid=<?php echo $user['user_id']; ?>" style="text-decoration:none; color:black;"><?php echo $user['display_name'] ?></a></div></li>
                                 <li><h2><?php echo $user['location'] ?></h2></li>
+                                <li><h2><?php echo $user['email'] ?></h2></li>
                                 </ul>
                             </div>
                         </div></div>

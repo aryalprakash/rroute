@@ -10,8 +10,8 @@ global $project_exists;
 
 $source_details = parse_url($source);
 
-if ($source_details["host"]) {
-    if ($source_details["host"] == 'host') {
+if ($source_details['host']) {
+    if ($source_details['host'] == 'host') {
         if ($source_details['path'] == '/home.php') {
             parse_str($source_details['query'], $output);
             if ($output['pid']) {
