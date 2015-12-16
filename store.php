@@ -19,7 +19,7 @@ if (empty($_SESSION['logged_in']))
 <form action="" method="post">
 
 <div class="store-search">
-
+    <div class ="content-titles">My Store</div>
 <div class="search-category"><label>Category: </label>
 <select name="project_category">
 <option value="-1">Any</option>
@@ -86,7 +86,7 @@ foreach ($categories as $ix=>$cat) {
  </form>
 
 <div class="content-block">
-<div class="content-title">Store</div>
+
 
 <?php $projects = getAllRecentProjectsWithFilter($_POST);
 
