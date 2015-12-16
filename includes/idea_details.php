@@ -1,5 +1,4 @@
-
-<?php include_once ('config.php');
+<?php include_once('config.php');
 $idea = getIdeaById(intval($_GET['iid']));
 $title = $idea['ideathread_title'];
 $description = $idea['description'];
@@ -11,13 +10,13 @@ global $project_exists;
 
 $source_details = parse_url($source);
 
-if($source_details["host"]){
+if ($source_details["host"]) {
     if ($source_details["host"] == 'host') {
         if ($source_details['path'] == '/home.php') {
             parse_str($source_details['query'], $output);
             if ($output['pid']) {
                 $project_exists = true;
-                $project_id =$output['pid'];
+                $project_id = $output['pid'];
             }
         } else {
             $project_exists = false;
@@ -25,7 +24,7 @@ if($source_details["host"]){
     } else {
         $project_exists = false;
     }
-}else {
+} else {
     $project_exists = false;
 }
 
@@ -149,18 +148,34 @@ else
 
 
     <a href="#" class="project-action-btn" id="report_project" data-id="<?php echo $ideathread_id; ?>">Report</a>
-    <ul id ="h">
-    <a href="" class="project-action-btn" id="share" data-id="">
-        <img src="<?php echo SITE_URL; ?>/images/shareicon.png" width="30" height="20" align="center"/></a>
-
-        <a class="project-action-btns" href="http://www.facebook.com/sharer.php?u=<?php echo SITE_URL.'/home.php?iid='.$ideathread_id; ?>" target="_blank" title="Click to share"><img src="./images/icons/facebook.png" width="40"height="40"></a>
-    <a class="project-action-btns" href="https://plus.google.com/share?url=<?php echo SITE_URL.'/home.php?iid='.$ideathread_id; ?>" target="_blank" title="Click to share"><img src="./images/icons/gplus.png" width="40" height="40"></a>
-    <a class="project-action-btns" href="http://twitter.com/share?text=Rangeenroute&url=<?php echo SITE_URL.'/home.php?iid='.$ideathread_id; ?>" target="_blank" title="Click to share"><img src="./images/icons/twitter.png" width="40" height="40"></a>
-
+    <ul id="h">
+        <a href="" class="project-action-btn" id="share" data-id="">
+            <img src="<?php echo SITE_URL; ?>/images/shareicon.png" width="30" height="20" align="center"/></a>
+        <a class="project-action-btns"
+           href="http://www.facebook.com/sharer.php?u=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>"
+           target="_blank" title="Click to share"><img src="./images/icons/facebook.png" width="40" height="40"
+                                                       class="img-circle"></a>
+        <a class="project-action-btns"
+           href="https://plus.google.com/share?url=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>"
+           target="_blank" title="Click to share"><img src="./images/icons/gplus.png" width="40" height="40"></a>
+        <a class="project-action-btns"
+           href="http://twitter.com/share?text=Rangeenroute&url=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>"
+           target="_blank" title="Click to share"><img src="./images/icons/twitter.png" width="40" height="40"></a>
+        <a class="project-action-btns"
+           href="http://www.linkedin.com/shareArticle?mini=true&url=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>"
+           target="_blank" title="Click to share"><img src="./images/icons/linkedin.png" width="40" height="40"></a>
+        <a class="project-action-btns"
+           href="http://reddit.com/submit?url=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>&title=<?php echo $title; ?>"
+           target="_blank" title="Click to share"><img src="./images/icons/reddit.png" width="40"
+                                                       height="40"></a>
+        <a class="project-action-btns"
+           href="mailto:?Subject=<?php echo $title;?>&Body=<?php echo substr ($description,0,50).' for more visit. '.SITE_URL . '/home.php?iid=' . $ideathread_id;
+                                ?>"
+           title="Click to share"><img src="./images/icons/email.png" width="40"
+                                       height="40"></a>
     </ul>
 
 </div>
-
 
 
 <div class="comment-area">
