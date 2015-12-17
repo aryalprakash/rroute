@@ -167,13 +167,83 @@
 .pagination-right {
     text-align: right
 }
-/* added for sliding social menu */
-.project-action-btns{
-    display: none;
-    padding: 5px;
+/*!* added for sliding social menu *!*/
+/*.project-action-btns{*/
+    /*display: none;*/
+    /*padding: 5px;*/
 
-}
+/*}*/
 .project-action-btn{
     margin-bottom: 3px;
 
+}
+
+/* for route search fields*/
+.route-area div ul{
+    margin-left:5px;
+}
+
+.route-area div ul >li{
+    margin-top: 5px;
+    list-style-type: none;
+    border-bottom: dotted 1px black;
+    height: 20px;
+    width: 270px;
+}
+
+#route-result li:hover{
+    background: #E2E7ED;
+    height: 20px;
+}
+.route-area > a{
+    text-decoration: none;
+    font-size: 18px;
+}
+/* route search fields ends*/
+/*for verticla divider between search and router name*/
+.divider{
+    border-right: 1px solid #cfc7c0;
+}
+
+.active{
+    border-style:solid;
+    border-width:1px;
+    border-color:black;
+}
+
+.click-user{
+    cursor: pointer;
+}
+
+.unroute{
+    border: 2px solid #FF4F00;
+    color: red;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    font-size: 11px;
+    padding: 1px;
+    font-weight: 600;
+    text-align: center;
+    float: left;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.routed-name{
+ font-weight: 600;
+    margin-top: 2px;
+}
+
+.routed-users li{
+    margin-bottom: 8px;
+}
+.routed-users a{
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 10px;
+}
+
+.route-area{
+    height: 100px;
 }

@@ -181,29 +181,29 @@ $(document).ready(function () {
 
 
     /*route project*/
-    $("#route_project").click(function () {
-        
-        $('.route-area').slideDown('slow');
-        
-        var project_id = $(this).attr('data-id');
-        $.ajax({
-            type: 'POST',
-            url: "includes/ajaxDispatcher.php",
-            data: {project_id: project_id, dispatcher: 'route-project'},
-            error: function (req, text, error) {
-                alert('Error AJAX: ' + text + ' | ' + error);
-            },
-            success: function (data) {
-                if (data['result'] == 'OK') {
-                    $('#route_project').css('display', 'none');
-                    $('#routed_project').css('display', 'block');
-                    $('#routed_project').css('opacity', '0.6');
-                }
-            },
-            dataType: "json"
-        });
-        return false;
-    });
+    //$("#route_project").click(function () {
+    //
+    //    $('.route-area').slideDown('slow');
+    //
+    //    var project_id = $(this).attr('data-id');
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: "includes/ajaxDispatcher.php",
+    //        data: {project_id: project_id, dispatcher: 'route-project'},
+    //        error: function (req, text, error) {
+    //            alert('Error AJAX: ' + text + ' | ' + error);
+    //        },
+    //        success: function (data) {
+    //            if (data['result'] == 'OK') {
+    //                $('#route_project').css('display', 'none');
+    //                $('#routed_project').css('display', 'block');
+    //                $('#routed_project').css('opacity', '0.6');
+    //            }
+    //        },
+    //        dataType: "json"
+    //    });
+    //    return false;
+    //});
     /*end route project*/
 
 
@@ -412,7 +412,7 @@ $(document).ready(function () {
         $(".comment-area p").remove();
         $('.comment-idea-textarea').css('display', 'block');
         $('#add-comment-btn').css('display', 'block');
-        $(".comment-area").slideDown("slow");
+        $(".comment-area").toggle("slow");
         
         return false;
     });
@@ -563,8 +563,10 @@ $(document).ready(function () {
         $('.rate-area').css('display', 'none');
         $('.likes-area').css('display', 'none');
         $('.comment-area').css('display', 'none');
+        $('.route-area').css('display', 'none');
+        $('.share-area').css('display', 'none');
 
-        $(".report-area").slideDown("slow");
+        $(".report-area").toggle("slow");
 
         return false;
     });
@@ -1223,8 +1225,6 @@ $(function () {
     });
 
 });
-
-
 
 function deleteComment(comment_id) {
     //

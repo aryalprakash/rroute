@@ -120,13 +120,163 @@ $('.allNotifications').click(function(){
 });
 
 //for sliding social sharing icons
-    $( "#h" ).hover(function () {
-        if ( $( ".project-action-btns" ).is( ":hidden" ) ) {
-            $( ".project-action-btns" ).toggle( "slow" );
-        } else {
-            $( ".project-action-btns" ).hide();
-        }
+//    $( "#h" ).hover(function () {
+//        if ( $( ".project-action-btns" ).is( ":hidden" ) ) {
+//            $( ".project-action-btns" ).toggle( "slow" );
+//        } else {
+//            $( ".project-action-btns" ).hide();
+//        }
+//    });
+////
+
+
+    /*Route_project */
+    $(".route_project").click(function () {
+        $('.rate-area').css('display', 'none');
+        $('.likes-area').css('display', 'none');
+        $('.comment-area').css('display', 'none');
+        $('.report-area').css('display', 'none');
+        $('.share-area').css('display', 'none');
+
+        $(".route-area").slideDown("slow");
+
+        return false;
     });
+
+    //share project
+    $("#share_project").click(function () {
+        $('.rate-area').css('display', 'none');
+        $('.likes-area').css('display', 'none');
+        $('.comment-area').css('display', 'none');
+        $('.report-area').css('display', 'none');
+        $('.route-area').css('display', 'none');
+
+        $(".share-area").toggle("slow");
+
+        return false;
+    });
+    //for active class
+    $('#route_project,#share_project,#comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').on('click',function(){
+
+        //if ( $( "#route_project" ).hasClass( "active" ) ) {
+            $('#route_project,#share_project,#comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').removeClass('active');
+        //} else {
+            $(this).addClass('active');
+       // }
+
+
+    });
+    //end share project
+
+   //tooltip dekhaune
+
+    $('.showtooltipRate').mouseover(function () {
+        $('.showtooltipRate').tooltip({
+            items: ".showtooltipRate",
+            content: "Not applicable action because there is no project related to this IdeaThread in Rangeenroute"
+        });
+        $('.showtooltipRate').tooltip("open");
+    });
+
+    $('.showtooltipRoute').mouseover(function () {
+        $('.showtooltipRoute').tooltip({
+            items: ".showtooltipRoute",
+            content: "Not applicable action because there is no project related to this IdeaThread in Rangeenroute"
+        });
+        $('.showtooltipRoute').tooltip("open");
+    });
+
+    $('.showRoute').mouseover(function () {
+        $('.showRoute').tooltip({
+            items: ".showRoute",
+            content: "You will be directed to the Project page of this IdeaThread"
+        });
+        $('.showRoute').tooltip("open");
+    });
+
+
+    $('.showRate').mouseover(function () {
+        $('.showRate').tooltip({
+            items: ".showRate",
+            content: "You will be directed to the Project page of this IdeaThread"
+        });
+        $('.showRate').tooltip("open");
+    });
+
+
+
+
+
+    //route project ko
+
+
+    function search(){
+//                console.log('yaha aayo');
+        var title=$("#route-search").val();
+
+        if(title!=""){
+//                console.log(title);
+            $("#route-result").html("<li>searching</li>");
+            $.ajax({
+                type:"post",
+                url:"searchuser.php",
+                data:"title="+title,
+                success:function(data){
+//                        console.log(data);
+                    $("#route-result").html(data);
+                    //$("#route-result").html('<li class="click-user">'+data+'</li>');
+//                        $("#route-search").val("");
+                }
+            });
+        }
+
+    }
+
+
+    $("#route-button").click(function(){
+        search();
+    });
+
+    $('#route-search').keyup(function(e) {
+        // if(e.keyCode == 13) {
+        search();
+        //}
+    });
+
+    $('body').on('click','.click-user', function(){
+        $.ajax({
+            type: "post",
+            url: "includes/ajaxDispatcher.php",
+            data: {sent_to: $(this).attr("data-id"), project_id: $('.route_project').attr("data-id"), dispatcher: 'route-this-project'},
+            error: function (req, text, error) {
+                alert('Error AJAX: ' + text + ' | ' + error);
+            },
+            success:function(data){
+                $(".routed-users").append('<div class="routed-users-list" data-id="'+data.id+'"><span class="unroute" data-id="'+data.id+'">X</span><li class="routed-name">'+data.user+'</li></div>')
+            },
+            dataType: "json"
+        })
+    });
+
+    $('body').on('click','.unroute', function(){
+        $.ajax({
+            type: "post",
+            url: "includes/ajaxDispatcher.php",
+            data: {router_id: $(this).attr("data-id"), dispatcher: 'unroute-this-user'},
+            error: function (req, text, error) {
+                alert('Error AJAX: ' + text + ' | ' + error);
+            },
+            success:function(data){
+                if(data.result == 'OK') {
+                    $(".routed-users").find("[data-id="+data.router_id+"]").remove();
+                }
+            },
+            dataType: "json"
+        })
+    });
+
+
+
 
 
 

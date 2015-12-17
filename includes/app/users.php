@@ -229,6 +229,7 @@ function getRoutersForUser($routed_by, $search_str = '') {
     return $db_con->sql2array($query);
 }
 
+
 function getPrivacySettings($user_id) {
     global $db_con;
 

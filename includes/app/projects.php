@@ -369,14 +369,23 @@ function checkRoutedProject($project_id, $user_id) {
     return false;
 }
 
-function AddProjectRouter($project_id, $routed_by) {
+function getRoutersForProject($project_id, $user_id){
     global $db_con;
 
-    $insert = "INSERT INTO `routed_projects`(`project_id`, `routed_by`)
-		VALUES (" . $db_con->escape($project_id) . ", " . $db_con->escape($routed_by) . ")";
+    $res = "SELECT `routed_to`, `router_id` FROM `routed_projects` WHERE `project_id` = ". $project_id. " AND `routed_by` = ".$user_id;
+
+//    $q = 'SELECT * FROM `comments` WHERE `project_id` = ' . $project_id;
+//    print_r($db_con->sql2array($res));
+    return $db_con->sql2array($res);
+}
+
+function AddProjectRouter($project_id, $routed_by, $routed_to) {
+    global $db_con;
+
+    $insert = "INSERT INTO `routed_projects`(`project_id`, `routed_by`, `routed_to`)
+		VALUES (" . $db_con->escape($project_id) . ", " . $db_con->escape($routed_by) . ", " . $db_con->escape($routed_to) .")";
 
     $db_con->query($insert);
-
     return $db_con->insert_id();
 }
 
@@ -385,6 +394,14 @@ function RemoveProjectRouter($project_id, $routed_by) {
 
     $q = "DELETE FROM `routed_projects` WHERE `project_id` = " . $project_id . " AND `routed_by` = " . $routed_by;
 
+    $res = $db_con->query($q);
+
+    return $res;
+}
+
+function RemoveRouterId($router_id){
+    global $db_con;
+    $q ="DELETE FROM `routed_projects` WHERE `router_id` = ".$router_id ;
     $res = $db_con->query($q);
 
     return $res;

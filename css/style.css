@@ -480,12 +480,19 @@ hr.delimiter.standrt { margin-top: 15px; }
 .report-area .project-action-btn { float: left; margin-left: 0 !important; padding-left: 10px !important; padding-right: 10px !important; }
 .content-block .report-area label { width: 250px;}
 .report-message { display: none; }
+/*added for share and route button */
+.route-area { width: 598px; float: left; margin-top: 10px; display: none; }
+.route-area .project-action-btn { float: left; margin-left: 0 !important; padding-left: 10px !important; padding-right: 10px !important; }
+.share-area { width: 598px; float:right; margin-top: 10px; display: none; }
+.share-area .project-action-btns { float: right; margin-left: 0 !important; padding-left: 10px !important; padding-right: 10px !important; }
+/*2015-12-17*/
 .comment-area .delete { float: right; width: 21px; height: 21px; background: url('../images/icons/delete.png'); margin-right: 10px; cursor: pointer; }
 
 .comment-date { float: left; margin-top: 5px; margin-left: 10px; font-size: 11px; }
 .comment-area .message-author { float: left; min-height: 45px; width: 170px; }
 
-.route-area { width: 600px; padding: 10px; margin-top: 10px; display: none; float: left; border: 1px solid #d9dee4;}
+.share-area { width: 60px; padding: 10px; margin-top: 0px; display: none; float: left; border: 1px solid #d9dee4;}
+.route-area,.report-area,.comment-area { width: 598px; padding: 10px; margin-top: 10px; display: none; float: left; border: 1px solid #d9dee4;}
 .route-area input[type="text"] {width: 250px; height: 33px; padding: 0 15px 0 15px; border: #d6dbe2 solid 1px; background: #e0e5eb; border-radius: 3px; }
 .route-area .routers-set { overflow-y: auto; max-height: 80px; margin-top: 10px; }
 .route-area table { }

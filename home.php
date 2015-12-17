@@ -240,17 +240,20 @@ require_once(DIR_APP . 'users.php');
                                data-id="<?php echo $project['project_id'] ?>">Rate</a>
                         <?php } ?>
 
-                        <?php if (checkRoutedProject($project['project_id'], $_SESSION['uid'])) { ?>
-                            <a href="#" class="project-action-btn" id="routed_project"
-                               data-id="<?php echo $project['project_id'] ?>" title="Unroute">Routed</a>
-                            <a href="#" class="project-action-btn" id="route_project"
-                               data-id="<?php echo $project['project_id'] ?>" style="display: none;">Route</a>
-                        <?php } else { ?>
-                            <a href="#" class="project-action-btn" id="routed_project"
+
+<!--                        --><?php //if (checkRoutedProject($project['project_id'], $_SESSION['uid'])) { ?>
+<!--                            <a href="#" class="project-action-btn route_project" id="routed_project"-->
+<!--                               data-id="--><?php //echo $project['project_id'] ?><!--" title="Unroute">Routed</a>-->
+<!--                            <a href="#" class="project-action-btn route_project" id="route_project"-->
+<!--                               data-id="--><?php //echo $project['project_id'] ?><!--" style="display: none;">Route</a>-->
+<!--                        --><?php //} else { ?>
+
+                            <a href="#" class="project-action-btn route_project" id="routed_project"
                                data-id="<?php echo $project['project_id'] ?>" style="display: none;" title="Unroute">Routed</a>
-                            <a href="#" class="project-action-btn" id="route_project"
+                            <a href="#" class="project-action-btn route_project" id="route_project"
                                data-id="<?php echo $project['project_id'] ?>">Route</a>
-                        <?php } ?>
+
+<!--                        --><?php //} ?>
 
                         <a href="#" class="project-action-btn" id="comment_project"
                            data-id="<?php echo $project['project_id'] ?>">Comment
@@ -399,33 +402,26 @@ require_once(DIR_APP . 'users.php');
 
                     <!-- route -->
                     <div class="route-area">
-                        <input type="text" id="searchInput" placeholder="Type To Filter">
+                        <div  style="width:296px;float:left;">
+                            <input type="text" id="route-search" placeholder="Type Your Router Name"/>
+                            <input type="hidden" id="route-button" value="Search" />
+                            <ul id="route-result"></ul>
+                        </div>
 
-                        <div class="routers-set">
-                            <?php $routers = getRoutersForUser($_SESSION['uid'], '');
-                            if ($routers) {
-                                ?>
+                        <div style="width:296px;float:right;margin-left:-20px;">
+                            <ul class="routed-users">
+                                <?php $routers = getRoutersForProject($project['project_id'], $_SESSION['uid']);
+                                if ($routers) {
+                                    foreach ($routers as $router) {
+                                        echo '<div class="routed-users-list" data-id="'.$router['router_id'].'"><span class="unroute" data-id="'.$router['router_id'].'">X</span><a href="'.SITE_URL.'/user.php?uid='.$router['routed_to'].'"><li class="routed-name">'.getUserNameById($router['routed_to']).'</li></a></div>';
+                                    }
+                                    }
+//                                    ?>
+                            </ul>
+                        </div>
+<!--                        <div class="routers-set">-->
 
-                                <table>
-                                    <tbody id="fbody">
-                                    <?php foreach ($routers as $router) {
-                                        $u = getUserData($router['user_id']);
-                                        ?>
-                                        <tr>
-                                            <td><input type="checkbox" class="router-item"
-                                                       data-id="<?php echo $u['user_id']; ?>"
-                                                       id="router_<?php echo $u['user_id']; ?>"
-                                                       data-project="<?php echo $project['project_id']; ?>" <?php if (checkSuggestion($project['project_id'], $u['user_id'], $_SESSION['uid'])) echo 'checked'; ?>>
-                                            </td>
-                                            <td><label
-                                                    for="router_<?php echo $u['user_id']; ?>"><?php echo $u['email'] . ' ' . $u['last_name'] ?></label>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
-                            <?php } ?>
-                        </div> <!-- routers-set -->
+<!--                        </div> <!-- routers-set -->
                     </div> <!-- route-area -->
 
 
