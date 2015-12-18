@@ -79,7 +79,7 @@ echo '<a href="user.php?uid='.$user['user_id'].'"><img src="uploads/avatars/noph
 		<hr class="ninty"/>
 		<div class="project-review-type">Rating: <?php echo calculateRating($project['project_id']); ?></div>
 		<hr class="ninty"/>
-		<div class="project-review-type">Ranking: <?php echo $rank = getRankForProject($project['project_id']); ?></div>
+<!--		<div class="project-review-type">Ranking: --><?php//// echo $rank = getRankForProject($project['project_id']); ?><!--</div>-->
 	</div>
 	<div class="one-third left" style="width: 31%; padding: 10px;">
 		<div class="project-review-type">Likes: <?php echo getLikesCount($project['project_id']); ?> </div>
@@ -190,9 +190,9 @@ echo '<img src="'.SITE_URL.'/uploads/images/'.$image['file_name'].'" alt="">';
 
 <div class="content-block">
 <div class="content-title">Financial Plan</div>
-<div class="form-item no-height"><p>Startup Amount: $<?php echo $project[startup_amount]; ?></p></div>
-<div class="form-item no-height"><p>Rewards: <?php echo $project[reward]; ?></p></div>
-<div class="form-item no-height"><p>Financial Model: <?php echo $project[about_amount]; ?></p></div>
+<div class="form-item no-height"><p>Startup Amount: $<?php echo $project['startup_amount']; ?></p></div>
+<div class="form-item no-height"><p>Rewards: <?php echo $project['reward']; ?></p></div>
+<div class="form-item no-height"><p>Financial Model: <?php echo $project['about_amount']; ?></p></div>
 </div>
 
 

@@ -195,8 +195,7 @@ function updateProject($data, $id, $step) {
 function getProjectById($project_id) {
     global $db_con;
     $pid= $project_id;
-    $res = $db_con->query("SELECT * FROM `projects` WHERE (`project_id` = $pid) LIMIT 1");
-
+    $res = $db_con->query("SELECT * FROM `projects` WHERE `project_id` =".$pid." LIMIT 1");
     return $db_con->fetch_array($res);
 }
 
@@ -330,10 +329,10 @@ function searchUser($search){
 }
 
 //function getAllRecentProjects($id,$limit = '')
-function getAllRecentProjects($id) {
+function getAllRecentProjects() {
     global $db_con;
-    $uid = $id;
-    $query = 'SELECT `project_id`, `project_title`, `created_on`, `created_by` FROM `projects` WHERE (`status`=1,`created_by` =$uid) ORDER BY `project_id` DESC';
+//    $uid = $id;
+    $query = 'SELECT `project_id`, `project_title`, `created_on`, `created_by` FROM `projects` WHERE (`status`= 1) ORDER BY `project_id` DESC';
 
     return $db_con->sql2array($query);
 }
@@ -382,11 +381,24 @@ function getRoutersForProject($project_id, $user_id){
 function AddProjectRouter($project_id, $routed_by, $routed_to) {
     global $db_con;
 
-    $insert = "INSERT INTO `routed_projects`(`project_id`, `routed_by`, `routed_to`)
-		VALUES (" . $db_con->escape($project_id) . ", " . $db_con->escape($routed_by) . ", " . $db_con->escape($routed_to) .")";
+//    $insert = "INSERT INTO `routed_projects`(`project_id`, `routed_by`, `routed_to`)
+//		SELECT * FROM (SELECT " . $db_con->escape($project_id) . ", " . $db_con->escape($routed_by) . ", " . $db_con->escape($routed_to) .") AS tmp
+//		WHERE NOT EXISTS ( SELECT `project_id`, `routed_by`, `routed_to` FROM `routed_projects` WHERE `routed_by` =" . $db_con->escape($routed_by) ." AND `routed_to` = ". $db_con->escape($routed_to)." )";
+//
+//    $db_con->query($insert);
+//    return $db_con->insert_id();
+//
 
-    $db_con->query($insert);
-    return $db_con->insert_id();
+    $qry = 'SELECT `project_id`, `routed_by`, `routed_to` FROM `routed_projects` WHERE `project_id` =' .$db_con->escape($project_id) .' AND `routed_by` =' .$db_con->escape($routed_by). ' AND `routed_to` = ' .$db_con->escape($routed_to). '';
+    $res = $db_con->query($qry);
+    if($db_con->num_rows($res) == 0) {
+        $insert = 'INSERT INTO `routed_projects`(`project_id`, `routed_by`, `routed_to`) VALUES ('.$project_id.','.$routed_by.','.$routed_to.')';
+        $db_con->query($insert);
+        return $db_con->insert_id();
+    } else {
+
+        return '';
+    }
 }
 
 function RemoveProjectRouter($project_id, $routed_by) {
@@ -1004,16 +1016,15 @@ function getRankForProject($project_id) {
     while($projects = $db_con->fetch_object($res))            
         $objectsToRank[] = (object)$projects;
 
-            
    $ranker = new Ranker();
    $ranker
    ->useStrategy('competition')      // Use the dense ranking strategy
    ->orderBy('avr_rating')         // Property to base ranking on, Default is 'score'
    ->storeRankingIn('ranked')  // Default is 'ranking'
-   ->rank($objectsToRank);  
+   ->rank($objectsToRank);
 
-    //print_r($objectsToRank);
-   
+    print_r($objectsToRank);
+
    foreach($objectsToRank as $obj) {
        $id = $obj->project_id;
        if ($id == $project_id) {           

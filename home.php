@@ -146,13 +146,13 @@ require_once(DIR_APP . 'users.php');
                 }
 
 
-                $rank = getRankForProject($project['project_id']);
+//                $rank = getRankForProject($project['project_id']);
                 ?>
                 <?php if (!isset($_GET['iid'])){ ?>
                     <div class="home-project-info">
                         <p>Rating: <span><?php echo calculateRating($project['project_id']); ?></span></p>
 
-                        <p>Ranking: <span><?php echo $rank; ?></span></p>
+                        <p>Ranking: <span><?php // echo $rank; ?></span></p>
 
                         <p>Status: <span><?php echo $project['status']; ?></span></p>
 
@@ -276,37 +276,8 @@ require_once(DIR_APP . 'users.php');
                         <?php } ?>
                         <a href="#" class="project-action-btn" id="report_project"
                            data-id="<?php echo $project['project_id'] ?>">Report</a>
-                        <ul id="h">
-                            <a href="" class="project-action-btn" id="share" data-id="">
-                                <img src="<?php echo SITE_URL; ?>/images/shareicon.png" width="30" height="20"
-                                     align="center"/></a>
-                            <a class="project-action-btns"
-                               href="http://www.facebook.com/sharer.php?u=<?php echo SITE_URL . '/home.php?iid=' . $project['project_id']; ?>"
-                               target="_blank" title="Click to share"><img src="./images/icons/facebook.png" width="40"
-                                                                           height="40"></a>
-                            <a class="project-action-btns"
-                               href="https://plus.google.com/share?url=<?php echo SITE_URL . '/home.php?iid=' . $project['project_id']; ?>"
-                               target="_blank" title="Click to share"><img src="./images/icons/gplus.png" width="40"
-                                                                           height="40"></a>
-                            <a class="project-action-btns"
-                               href="http://twitter.com/share?text=Rangeenroute&url=<?php echo SITE_URL . '/home.php?iid=' . $project['project_id']; ?>"
-                               target="_blank" title="Click to share"><img src="./images/icons/twitter.png" width="40"
-                                                                           height="40"></a>
-                            <a class="project-action-btns"
-                               href="http://www.linkedin.com/shareArticle?mini=true&url=<?php echo SITE_URL . '/home.php?iid=' . $project['project_id']; ?>"
-                               target="_blank" title="Click to share"><img src="./images/icons/linkedin.png" width="40"
-                                                                           height="40"></a>
-                            <a class="project-action-btns"
-                               href="http://reddit.com/submit?url=<?php echo SITE_URL . '/home.php?iid=' . $project['project_id']; ?>&title=<?php echo $project['project_title']; ?>"
-                               target="_blank" title="Click to share"><img src="./images/icons/reddit.png" width="40"
-                                                                           height="40"></a>
-                            <a class="project-action-btns"
-                               href="mailto:?Subject=<?php echo $project['project_title'];?> &Body=<?php echo substr($text,0,50).' for more visit. '.SITE_URL . '/home.php?iid=' . $project['project_id']; ?>"
-                                title="Click to share"><img src="./images/icons/email.png" width="40"
-                                                                           height="40"></a>
-
-
-                        </ul>
+                        <a href="" class="project-action-btn " id="homeshare_project" data-id="">
+                            <img src="<?php echo SITE_URL; ?>/images/shareicon.png" width="30" height="20" align="center"/></a>
 
 
                     </div>
@@ -403,7 +374,7 @@ require_once(DIR_APP . 'users.php');
                     <!-- route -->
                     <div class="route-area">
                         <div  style="width:296px;float:left;">
-                            <input type="text" id="route-search" placeholder="Type Your Router Name"/>
+                            <input type="text" id="route-search" placeholder="Type Your Router Name" data-id="<?php echo $_SESSION['uid']; ?>"/>
                             <input type="hidden" id="route-button" value="Search" />
                             <ul id="route-result"></ul>
                         </div>
@@ -450,6 +421,31 @@ require_once(DIR_APP . 'users.php');
                     <?php
                 }
                 } ?>
+                <!-- homeshare area  -->
+                <div class="homeshare-area active" >
+                    <a class="project-action-btns"
+                       href="http://www.facebook.com/sharer.php?u=<?php echo SITE_URL . '/home.php?pid=' . $project['project_id']; ?>"
+                       target="_blank" title="Click to share"><img src="./images/icons/facebook.png" width="40" height="40"
+                                                                   class="img-circle"></a>
+                    <a class="project-action-btns"
+                       href="https://plus.google.com/share?url=<?php echo SITE_URL . '/home.php?pid=' . $project['project_id']; ?>"
+                       target="_blank" title="Click to share"><img src="./images/icons/gplus.png" width="40" height="40"></a>
+                    <a class="project-action-btns"
+                       href="http://twitter.com/share?text=<?php echo substr($project['project_title'],0,50); ?>&url=<?php echo SITE_URL . '/home.php?pid=' . $project['project_id']; ?>"
+                       target="_blank" title="Click to share"><img src="./images/icons/twitter.png" width="40" height="40"></a>
+                    <a class="project-action-btns"
+                       href="http://www.linkedin.com/shareArticle?mini=true&url=<?php echo SITE_URL . '/home.php?pid=' .$project['project_id']; ?>"
+                       target="_blank" title="Click to share"><img src="./images/icons/linkedin.png" width="40" height="40"></a>
+                    <a class="project-action-btns"
+                       href="http://reddit.com/submit?url=<?php echo SITE_URL . '/home.php?pid=' .$project['project_id']; ?>&title=<?php echo $project['project_title']; ?>"
+                       target="_blank" title="Click to share"><img src="./images/icons/reddit.png" width="40"
+                                                                   height="40"></a>
+                    <a class="project-action-btns"
+                       href="mailto:?Subject=<?php echo $project['project_title'];?>&Body=<?php echo substr ($text,0,50).' for more visit. '.SITE_URL . '/home.php?pid=' . $project['project_id'];;
+                       ?>"
+                       title="Click to share"><img src="./images/icons/email.png" width="40"
+                                                   height="40"></a>
+                </div>
             </div>
 
             <div id="home-tabs">

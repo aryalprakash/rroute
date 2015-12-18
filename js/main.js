@@ -149,7 +149,7 @@ $(document).ready(function () {
         $('.comment-area').css('display', 'none');
         $('.report-area').css('display', 'none');
         $('.route-area').css('display', 'none');
-        
+        $('.homeshare-area').css('display', 'none');
         
         return false;
     });
@@ -285,6 +285,8 @@ $(document).ready(function () {
                     $('.comment-area').css('display', 'none');
                     $('.report-area').css('display', 'none');
                     $('.route-area').css('display', 'none');
+                    $('.homeshare-area').css('display', 'none');
+                    $('.share-area').css('display', 'none');
 
                   //  $('.likes-area').slideDown("slow");
                   //  $(".likes-area").delay(1500).slideUp('slow');
@@ -322,6 +324,8 @@ $(document).ready(function () {
                     $('.comment-area').css('display', 'none');
                     $('.report-area').css('display', 'none');
                     $('.route-area').css('display', 'none');
+                    $('.share-area').css('display', 'none');
+                    $('.homeshare-area').css('display', 'none');
 
                   //  $('.likes-area').slideDown("slow");
                   //  $(".likes-area").delay(1500).slideUp('slow');
@@ -355,6 +359,8 @@ $(document).ready(function () {
                     $('.rate-area').css('display', 'none');
                     $('.comment-area').css('display', 'none');
                     $('.report-area').css('display', 'none');
+                    $('.homeshare-area').css('display', 'none');
+                    $('.share-area').css('display', 'none');
 
                   //  $('.likes-area').slideDown("slow");
                    // $(".likes-area").delay(1500).slideUp('slow');
@@ -389,6 +395,8 @@ $(document).ready(function () {
                     $('.rate-area').css('display', 'none');
                     $('.comment-area').css('display', 'none');
                     $('.report-area').css('display', 'none');
+                    $('.homeshare-area').css('display', 'none');
+                    $('.share-area').css('display', 'none');
 
                   //  $('.likes-area').slideDown("slow");
                    // $(".likes-area").delay(1500).slideUp('slow');
@@ -409,6 +417,8 @@ $(document).ready(function () {
         $('.likes-area').css('display', 'none');
         $('.report-area').css('display', 'none');
         $('.route-area').css('display', 'none');
+        $('.homeshare-area').css('display', 'none');
+        $('.share-area').css('display', 'none');
         $(".comment-area p").remove();
         $('.comment-idea-textarea').css('display', 'block');
         $('#add-comment-btn').css('display', 'block');
@@ -565,7 +575,7 @@ $(document).ready(function () {
         $('.comment-area').css('display', 'none');
         $('.route-area').css('display', 'none');
         $('.share-area').css('display', 'none');
-
+        $('.homeshare-area').css('display', 'none');
         $(".report-area").toggle("slow");
 
         return false;

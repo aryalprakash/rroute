@@ -10,8 +10,7 @@ if (isset($_GET['uid']))
 else
     $uid = $_SESSION['uid'];
 
-$projects = getAllRecentProjects($uid);
-
+$projects = getAllRecentProjects();
 
 if ($projects) {
 

@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    var SITE_URL = "<?php echo SITE_URL; ?>";
 $("#rewardType" )
   .change(function () {
     var str = "";
@@ -137,13 +138,14 @@ $('.allNotifications').click(function(){
         $('.comment-area').css('display', 'none');
         $('.report-area').css('display', 'none');
         $('.share-area').css('display', 'none');
+        $('.homeshare-area').css('display', 'none');
 
         $(".route-area").slideDown("slow");
 
         return false;
     });
 
-    //share project
+    //share ideathread
     $("#share_project").click(function () {
         $('.rate-area').css('display', 'none');
         $('.likes-area').css('display', 'none');
@@ -155,8 +157,21 @@ $('.allNotifications').click(function(){
 
         return false;
     });
+
+    //share project
+    $("#homeshare_project").click(function () {
+        $('.rate-area').css('display', 'none');
+        $('.likes-area').css('display', 'none');
+        $('.comment-area').css('display', 'none');
+        $('.report-area').css('display', 'none');
+        $('.route-area').css('display', 'none');
+
+        $(".homeshare-area").toggle("slow");
+
+        return false;
+    });
     //for active class
-    $('#route_project,#share_project,#comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').on('click',function(){
+    $('#route_project,#homeshare_project,#share_project,#comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').on('click',function(){
 
         //if ( $( "#route_project" ).hasClass( "active" ) ) {
             $('#route_project,#share_project,#comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').removeClass('active');
@@ -210,36 +225,85 @@ $('.allNotifications').click(function(){
     //route project ko
 
 
-    function search(){
-//                console.log('yaha aayo');
-        var title=$("#route-search").val();
+//    function search(){
+////                console.log('yaha aayo');
+//        var title=$("#route-search").val();
+//
+//        if(title!=""){
+////                console.log(title);
+//            //$("#route-result").html("<li>searching</li>");
+//            $.ajax({
+//                type:"post",
+//                url:"searchuser.php",
+//                data:"title="+title,
+//                success:function(data){
+////                        console.log(data);
+//                    $("#route-result").html(data);
+//                    //$("#route-result").html('<li class="click-user">'+data+'</li>');
+////                        $("#route-search").val("");
+//                }
+//            });
+//        }else
+//        {
+//           // $("#route-result").html("<li>searching</li>");
+//            $.ajax({
+//                type:"post",
+//                url:"searchuser.php",
+//                data:"title="+title,
+//                success:function(data){
+////                        console.log(data);
+//                   // $("#route-result").html(data);
+//                    $("#route-result").html("<li>searching</li>");
+//                    //$("#route-result").html('<li class="click-user">'+data+'</li>');
+////                        $("#route-search").val("");
+//                }
+//            });
+//        }
+//
+//    }
 
-        if(title!=""){
+    function searchUserList() {
+//                console.log('yaha aayo');
+        var title = $("#route-search").val();
+        var user_id =$(this).attr("#data-id");
+        if (title != "") {
 //                console.log(title);
-            $("#route-result").html("<li>searching</li>");
+            //$("#route-result").html("<li>searching</li>");
             $.ajax({
-                type:"post",
-                url:"searchuser.php",
-                data:"title="+title,
-                success:function(data){
-//                        console.log(data);
+                type: "post",
+                url: "includes/ajaxDispatcher.php",
+                data: {title:title,user_id:user_id, dispatcher: 'search-route-user-lists'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+
                     $("#route-result").html(data);
                     //$("#route-result").html('<li class="click-user">'+data+'</li>');
 //                        $("#route-search").val("");
                 }
             });
         }
-
+        else
+        {$.ajax({
+                type:"post",
+                url:"searchuser.php",
+                data:"title="+title,
+                success:function(data){
+                    $("#route-result").html("");
+                }
+            });
+        }
     }
 
 
     $("#route-button").click(function(){
-        search();
+        searchUserList();
     });
 
     $('#route-search').keyup(function(e) {
         // if(e.keyCode == 13) {
-        search();
+        searchUserList();
         //}
     });
 
@@ -252,10 +316,14 @@ $('.allNotifications').click(function(){
                 alert('Error AJAX: ' + text + ' | ' + error);
             },
             success:function(data){
-                $(".routed-users").append('<div class="routed-users-list" data-id="'+data.id+'"><span class="unroute" data-id="'+data.id+'">X</span><li class="routed-name">'+data.user+'</li></div>')
-            },
+                if(data.result == 'OK') {
+                    $(".routed-users").prepend('<div class="routed-users-list" data-id="' + data.id + '"><span class="unroute" data-id="' + data.id + '">X</span><a href="user.php?uid=' + data.user_id + '"><li class="routed-name">' + data.user + '</li></a></div>')
+                }else{
+                    alert("You've already routed this user.");
+                }
+                },
             dataType: "json"
-        })
+        });
     });
 
     $('body').on('click','.unroute', function(){
@@ -272,7 +340,7 @@ $('.allNotifications').click(function(){
                 }
             },
             dataType: "json"
-        })
+        });
     });
 
 

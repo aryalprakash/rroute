@@ -444,6 +444,7 @@ switch ($action) {
         if (!empty($id)) {
             $responce['result'] = 'OK';
             $responce['id'] = $id;
+            $responce['user_id'] = $_POST['sent_to'];
             $responce['user'] = getUserNameById($_POST['sent_to']);
             addSuggestion($_POST['project_id'], $_POST['sent_to'], $_SESSION['uid']);
             $project_title = getProjectTitle($_POST['project_id']);
@@ -451,6 +452,8 @@ switch ($action) {
             $url = SITE_URL.'/home.php?pid='.$_POST['project_id'];
             $text = $author . ' suggested project ' . $project_title;
             addNotification($_POST['sent_to'], $text, $_SESSION['uid'], $url);
+        }else{
+            $responce['result'] = 'FALSE';
         }
 
         echo json_encode($responce);
@@ -465,6 +468,24 @@ switch ($action) {
         }
 
         echo json_encode($responce);
+        break;
+
+    case 'search-route-user-lists':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
+        $title=$_POST['title'];
+        $user_id=$_SESSION['uid'];
+        if( getUserNameBySearch($title,$user_id)){
+            $responce['result'] = 'OK';
+        }
+
+
+//        if(RemoveRouterId($_POST['router_id'])){
+//            $responce['result'] = 'OK';
+//            $responce['router_id'] = $_POST['router_id'];
+//        }
+
+       // echo json_encode($responce);
         break;
 
 }

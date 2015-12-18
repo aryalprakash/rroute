@@ -20,7 +20,6 @@ if (empty($_SESSION['logged_in']))
 <?php if (isset($_GET['pid'])) {
 	$id = intval($_GET['pid']);
 	$project = getProjectById($id);
-
 	if (!empty($project))
 	require (DIR_INCLUDE.'project_details.php');
 		else { ?>
