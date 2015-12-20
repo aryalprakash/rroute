@@ -490,7 +490,7 @@ function loadProjects($term) {
     $qstring = "SELECT `project_title`, `project_id` FROM `projects` WHERE `project_title` LIKE '%" . $term . "%' AND `created_by` = " . $_SESSION['uid'];
     $result = $db_con->query($qstring); //query the database for entries containing the term
 
-    while ($row = $db_con->fetch_array($result, MYSQL_ASSOC)) {//loop through the retrieved values
+    while ($row = $db_con->fetch_array($result)) {//loop through the retrieved values
         $row['value'] = $db_con->escape($row['project_title']);
         $row['id'] = (int) $row['project_id'];
         $row_set[] = $row; //build an array

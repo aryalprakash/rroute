@@ -446,11 +446,14 @@ function getNotifications($user_id) {
 }
 
 function getInteractions($user_id) {
-    global $db_con;
+  global $db_con;
 
-    $q = 'SELECT * FROM `interactions` WHERE `created_by` = ' . $user_id . ' ORDER BY `created_on` DESC';
-    
-    return $db_con->sql2array($q);
+
+
+        $q = 'SELECT * FROM `interactions` WHERE `created_by` = ' . $user_id . ' ORDER BY `created_on` DESC';
+
+        return $db_con->sql2array($q);
+
 }
 
 function getUserNameById($user_id) {

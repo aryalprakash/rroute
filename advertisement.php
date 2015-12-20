@@ -288,7 +288,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'pause') {
                                 </div>
                                 
                             </div><!-- ad-item -->
-                            <?
+                            <?php
                         
                     }
                     ?>
@@ -459,6 +459,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'pause') {
                     <?php
                 }
                 ?>
+
 
 
         </div>

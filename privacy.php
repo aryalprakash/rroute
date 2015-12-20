@@ -42,7 +42,7 @@ $privacy = getPrivacySettings($_SESSION['uid']);
 <hr class="delimiter standart">
 <div class="form-item"><input type="radio" name="privacy_type" value="2" id="custom_privacy"><label for="custom_privacy" class="radio-label">Custom Privacy Settings</label></div>
 <div class="form-item"><label class="privacy-label">Limit my activity to</label>
-<select name="limit_aphtority">
+<select name="limit_authority">
 <option value="1">Everyone</option>
 <option value="2">My routers only</option>
 <option value="3">My routers and their routers</option>
@@ -64,7 +64,7 @@ else { ?>
 <hr class="delimiter standart">
 <div class="form-item"><input type="radio" name="privacy_type" value="2" id="custom_privacy" <?php if ($privacy['selected_option'] == 2) echo 'checked'; ?>><label for="custom_privacy" class="radio-label">Custom Privacy Settings</label></div>
 <div class="form-item"><label class="privacy-label">Limit my activity to</label>
-<select name="limit_aphtority">
+<select name="limit_authority">
 <option value="1" <?php if ($privacy['limit_activity'] == 1) echo 'selected'; ?>>Everyone</option>
 <option value="2" <?php if ($privacy['limit_activity'] == 2) echo 'selected'; ?>>My routers only</option>
 <option value="3" <?php if ($privacy['limit_activity'] == 3) echo 'selected'; ?>>My routers and their routers</option>
