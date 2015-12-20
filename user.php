@@ -47,7 +47,7 @@ if (isset($_POST['add_foonote']))
                 <form action="" method="post" enctype="multipart/form-data">
 
                     <div class="content-block">
-                        <div class="content-title"><?php echo $user['display_name']; ?>
+                        <div class="content-title"><?php echo $user['display_name']; ?> <?php if ($user['verified']==True) { ?><img src="images/4.png" alt="" "><?php } ?>
                             <div class="add-router">
                                 <?php
                                 if (!$own_profile) {
@@ -80,7 +80,7 @@ if (isset($_POST['add_foonote']))
                                     echo '<img src='.SITE_URL.'/uploads/avatars/' . $user['photo'] .' alt="">';
                                 }
                                 ?>
-                                <div class="name-block"><?php echo $user['display_name']; ?></div>
+                                <div class="name-block"><a href="<?php SITE_URL.'/user.php?uid='.$user['user_id']; ?>"><?php echo ucwords($user['display_name']); ?></a></div>
                             </div>
                         </div>
 
