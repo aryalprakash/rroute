@@ -88,10 +88,10 @@ function updateUser($data) {
 
     if (!empty($_POST['photo'])) {
         if (!empty($_POST['photo_updated'])) {
-            if (copy('js/file-uploading/server/php/files/' . $_POST['photo'], 'uploads/avatars/' . $_POST['photo']) && copy('js/file-uploading/server/php/files/thumbnail/' . $_POST['photo'], 'uploads/avatars/thumbs/' . $_POST['photo'])) {
+            if (copy('/js/file-uploading/server/php/files/' . $_POST['photo'], 'uploads/avatars/' . $_POST['photo']) && copy('js/file-uploading/server/php/files/thumbnail/' . $_POST['photo'], 'uploads/avatars/thumbs/' . $_POST['photo'])) {
                 $photo = $_POST['photo'];
-                unlink('js/file-uploading/server/php/files/' . $_POST['photo']);
-                unlink('js/file-uploading/server/php/files/thumbnail/' . $_POST['photo']);
+                unlink('/js/file-uploading/server/php/files/' . $_POST['photo']);
+                unlink('/js/file-uploading/server/php/files/thumbnail/' . $_POST['photo']);
             } else
                 $photo = '';
         } else

@@ -43,7 +43,7 @@ switch ($action) {
             $project_title = getProjectTitle($_POST['project_id']);
             $sent_to = getProjectAuthor($_POST['project_id']);
             $author = getUserNameById($_POST['user_id']);
-            $url = SITE_URL.'/home.php?iid='.$_POST['project_id'];
+            $url = SITE_URL.'/home.php?pid='.$_POST['project_id'];
             $text = $author . ' rated project ' . $project_title;
             addNotification($sent_to, $text, $_POST['user_id'],$url);
             addInteraction($_SESSION['uid'], 'rate', $sent_to, 'project', $_POST['project_id']);

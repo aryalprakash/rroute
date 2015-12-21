@@ -179,7 +179,6 @@ $('.allNotifications').click(function(){
             $(this).addClass('active');
        // }
 
-
     });
     //end share project
 

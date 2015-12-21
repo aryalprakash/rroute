@@ -1038,7 +1038,8 @@ $(function () {
     'use strict';
     // Change this to the location of your server-side upload handler:
 
-    var url = 'https://www.rangeenroute.com/js/file-uploading/server/php/';
+   // var url = 'https://www.rangeenroute.com/js/file-uploading/server/php/';
+    var url = "<?php echo SITE_URL; ?>;"+'/js/file-uploading/server/php/';
     //var url =  'https://rangeen/js/file-uploading/server/php/';
 
     var base_url = 'https://rangeenroute.com/';

@@ -1500,8 +1500,8 @@ function calculateRegression($project_id, $time, $trend_value) {
     $sx = stats_standard_deviation($times);
     $sy = stats_standard_deviation($trends);
     
-    //$r = Corr($x, $y);//removed to check error can be uncomment later.
-    $r = 2;//random value need to remove
+    $r = Corr($sx, $sy);//removed to check error can be uncomment later.
+    //$r = 2;//random value need to remove
     $b = $r * ($sy / $sx);
     
     $a = $trend_value - $b * $time;
