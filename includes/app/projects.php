@@ -1023,7 +1023,7 @@ function getRankForProject($project_id) {
    ->storeRankingIn('ranked')  // Default is 'ranking'
    ->rank($objectsToRank);
 
-    print_r($objectsToRank);
+   // print_r($objectsToRank);
 
    foreach($objectsToRank as $obj) {
        $id = $obj->project_id;

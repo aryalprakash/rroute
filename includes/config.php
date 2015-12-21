@@ -2,7 +2,7 @@
 session_start();
 
 if (empty($_SERVER['REMOTE_ADDR']) || $_SERVER['REMOTE_ADDR'] == '127.0.0.1' || $_SERVER['REMOTE_ADDR'] == '::1') {
-	define('SITE_URL', 'http://localhost/github/rangeenroute');
+	define('SITE_URL', "http://localhost/github/rangeenroute");
 }
 else {
 	define('SITE_URL', 'https://www.rangeenroute.com');

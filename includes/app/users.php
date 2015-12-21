@@ -228,6 +228,16 @@ function getRoutersForUser($routed_by, $search_str = '') {
         
     return $db_con->sql2array($query);
 }
+function getRoutedByUser($user_id, $search_str = '') {
+    global $db_con;
+
+    if (empty($search_str))
+        $query = 'SELECT `routed_by` FROM `routers` WHERE `user_id` = ' . $user_id . ' AND `status` = 1 ORDER BY user_id';
+    else
+        $query = 'SELECT r.routed_by FROM routers as r, users as u WHERE r.router_id = u.router_id AND (u.first_name LIKE "%' . $db_con->escape($search_str) . '%" OR u.last_name LIKE "%' . $db_con->escape($search_str) . '%") AND r.user_id = ' . $user_id . ' AND r.status = 1 ORDER BY user_id';
+
+    return $db_con->sql2array($query);
+}
 
 
 function getPrivacySettings($user_id) {

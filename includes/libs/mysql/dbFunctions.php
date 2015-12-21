@@ -38,8 +38,8 @@ class CDatabase {
     function num_rows($q) {
         return mysqli_num_rows($q);
     }
-    function fetch_array($q, $result_type = MYSQL_ASSOC) {
-        return mysqli_fetch_array($q, $result_type = MYSQLI_ASSOC);
+    function fetch_array($q, $result_type = MYSQLI_BOTH) {
+        return mysqli_fetch_array($q, $result_type = MYSQLI_BOTH);
     }
 
     function fetch_object($q) {

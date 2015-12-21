@@ -25,10 +25,10 @@ if (!$user)
 
 if (isset($_GET['action']) && $_GET['action'] == 'add_router') {
     AddRouter($uid, $_SESSION['uid']);
-    redirect(SITE_URL.'user.php?uid=' . $uid);
+    redirect(SITE_URL.'/user.php?uid=' . $uid);
 } else if (isset($_GET['action']) && $_GET['action'] == 'remove_router') {
     DeleteRouter($uid, $_SESSION['uid']);
-    redirect(SITE_URL.'user.php?uid=' . $uid);
+    redirect(SITE_URL.'/user.php?uid=' . $uid);
 }
 
 if (isset($_POST['add_foonote']))
@@ -51,13 +51,66 @@ if (isset($_POST['add_foonote']))
                             <div class="add-router">
                                 <?php
                                 if (!$own_profile) {
+                                    $privacy = getPrivacySettings($uid);
+                                    $router_settings=$privacy['router_available'];
                                     $status = checkRouter($uid, $_SESSION['uid']);
                                     if ($status == -1) {
+                                        if(!empty($options_settings)){ ?>
+                                            <?php if ( $router_settings=='1') { ?>
+                                                <?php if ($_GET['uid'] != $_SESSION['uid']) { ?>
+                                                    <a href="<?php echo SITE_URL; ?>/user.php?action=add_router&uid=<?php echo $uid; ?>"><img
+                                                            src="<?php echo SITE_URL; ?>/images/add_route.png" alt=""
+                                                            title="Click to add router"></a>
+                                                <?php }
+                                            }else if ($router_settings=='2'){
+                                                if ($_GET['uid'] != $_SESSION['uid']) {
+                                                    $routers = getRoutersForUser($_SESSION['uid']);
+                                                    $routers_router=getRoutersForUser($_SESSION['uid']);
+                                                    if(!empty($routers)) {
+                                                        foreach ($routers as $router) {
+                                                            if ($router['user_id'] != $_GET['uid']) { ?>
+                                                                <a href="<?php echo SITE_URL; ?>/user.php?action=add_router&uid=<?php echo $uid; ?>"><img
+                                                                        src="<?php echo SITE_URL; ?>/images/add_route.png"
+                                                                        alt=""
+                                                                        title="Click to add router"></a>
+                                                            <?php }
+                                                        }
+                                                    }else if(!empty($routers_router)){
+
+                                                        foreach ($routers_router as $routed) {
+                                                            $routersrouter=getRoutersForUser($routed['user_id']);
+
+                                                            foreach ($routersrouter as $rout) {
+                                                                if ($rout['user_id'] = $_GET['uid']) { ?>
+
+                                                                <?php }
+
+                                                            }
+
+                                                        }
+                                                    }
+                                                }
+
+
+
+
+                                            }else if ($router_settings=='3') {
+                                                echo "";
+                                            }
+
+
+                                        }else{?>
+
+                                            <a href="<?php echo SITE_URL; ?>/user.php?action=add_router&uid=<?php echo $uid; ?>"><img
+                                                                            src="<?php echo SITE_URL; ?>/images/add_route.png"
+                                                                            alt=""
+                                                                            title="Click to add router"></a>
+
+                                    <?php    }
+
+                                    } else if ($status == 1) {
                                         ?>
-                                        <a href="<?php echo SITE_URL; ?>/user.php?action=add_router&uid=<?php echo $uid; ?>"><img
-                                                src="<?php echo SITE_URL; ?>/images/add_route.png" alt="" title="Click to add router"></a>
-                                    <?php } else if ($status == 1) {
-                                        ?>
+
                                         <a href="<?php echo SITE_URL; ?>/user.php?action=remove_router&uid=<?php echo $uid; ?>"><img
                                                 src="<?php echo SITE_URL; ?>/images/routed.png" alt="" title="Click to remove router"></a>
                                         <?php
