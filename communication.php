@@ -103,7 +103,7 @@ $own_photo = $own['photo'];
 	<?php 	} ?>
 	</a>
 	<div class="router-user-name">
-	<a href="user.php?uid=<?php echo $u['user_id']; ?>"><?php echo $u['display_name']; ?></a>
+	<a href="user.php?uid=<?php echo $u['user_id']; ?>"><?php echo ucwords($u['display_name']); ?></a>
 	</div>
 	</div>
  	</div>
@@ -112,7 +112,7 @@ $own_photo = $own['photo'];
  	<div class="answer-box" id="answer_<?php echo $ix; ?>" >
  	<textarea></textarea>
     <div class="router-user-photo answer-photo">
-        <a href="user.php?uid=<?php echo $u['user_id']; ?>">
+        <a href="user.php?uid=<?php echo $own['user_id']; ?>">
 		<?php if (empty($own_photo)) { ?>
 		<img src="uploads/avatars/nophoto.jpg" alt="">
 		<?php }

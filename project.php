@@ -43,10 +43,14 @@ if (empty($_SESSION['logged_in']))
                     <tbody>
                         <?php
                         $projects = getConnectedProjects($_SESSION['uid']);
+                        //print_r($projects);
 
                         if ($projects) {
                         foreach ($projects as $pr) {
+
                             $project = getProjectById($pr['project_id']);
+
+                            print_r($project);
                             $title = $project['project_title'];
                             $u = getUserData($project['created_by']);
                             ?>
@@ -80,6 +84,8 @@ if (empty($_SESSION['logged_in']))
                                 </div> 
                                 </td>
                             </tr>
+
+
                         <?php } 
                         }
                         ?>
