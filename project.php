@@ -50,7 +50,6 @@ if (empty($_SESSION['logged_in']))
 
                             $project = getProjectById($pr['project_id']);
 
-                            print_r($project);
                             $title = $project['project_title'];
                             $u = getUserData($project['created_by']);
                             ?>

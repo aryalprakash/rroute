@@ -31,7 +31,7 @@ $date = split_date($user['birthday']);
 
 <div class="content-block personal-details">
 <div class="content-left-col">
-<div class="content-title">Personal Details <?php if (!$user['verified'] && $user['user_id'] == $_SESSION['uid']) { ?><img src="images/get_verified.png" alt="" class="right-pull get-verified"><?php }else{ ?><img src="images/4.png" alt="" class=""><?php } ?></div>
+<div class="content-title">Personal Details <?php if (!$user['verified'] && $user['user_id'] == $_SESSION['uid']) { ?><img src="images/get_verified.png" alt="" class="right-pull get-verified"><?php }else{ ?><img src="images/4.png" alt=""  title="Verified."class=""><?php } ?></div>
 <form action="" method="post" enctype="multipart/form-data" id="upload-id">
 <div class="form-item">To get verified user badge in rangeenroute</div>
 <div class="form-item"><input type="file" name="verify_file"></div>

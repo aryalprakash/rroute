@@ -281,20 +281,46 @@ function loadRecipients($term) {
     echo json_encode($row_set); //format the array into json data
 }
 
+function getIdByComm($data){
+    global $db_con;
+    $sender =$_SESSION['uid'];
+    $recipient=$data['user_id'];
+    $q =$db_con-> query('SELECT `com_id`,`sender`,`recipient` FROM `communication` WHERE (`sender`='.$sender.' AND `recipient`='.$recipient.')OR (`sender`='.$recipient.' AND `recipient`='.$sender.')');
+    $res =$db_con->fetch_array($q);
+    //print_r($res);
+    if($res){
+        return $res['com_id'];
+    }
+    else{
+        $q = 'INSERT INTO `communication` (`sender`, `recipient`) VALUES(
+		' . $sender. ', '.$recipient.')';
+
+        if($db_con->query($q)){
+
+            $q =$db_con-> query('SELECT `com_id`,`sender`,`recipient` FROM `communication` WHERE (`sender`='.$sender.' AND `recipient`='.$recipient.')OR (`sender`='.$recipient.' AND `recipient`='.$sender.')');
+            $res =$db_con->fetch_array($q);
+            return $res['com_id'];
+        }
+
+    }
+}
+
 function sendMessage($data) {
     global $db_con;
 
-    $q = 'INSERT INTO `messages` (`sender`, `recipient`, `message`) VALUES(
-		' . $_SESSION['uid'] . ', ' . $data['user_id'] . ', \'' . $db_con->escape($data['message']) . '\')';
+    $com_id =getIdByComm($data);
+    $q = 'INSERT INTO `messages` (`sender`, `recipient`, `message`,`com_id`) VALUES(
+		' . $_SESSION['uid'] . ', ' . $data['user_id'] . ', \'' . $db_con->escape($data['message']) . '\','.$com_id.')';
+    $db_con->query('UPDATE `communication` SET `com_id` = '.$com_id.' WHERE  `com_id` = '.$com_id);
 
     return $db_con->query($q);
 }
 
 function sendReply($data) {
     global $db_con;
-
-    $q = 'INSERT INTO `messages` (`sender`, `recipient`, `message`, `reply_on`) VALUES(
-		' . $_SESSION['uid'] . ', ' . $data['user_id'] . ', \'' . $db_con->escape($data['message']) . '\', ' . $data['reply_on'] . ')';
+    $com_id =getIdByComm($data);
+    $q = 'INSERT INTO `messages` (`sender`, `recipient`, `message`, `reply_on`,`com_id`) VALUES(
+		' . $_SESSION['uid'] . ', ' . $data['user_id'] . ', \'' . $db_con->escape($data['message']) . '\', ' . $data['reply_on'] . ','.$com_id.')';
 
     return $db_con->query($q);
 }
@@ -302,7 +328,7 @@ function sendReply($data) {
 function getInboxMessages($user_id) {
     global $db_con;
 
-    $query = 'SELECT * FROM `messages` WHERE `recipient` = ' . $user_id . ' ORDER BY `message_id` DESC';
+    $query = 'SELECT * FROM `messages` WHERE `recipient` = ' . $user_id . ' ORDER BY `created_on` DESC';
 
     return $db_con->sql2array($query);
 }

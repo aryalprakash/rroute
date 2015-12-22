@@ -47,7 +47,7 @@ if (isset($_POST['add_foonote']))
                 <form action="" method="post" enctype="multipart/form-data">
 
                     <div class="content-block">
-                        <div class="content-title"><?php echo $user['display_name']; ?> <?php if ($user['verified']==True) { ?><img src="images/4.png" alt="" "><?php } ?>
+                        <div class="content-title"><?php echo $user['display_name']; ?> <?php if ($user['verified']==True) { ?><img src="images/4.png" title="Verified." "><?php } ?>
                             <div class="add-router">
                                 <?php
                                 if (!$own_profile) {

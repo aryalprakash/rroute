@@ -44,7 +44,7 @@ require_once(DIR_APP . 'users.php');
 
                 } else if (isset($_GET['pid'])) {
 
-                    $project = getProjectById(intval($_GET['pid']));
+                    $project = getProjectById($_GET['pid']);
                     $user = getUserData($project['created_by']);
                     if (!empty($project)) {
                         $showProject = true;
