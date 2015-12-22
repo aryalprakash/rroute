@@ -89,7 +89,11 @@ $own_photo = $own['photo'];
 
 ?>
 	<div class="inbox-messages">
+<!--		//$myconversations=get-->
+
 	<?php foreach($messages as $ix=>$m) { ?>
+			<?php //echo print_r($m);?>
+			<?//php $Allmsg=getMessagesByCom_id)($m[]) ?>
 	<div class="message-item <?php if (($ix % 2) == 0) echo 'odd'; ?>" data-id="<?php echo $ix; ?>">
  	<div class="message-author">
  	<?php $u = getUserData($m['sender']); ?>
@@ -99,7 +103,7 @@ $own_photo = $own['photo'];
 		<img src="uploads/avatars/nophoto.jpg" alt="">
 		<?php }
 		 else { ?>
-	 	<img src="uploads/avatars/<?php echo $u['photo']; ?>" alt="">
+	 	<img src="uploads/avatars/<?php echo  $u['photo']; ?>" alt="">
 	<?php 	} ?>
 	</a>
 	<div class="router-user-name">
