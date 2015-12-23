@@ -409,7 +409,7 @@ hr.delimiter.standrt { margin-top: 15px; }
 .message-item { padding: 15px 0 15px 0; border-top: #e7eaee solid 1px; overflow: hidden; }
 .message-item.odd { background: #fafbfd; }
 .message-item .router-user-photo { margin-bottom: 0; margin-left: 2px; }
-.message-content { float: right; padding-right: 30px; width: 650px; cursor: pointer; }
+.message-content { float: right; padding-right: 30px; width: 650px; }
 
 .answer-box{ float: right; padding-right: 30px;  width: 650px; background: url('../images/answer_bg.png') no-repeat left top; display: none; }
 .answer-box textarea { width: 570px; height: 50px; border: none; background: none; padding-top: 5px; padding-left: 10px; resize: none; margin-top: 5px; float: left; outline: none;}

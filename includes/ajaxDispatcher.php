@@ -487,6 +487,9 @@ switch ($action) {
 
        // echo json_encode($responce);
         break;
+    case 'show-all-messages':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
 
 }
 ?>

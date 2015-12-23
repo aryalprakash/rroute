@@ -29,11 +29,15 @@ $("#rewardType" )
     	$("#productEntry").slideUp('slow');
     	$("#equityEntry").slideDown('slow');
     }
-    
-  
-  
-  
-  $("#projectType" )
+    /* added for communication message for active or inactive class */
+        $('.inbox-messages').children(':odd').addClass('odd');
+    /* added for communication message for active or inactive class */
+
+
+
+
+
+    $("#projectType" )
   .change(function () {
     var str = "";
     $( "#projectType option:selected" ).each(function() {
@@ -344,6 +348,30 @@ $('.allNotifications').click(function(){
 
 
 
+/* After clicking on message */
+
+    //$('.msg-click').click(function(){
+    //    //var user_id = $(this).attr('user-id');
+    //    var conv_id = $this.attr('data-id');
+    //    //console.log(user_id);
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: "includes/ajaxDispatcher.php",
+    //        data: {conv_id: conv_id, dispatcher: 'show-detail-message'},
+    //        error: function (req, text, error) {
+    //            alert('Error AJAX: ' + text + ' | ' + error);
+    //        },
+    //        success: function (data) {
+    //            if (data['result'] == 'OK') {
+    //                //console.log(data);
+    //                $('.notifyNo').css('display','none');
+    //            }
+    //        },
+    //        dataType: "json"
+    //    });
+    //    return false;
+    //});
+///* After clicking on message ends */
 
 
 

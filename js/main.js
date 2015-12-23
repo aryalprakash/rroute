@@ -633,15 +633,15 @@ $(document).ready(function () {
 
 
     /*show answer form*/
-    $(".message-content").click(function () {
-        $('.answer-box').slideUp('fast');
-
-        var answer_block = $(this).attr('data-id');
-
-        $('#answer_' + answer_block).slideDown('slow');
-
-        return false;
-    });
+    //$(".message-content").click(function () {
+    //    $('.answer-box').slideUp('fast');
+    //
+    //    var answer_block = $(this).attr('data-id');
+    //
+    //    $('#answer_' + answer_block).slideDown('slow');
+    //
+    //    return false;
+    //});
 
 
     /*send answer*/
