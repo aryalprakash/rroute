@@ -176,7 +176,8 @@ switch ($action) {
 
     case 'reply':
         require_once(DIR_APP . 'users.php');
-        $res = sendReply($_POST);
+        $res = sendMessage($_POST);
+        //print_r($res);
 
         if ($res) {
             $responce['result'] = 'OK';
@@ -487,9 +488,7 @@ switch ($action) {
 
        // echo json_encode($responce);
         break;
-    case 'show-all-messages':
-        require_once(DIR_APP . 'users.php');
-        require_once(DIR_APP . 'projects.php');
+
 
 }
 ?>

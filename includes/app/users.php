@@ -305,6 +305,7 @@ function getIdByComm($data)
     $res = $db_con->fetch_array($q);
     //print_r($res);
     if ($res) {
+        $db_con->query('UPDATE `communication` SET `com_id` = ' . $res['com_id'] . ' WHERE  `com_id` = ' . $res['com_id']);
         return $res['com_id'];
     } else {
         $q = 'INSERT INTO `communication` (`sender`, `recipient`) VALUES(
@@ -327,10 +328,10 @@ function getConversations($id)
     return $q;
 }
 
-function getLastMessage($conv_id,$sender)
+function getLastMessage($conv_id, $sender,$ordering='DESC')
 {
     global $db_con;
-    $q = $db_con->query('SELECT `message`,`message_id` FROM `messages` WHERE `com_id`=' . $conv_id .' AND `sender`='.$sender.' ORDER BY `created_on` DESC ');
+    $q = $db_con->query('SELECT `message`,`message_id` FROM `messages` WHERE `com_id`=' . $conv_id . ' AND `sender`=' . $sender . ' ORDER BY `created_on` '.$ordering.' ');
     $res = $db_con->fetch_array($q);
     return $res['message'];
 }
@@ -354,6 +355,7 @@ function sendReply($data)
     $q = 'INSERT INTO `messages` (`sender`, `recipient`, `message`,`com_id`) VALUES(
 		' . $_SESSION['uid'] . ', ' . $data['user_id'] . ', \'' . $db_con->escape($data['message']) . '\',' . $com_id . ')';
     $db_con->query('UPDATE `communication` SET `com_id` = ' . $com_id . ' WHERE  `com_id` = ' . $com_id);
+
     return $db_con->query($q);
 }
 
@@ -732,23 +734,40 @@ function getUserNameBySearch($title, $user_id)
 
                 // <a href=>($row[user_id];</a></li>";
             }
+            return true;
         } else {
             echo "<li>No User found.<li>";
+            return false;//added to remove warning in ajaxdispathcer
         }
     }
 }
 
-function getMessageDetails($conv_id){
+function getMessageDetails($conv_id)
+{
     global $db_con;
-    $q = "SELECT * FROM `messages` WHERE `com_id` = ". $conv_id. " ORDER BY `created_on` ";
+    $q = "SELECT * FROM `messages` WHERE `com_id` = " . $conv_id . " ORDER BY `created_on` ";
     $res = $db_con->sql2array($q);
     return $res;
 }
 
-function getMessageParticipants($conv_id){
+function getMessageParticipants($conv_id)
+{
     global $db_con;
-    $q = $db_con->query("SELECT `sender`, `recipient` FROM `communication` WHERE `com_id` = ". $conv_id);
+    $q = $db_con->query("SELECT `sender`, `recipient` FROM `communication` WHERE `com_id` = " . $conv_id);
     return $db_con->fetch_array($q);
+}
+
+function getMessageRecipient($conv_id)
+{
+    global $db_con;
+    $q = $db_con->query("SELECT `sender`, `recipient` FROM `communication` WHERE `com_id` = " . $conv_id);
+    $res = $db_con->fetch_array($q);
+    if ($res['sender'] == $_SESSION['uid'])
+        return $res['recipient'];
+
+    else
+        return $res['sender'];
+
 }
 
 ?>

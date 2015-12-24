@@ -408,10 +408,17 @@ hr.delimiter.standrt { margin-top: 15px; }
 .inbox-messages { oberflow: hidden; margin-top: 25px;}
 .message-item { padding: 15px 0 15px 0; border-top: #e7eaee solid 1px; overflow: hidden; }
 .message-item.odd { background: #fafbfd; }
-.message-item .router-user-photo { margin-bottom: 0; margin-left: 2px; }
-.message-content { float: right; padding-right: 30px; width: 650px; }
 
-.answer-box{ float: right; padding-right: 30px;  width: 650px; background: url('../images/answer_bg.png') no-repeat left top; display: none; }
+.message-item .router-user-photo { margin-bottom: 0; margin-left: 2px; }
+.message-items { padding: 15px 0 15px 0; border-top: #e7eaee solid 1px; overflow: hidden; }
+.message-items.odd { background: #fafbfd; }
+.message-items .router-user-photo { margin-bottom: 0; margin-left: 2px; }
+.message-content { float: right; padding-right: 30px; width: 550px; }
+.message-contents { float:none; padding-right: 30px; width: 650px; }
+.message-contents.odd { background: #fafbfd; }
+.message-contents p{text-align: right; }
+
+.answer-box{ float: right; padding-right: 30px;  width: 650px; background: url('../images/answer_bg.png') no-repeat left top; display: block; }
 .answer-box textarea { width: 570px; height: 50px; border: none; background: none; padding-top: 5px; padding-left: 10px; resize: none; margin-top: 5px; float: left; outline: none;}
 .answer-box .submit-rounded { float: right; margin-top: 10px; margin-right: -5px; }
 .router-user-photo.answer-photo { float: right; padding-left: 15px; height: 66px; }
@@ -491,7 +498,7 @@ hr.delimiter.standrt { margin-top: 15px; }
 /*2015-12-17*/
 .comment-area .delete { float: right; width: 21px; height: 21px; background: url('../images/icons/delete.png'); margin-right: 10px; cursor: pointer; }
 
-.comment-date { float: left; margin-top: 5px; margin-left: 10px; font-size: 11px; }
+.comment-date { float: left; margin-top: 1px; margin-left: 10px; font-size: 11px; }
 .comment-area .message-author { float: left; min-height: 45px; width: 170px; }
 
 .share-area { width: 60px; padding: 10px; margin-top: 0px; display: none; float: left; border: 1px solid #d9dee4;}

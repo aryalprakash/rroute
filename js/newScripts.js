@@ -30,7 +30,12 @@ $("#rewardType" )
     	$("#equityEntry").slideDown('slow');
     }
     /* added for communication message for active or inactive class */
-        $('.inbox-messages').children(':odd').addClass('odd');
+        //$('.inbox-messages').children(':odd').addClass('odd');
+        //$('.message-item odd').click(function(){
+        //    $('.message-item ev').removeClass('odd');
+        //    $('.message-item').addClass('even');
+        //});
+
     /* added for communication message for active or inactive class */
 
 

@@ -54,8 +54,8 @@ else
 
                     <a href="communication.php?mode=create" class="inbox-settings">Settings</a>
 
-                    <input type="text" name="search_connection" value="<?php if (isset($_POST['search_connection'])) echo $_POST['search_connection']; ?>" placeholder="Search">
-                    <input type="submit" name="search">
+                    <input type="hidden" name="search_connection" value="<?php if (isset($_POST['search_connection'])) echo $_POST['search_connection']; ?>" placeholder="Search">
+<!--                    <input type="submit" name="search">-->
 
                 </form>
             </div>
@@ -111,9 +111,9 @@ else
 
                         ?>
                         <?php $u = getUserData($nextuser);
-                        getLastMessage($conversation_id,$nextuser);if(!empty(getLastMessage($conversation_id,$nextuser))){
+                        getLastMessage($conversation_id,$nextuser,'ASC');if(!empty(getLastMessage($conversation_id,$nextuser,'ASC'))){
                         ?>
-                        <div class="message-item " data-id="<?php echo $ix; ?>">
+                        <div class="message-item odd" data-id="<?php echo $ix; ?>">
                             <div class="message-author">
 
                                 <div class="router-user-photo">

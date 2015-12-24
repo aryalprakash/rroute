@@ -646,25 +646,33 @@ $(document).ready(function () {
 
     /*send answer*/
     $(".answer-button").click(function () {
-        var answer_block = $(this).attr('data-block');
+        //var answer_block = $(this).attr('data-block');
         var recipient = $(this).attr('data-user');
-        var reply_on = $(this).attr('data-id');
+        var com_id = $(this).attr('data-id');
 
-        var message = $('#answer_' + answer_block + ' textarea').val();
+        var message = $('textarea').val();
+        console.log(com_id,message,recipient);
 
         $.ajax({
             type: 'POST',
             url: "includes/ajaxDispatcher.php",
-            data: {user_id: recipient, reply_on: reply_on, message: message, dispatcher: 'reply'},
+            data: {user_id: recipient,message: message,com_id:com_id, dispatcher: 'reply'},
             error: function (req, text, error) {
                 alert('Error AJAX: ' + text + ' | ' + error);
             },
             success: function (data) {
                 if (data['result'] == 'OK') {
-                    $('#answer_' + answer_block).delay(500).append('<div style="line-height: 2;">Your answer has been sent</div>');
-                    $('#answer_' + answer_block + ' textarea').val('');
-                    $('#answer_' + answer_block).delay(1000).slideUp('slow');
-                }
+
+                    $('#reply-ans').delay(500).html('<p style="line-height: 2;">Your Message has been sent</p>');
+                    $('#reply-ans').val('');
+                    $('textarea').val('').delay(500);
+                    $('#reply-ans').delay(1000).hide('slow');
+                }else{
+                    $('#reply-ans').val().delay(500).html('<div style="line-height: 2;">Error</div>');
+                    $('#reply-ans').val('');
+                    $('textarea').val('')
+                    $('#reply-ans').delay(1000).hide('slow');
+                 }
             },
             dataType: "json"
         });
