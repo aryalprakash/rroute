@@ -215,6 +215,7 @@ switch ($action) {
                 $content .= '" data-id="' . $ix . '">
  						<div class="message-author">';
 
+                
                 $u = getUserData($m['created_by']);
 
                 $content .= '<div class="router-user-photo">
