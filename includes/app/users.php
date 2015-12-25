@@ -160,7 +160,8 @@ function updateAccount($data)
     if (!$keep_preferred_only && !$keep_preferred_nickname)
         $display_name = $db_con->escape($data['first_name']) . ' ' . $db_con->escape($data['last_name']);
 
-
+    echo $display_name;
+    print_r($display_name);
     $q = "UPDATE `users` SET
 		`first_name` = '" . $db_con->escape($data['first_name']) . "',
 		`last_name` = '" . $db_con->escape($data['last_name']) . "',
@@ -301,19 +302,16 @@ function getIdByComm($data)
     global $db_con;
     $sender = $_SESSION['uid'];
     $recipient = $data['user_id'];
-    $q = $db_con->query('SELECT `com_id`,`sender`,`recipient` FROM `communication` WHERE (`sender`=' . $sender . ' AND `recipient`=' . $recipient . ')OR (`sender`=' . $recipient . ' AND `recipient`=' . $sender . ')');
+    $q = $db_con->query('SELECT `com_id` FROM `communication` WHERE (`sender`=' . $sender . ' AND `recipient`=' . $recipient . ')OR (`sender`=' . $recipient . ' AND `recipient`=' . $sender . ')');
     $res = $db_con->fetch_array($q);
-    //print_r($res);
     if ($res) {
-        $db_con->query('UPDATE `communication` SET `com_id` = ' . $res['com_id'] . ' WHERE  `com_id` = ' . $res['com_id']);
         return $res['com_id'];
     } else {
         $q = 'INSERT INTO `communication` (`sender`, `recipient`) VALUES(
 		' . $sender . ', ' . $recipient . ')';
-
-        if ($db_con->query($q)) {
-
-            $q = $db_con->query('SELECT `com_id`,`sender`,`recipient` FROM `communication` WHERE (`sender`=' . $sender . ' AND `recipient`=' . $recipient . ')OR (`sender`=' . $recipient . ' AND `recipient`=' . $sender . ')');
+        $result=$db_con->query($q);
+        if ($result) {
+           $q = $db_con->query('SELECT `com_id` FROM `communication` WHERE (`sender`=' . $sender . ' AND `recipient`=' . $recipient . ')OR (`sender`=' . $recipient . ' AND `recipient`=' . $sender . ')');
             $res = $db_con->fetch_array($q);
             return $res['com_id'];
         }
@@ -321,10 +319,10 @@ function getIdByComm($data)
     }
 }
 
-function getConversations($id)
+function getConversations($id, $ordering = 'DESC')
 {
     global $db_con;
-    $q = $db_con->sql2array('SELECT * FROM `communication` WHERE `sender`=' . $id . ' OR `recipient`=' . $id . ' ORDER BY `updated_on` DESC');
+    $q = $db_con->sql2array('SELECT * FROM `communication` WHERE `sender`=' . $id . ' OR `recipient`=' . $id . ' ORDER BY `communication`.`updated_on`' . $ordering . ' ');
     return $q;
 }
 
@@ -335,6 +333,13 @@ function getLastMessage($conv_id, $sender, $ordering = 'DESC')
     $res = $db_con->fetch_array($q);
     return $res['message'];
 }
+
+function updateCom($com_id){
+    global $db_con;
+    $q = 'UPDATE `communication` SET `updated_on` = now()  WHERE  `com_id` = ' . $com_id;
+    return $db_con->query($q);
+}
+
 function sendMessage($data)
 {
     global $db_con;
@@ -342,8 +347,7 @@ function sendMessage($data)
     $com_id = getIdByComm($data);
     $q = 'INSERT INTO `messages` (`sender`, `recipient`, `message`,`com_id`) VALUES(
 		' . $_SESSION['uid'] . ', ' . $data['user_id'] . ', \'' . $db_con->escape($data['message']) . '\',' . $com_id . ')';
-    $db_con->query('UPDATE `communication` SET `com_id` = ' . $com_id . ' WHERE  `com_id` = ' . $com_id);
-
+    updateCom($com_id);
     return $db_con->query($q);
 }
 

@@ -19,12 +19,12 @@ if (empty($_SESSION['logged_in']))
 
                 <?php if(!empty($_POST['search_text'])){
                         $search=$_POST['search_text'];}
-                       else{$search='search';}
+                       else{$search='Search';}
 
                 ?>
 
                 <div class="content-block">
-                    <div class="content-title">Search for "<?php echo $search;//$_POST['search_text']; ?>":</div>
+                    <div class="content-title" style="color:#4a77a4">Search for : <?php echo $search;//$_POST['search_text']; ?></div>
 
                             <?php
                             $projects = searchProjects($search/*$_POST['search_text']*/);
@@ -130,9 +130,9 @@ if (empty($_SESSION['logged_in']))
                         <div class="right" style="width:639px; float:right;">
                             <div class="form-item no-height">
                                 <ul class="user-info-left">
-                                <li><div class="content-title" style="font-size:30px;"><a href="user.php?uid=<?php echo $user['user_id']; ?>" style="text-decoration:none; color:black;"><?php echo $user['display_name'] ?></a></div></li>
+                                <li><div class="content-title" style="font-size:30px;"><a href="user.php?uid=<?php echo ucwords($user['user_id']); ?>" style="text-decoration:none; color:#FF4F03;"><?php echo $user['display_name'] ?></a></div></li>
                                 <li><h2><?php echo $user['location'] ?></h2></li>
-                                <li><h2><?php echo $user['email'] ?></h2></li>
+                                <li><h2 style="color:#4a77a4;"><?php echo $user['email'] ?></h2></li>
                                 </ul>
                             </div>
                         </div></div>

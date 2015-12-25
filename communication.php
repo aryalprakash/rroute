@@ -97,65 +97,70 @@ else
                     if ($mode == 'details') {
                         include 'includes/message-details.php';
                     } else {
-                        $messages = getInboxMessages($_SESSION['uid']);
-
-                        if ($messages) {
 
                             $own = getUserData($_SESSION['uid']);
                             $own_photo = $own['photo']; ?>
+
                             <div class="inbox-messages">
                                 <?php
                                 $myconversations = getConversations($_SESSION['uid']);
-                                //print_r($myconversations);
-                                foreach ($myconversations as $ix => $conversation) {
-                                    $conversation_id = $conversation['com_id'];
-                                    if ($conversation['recipient'] == $_SESSION['uid']) {
-                                        $nextuser = $conversation['sender'];
-                                    } else $nextuser = $conversation['recipient'];
 
-                                    ?>
-                                    <?php $u = getUserData($nextuser);
-                                    getLastMessage($conversation_id, $nextuser, 'ASC');
-                                    // if(!empty(getLastMessage($conversation_id,$nextuser,'ASC'))){
-                                    ?>
-                                    <div class="message-item odd" data-id="<?php echo $ix; ?>">
-                                        <div class="message-author">
+                                if(!empty($myconversations)) {
+                                    foreach ($myconversations as $ix => $conversation) {
+                                        $conversation_id = $conversation['com_id'];
+                                        if ($conversation['recipient'] == $_SESSION['uid']) {
+                                            $nextuser = $conversation['sender'];
+                                        } else $nextuser = $conversation['recipient'];
 
-                                            <div class="router-user-photo">
-                                                <a href="user.php?uid=<?php echo $u['user_id']; ?>">
-                                                    <?php if (empty($u['photo'])) { ?>
-                                                        <img src="uploads/avatars/nophoto.jpg" alt="">
-                                                    <?php } else { ?>
-                                                        <img src="uploads/avatars/<?php echo $u['photo']; ?>" alt="">
-                                                    <?php } ?>
-                                                </a>
+                                        ?>
+                                        <?php $u = getUserData($nextuser);
+                                        getLastMessage($conversation_id, $nextuser, 'ASC');
+                                        // if(!empty(getLastMessage($conversation_id,$nextuser,'ASC'))){
+                                        ?>
+                                        <div class="message-item odd" data-id="<?php echo $ix; ?>">
+                                            <div class="message-author">
 
-                                                <div class="router-user-name">
-                                                    <a href="user.php?uid=<?php echo $u['user_id']; ?>"><?php echo ucwords($u['display_name']); ?></a>
+                                                <div class="router-user-photo">
+                                                    <a href="user.php?uid=<?php echo $u['user_id']; ?>">
+                                                        <?php if (empty($u['photo'])) { ?>
+                                                            <img src="uploads/avatars/nophoto.jpg" alt="">
+                                                        <?php } else { ?>
+                                                            <img src="uploads/avatars/<?php echo $u['photo']; ?>"
+                                                                 alt="">
+                                                        <?php } ?>
+                                                    </a>
+
+                                                    <div class="router-user-name">
+                                                        <a href="user.php?uid=<?php echo $u['user_id']; ?>"><?php echo ucwords($u['display_name']); ?></a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <a href="<?php echo SITE_URL ?>/communication.php?conv=<?php echo $conversation_id; ?>">
-                                            <div class="message-content" data-id="<?php echo $conversation_id; ?>">
-                                                <?php
-                                                if (!empty(getLastMessage($conversation_id, $nextuser, 'ASC'))) {
-                                                    echo getLastMessage($conversation_id, $nextuser);
-                                                } else {
-                                                    echo getLastMessage($conversation_id, $_SESSION['uid']);
-                                                }
-                                                ?>
+                                            <a href="<?php echo SITE_URL ?>/communication.php?conv=<?php echo $conversation_id; ?>">
+                                                <div class="message-content" data-id="<?php echo $conversation_id; ?>">
+                                                    <?php
+                                                    if (!empty(getLastMessage($conversation_id, $nextuser, 'ASC'))) {
+                                                        echo getLastMessage($conversation_id, $nextuser);
+                                                    } else {
+                                                        echo getLastMessage($conversation_id, $_SESSION['uid']);
+                                                    }
+                                                    ?>
 
-                                            </div>
-                                        </a>
+                                                </div>
+                                            </a>
 
-                                    </div> <?php //}?>
+                                        </div> <?php //}?>
 
 
-                                <?php } ?>
+                                    <?php }
+                                }
+                                else{
+                                    echo "You don't have started any conversations";
+                                }
+                                ?>
+
                             </div><!-- inbox-message -->
 
                             <?php
-                        }
                     }
                     ?>
 

@@ -9,8 +9,8 @@ if ($participants['sender'] == $_SESSION['uid']) {
 }
 $messages = getMessageDetails($_GET['conv']);
 ?>
-<div class="user-name-top">
-    <?php echo ucwords(getUserNameById($conv_partner)); ?>
+<div class="user-name-tops">
+  <a href ="<?php echo SITE_URL;?>/user.php?uid=<?php echo $conv_partner?>">  <?php echo ucwords(getUserNameById($conv_partner)); ?></a>
 </div>
 <div class="inbox-messages">
 
@@ -19,22 +19,22 @@ $messages = getMessageDetails($_GET['conv']);
         $user = getUserData($message['sender']);
         $recipent = $message['recipient'];
         if ($user['user_id'] == $_SESSION['uid']) {
-            $classval = 'router-user-photo answer-photo';
-            $activeornot = 'even';
-            $aligning = 'right';
+            $classval = 'router-user-photo';
+            $alignmessage = 'message-right';
+            $alignphoto = 'photo-right';
         } else {
             $classval = 'router-user-photo';
-            $activeornot = 'odd';
-            $aligning = 'left';
+            $alignmessage = 'message-left';
+            $alignphoto = 'photo-left';
         }
         ?>
         <div class="message-items " style="border-top: none;">
             <div class="message-author">
-                <div class="<?php echo $classval; ?>">
+                <div class="message-photo <?php echo $classval.' '.$alignphoto; ?>">
                     <a href="<?php echo SITE_URL ?>/user.php?uid=<?php echo $message['sender']; ?>">
                         <?php if (empty($user['photo'])) { ?>
                             <img src="uploads/avatars/nophoto.jpg"
-                                 alt="<?php $dates = strtotime($message['created_on']);
+                                 title="<?php $dates = strtotime($message['created_on']);
                                  echo date("g:i A m/d/Y", $dates); ?>">
                         <?php } else { ?>
                             <img src="uploads/avatars/<?php echo $user['photo']; ?>"
@@ -42,22 +42,15 @@ $messages = getMessageDetails($_GET['conv']);
                                  echo date("g:i A m/d/Y", $dates); ?>">
                         <?php } ?>
                     </a>
-
-                    <div class="router-user-name">
-                        <!--                            <a href="user.php?uid=-->
-                        <?php //echo $user['user_id']; ?><!--">-->
-                        <?php //echo ucwords($user['display_name']); ?><!--</a>-->
-                        <!--                            <span class="message-date"-->
-                        <!--                                  style="margin-left: 0;">-->
-                        <?php //$dates=strtotime($message['created_on']); echo date("g:i A m/d/Y",$dates); ?><!--</span>-->
-                    </div>
                 </div>
             </div>
-            <div class="message-contents <?php ?> " text-align="<?php $aligning; ?>">
+            <div class=" <?php echo $alignmessage; ?> ">
                 <?php echo $message['message']; ?>
             </div>
         </div>
     <?php } ?>
+
+
     <div class="message-item" style="border-top: none;"><?php
         $own = getUserData($_SESSION['uid']);
         $own_photo = $own['photo']; ?>
@@ -109,3 +102,8 @@ $messages = getMessageDetails($_GET['conv']);
     ?>
 
 </div>
+<script>
+    $(document).ready(function(){
+        $('.inbox-messages').scrollTop($(".answer-box").offset().top);
+    })
+</script>

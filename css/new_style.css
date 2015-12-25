@@ -260,11 +260,19 @@ h2.home-welcome {
     /*overflow: overlay;*/
 }
 
-.user-name-top {
+.user-name-tops {
+    color:#FF4F03;/*#4a77a4*/
     font-size: 24px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    margin-top: 20px;
+    padding-bottom: 5px;
     border-bottom: 1px solid #DBE0E5;
+}
+.user-name-tops a{
+    text-decoration: none;
+    color: #FF4F03;
+}
+.user-name-tops.a.visited{
+    color: #FF4F03;
 }
 
 .message-date {
