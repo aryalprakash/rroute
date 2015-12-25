@@ -1,117 +1,112 @@
 $(document).ready(function () {
     var SITE_URL = "<?php echo SITE_URL; ?>";
-$("#rewardType" )
-  .change(function () {
-    var str = "";
-    $( "#rewardType option:selected" ).each(function() {
-      str += $( this ).text();
-    });
-    
-    if(str == 'Product'){
-    	$("#equityEntry").slideUp('slow');
-    	$("#productEntry").slideDown('slow');
+    $("#rewardType")
+        .change(function () {
+            var str = "";
+            $("#rewardType option:selected").each(function () {
+                str += $(this).text();
+            });
+
+            if (str == 'Product') {
+                $("#equityEntry").slideUp('slow');
+                $("#productEntry").slideDown('slow');
+            }
+            if (str == 'Equity') {
+                $("#contdProduct").slideUp('slow');
+                $("#productEntry").slideUp('slow');
+                $("#equityEntry").slideDown('slow');
+            }
+
+        });
+
+    var rewardType = $("#rewardType option:selected").text();
+    if (rewardType == 'Product') {
+        $("#equityEntry").slideUp('slow');
+        $("#productEntry").slideDown('slow');
     }
-    if(str == 'Equity'){
-    	$("#contdProduct").slideUp('slow');
-    	$("#productEntry").slideUp('slow');
-    	$("#equityEntry").slideDown('slow');
-    }
-    
-  });
-  
-  var rewardType = $( "#rewardType option:selected" ).text();
-  if(rewardType == 'Product'){
-    	$("#equityEntry").slideUp('slow');
-    	$("#productEntry").slideDown('slow');
-    }
-    if(rewardType == 'Equity'){
-    	$("#contdProduct").slideUp('slow');
-    	$("#productEntry").slideUp('slow');
-    	$("#equityEntry").slideDown('slow');
+    if (rewardType == 'Equity') {
+        $("#contdProduct").slideUp('slow');
+        $("#productEntry").slideUp('slow');
+        $("#equityEntry").slideDown('slow');
     }
     /* added for communication message for active or inactive class */
-        //$('.inbox-messages').children(':odd').addClass('odd');
-        //$('.message-item odd').click(function(){
-        //    $('.message-item ev').removeClass('odd');
-        //    $('.message-item').addClass('even');
-        //});
+    //$('.inbox-messages').children(':odd').addClass('odd');
+    //$('.message-item odd').click(function(){
+    //    $('.message-item ev').removeClass('odd');
+    //    $('.message-item').addClass('even');
+    //});
 
     /* added for communication message for active or inactive class */
 
 
+    $("#projectType")
+        .change(function () {
+            var str = "";
+            $("#projectType option:selected").each(function () {
+                str += $(this).text();
+            });
+
+            if (str == 'Monetised') {
+                $("#monitizeBar").slideDown('slow');
+            }
+            else {
+                $("#monitizeBar").slideUp('slow');
+            }
+
+        });
+
+    var projectType = $("#projectType option:selected").text();
+
+    if (projectType == 'Monetised') {
+        $("#monitizeBar").slideDown('slow');
+    }
+    else {
+        $("#monitizeBar").slideUp('slow');
+    }
 
 
+    $("#productSubmit").click(function () {
+        $("#contdProduct").slideDown('slow');
+        return false;
 
-    $("#projectType" )
-  .change(function () {
-    var str = "";
-    $( "#projectType option:selected" ).each(function() {
-      str += $( this ).text();
     });
-    
-    if(str == 'Monetised'){
-    $("#monitizeBar").slideDown('slow');
-    }
-    else{
-    $("#monitizeBar").slideUp('slow');
-    }
-    
-  });
-  
-   var projectType = $( "#projectType option:selected" ).text();
-    
-   if(projectType == 'Monetised'){
-    $("#monitizeBar").slideDown('slow');
-    }
-    else{
-    $("#monitizeBar").slideUp('slow');
-    }
-  
-  
-  
-  $("#productSubmit").click(function(){
-  	$("#contdProduct").slideDown('slow');
-  	return false;
-  
-  });
-  
-  
-  $("#equitySubmit").click(function(){
-  	$("#contdEquity").slideDown('slow');
-  	var equity = $("#equityValue").val();
-  	var startup_amount = $("#startup_amount").val();
-  	$(".equityVal").html(equity + "% Equity Reward for $"+startup_amount);
-  });
-  
-  
-  
+
+
+    $("#equitySubmit").click(function () {
+        $("#contdEquity").slideDown('slow');
+        var equity = $("#equityValue").val();
+        var startup_amount = $("#startup_amount").val();
+        $(".equityVal").html(equity + "% Equity Reward for $" + startup_amount);
+    });
+
+
     //Fundables
-    
-    var showBox = function(el){
-    console.log(el);
-    }
-    
-    $('.help_title').click(function(){
-    	contentId = '#'+this.id+'Content';
-    	if($(contentId).is( ":hidden" )){
-    	$('.help_content').hide();
-    	$(contentId).slideDown('slow');
-    	}else{
-    	$(contentId).hide();
-    	}
-    	return false;
-    });
-    
-    $(".view-more").click(function() {
-    $('html, body').animate({
-        scrollTop: $(".signup-line").offset().top
-    }, 'slow');
-});
 
-$('.allNotifications').click(function(){
-	var user_id = $(this).attr('user-id');
-	//console.log(user_id);
-	$.ajax({
+    var showBox = function (el) {
+        console.log(el);
+    }
+
+    $('.help_title').click(function () {
+        contentId = '#' + this.id + 'Content';
+        if ($(contentId).is(":hidden")) {
+            $('.help_content').hide();
+            $(contentId).slideDown('slow');
+        } else {
+            $(contentId).hide();
+        }
+        return false;
+    });
+
+    $(".view-more").click(function () {
+        $('html, body').animate({
+            scrollTop: $(".signup-line").offset().top
+        }, 'slow');
+    });
+
+    $('.allNotifications').click(function () {
+        var user_id = $(this).attr('user-id');
+        //console.log(user_id);
+        $.ajax({
             type: 'POST',
             url: "includes/ajaxDispatcher.php",
             data: {user_id: user_id, dispatcher: 'read-notifications'},
@@ -121,13 +116,13 @@ $('.allNotifications').click(function(){
             success: function (data) {
                 if (data['result'] == 'OK') {
                     //console.log(data);
-                    $('.notifyNo').css('display','none');
+                    $('.notifyNo').css('display', 'none');
                 }
             },
             dataType: "json"
         });
-        return false; 
-});
+        return false;
+    });
 
 //for sliding social sharing icons
 //    $( "#h" ).hover(function () {
@@ -180,18 +175,18 @@ $('.allNotifications').click(function(){
         return false;
     });
     //for active class
-    $('#route_project,#homeshare_project,#share_project,#comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').on('click',function(){
+    $('#route_project,#homeshare_project,#share_project,#comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').on('click', function () {
 
         //if ( $( "#route_project" ).hasClass( "active" ) ) {
-            $('#route_project,#share_project,#comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').removeClass('active');
+        $('#route_project,#share_project,#comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').removeClass('active');
         //} else {
-            $(this).addClass('active');
-       // }
+        $(this).addClass('active');
+        // }
 
     });
     //end share project
 
-   //tooltip dekhaune
+    //tooltip dekhaune
 
     $('.showtooltipRate').mouseover(function () {
         $('.showtooltipRate').tooltip({
@@ -225,9 +220,6 @@ $('.allNotifications').click(function(){
         });
         $('.showRate').tooltip("open");
     });
-
-
-
 
 
     //route project ko
@@ -273,14 +265,14 @@ $('.allNotifications').click(function(){
     function searchUserList() {
 //                console.log('yaha aayo');
         var title = $("#route-search").val();
-        var user_id =$(this).attr("#data-id");
+        var user_id = $(this).attr("#data-id");
         if (title != "") {
 //                console.log(title);
             //$("#route-result").html("<li>searching</li>");
             $.ajax({
                 type: "post",
                 url: "includes/ajaxDispatcher.php",
-                data: {title:title,user_id:user_id, dispatcher: 'search-route-user-lists'},
+                data: {title: title, user_id: user_id, dispatcher: 'search-route-user-lists'},
                 error: function (req, text, error) {
                     alert('Error AJAX: ' + text + ' | ' + error);
                 },
@@ -292,12 +284,12 @@ $('.allNotifications').click(function(){
                 }
             });
         }
-        else
-        {$.ajax({
-                type:"post",
-                url:"searchuser.php",
-                data:"title="+title,
-                success:function(data){
+        else {
+            $.ajax({
+                type: "post",
+                url: "searchuser.php",
+                data: "title=" + title,
+                success: function (data) {
                     $("#route-result").html("");
                 }
             });
@@ -305,36 +297,39 @@ $('.allNotifications').click(function(){
     }
 
 
-    $("#route-button").click(function(){
+    $("#route-button").click(function () {
         searchUserList();
     });
 
-    $('#route-search').keyup(function(e) {
+    $('#route-search').keyup(function (e) {
         // if(e.keyCode == 13) {
         searchUserList();
         //}
     });
-
-    $('body').on('click','.click-user', function(){
+    $('body').on('click', '.click-user', function () {
         $.ajax({
             type: "post",
             url: "includes/ajaxDispatcher.php",
-            data: {sent_to: $(this).attr("data-id"), project_id: $('.route_project').attr("data-id"), dispatcher: 'route-this-project'},
+            data: {
+                sent_to: $(this).attr("data-id"),
+                project_id: $('.route_project').attr("data-id"),
+                dispatcher: 'route-this-project'
+            },
             error: function (req, text, error) {
                 alert('Error AJAX: ' + text + ' | ' + error);
             },
-            success:function(data){
-                if(data.result == 'OK') {
+            success: function (data) {
+                if (data.result == 'OK') {
                     $(".routed-users").prepend('<div class="routed-users-list" data-id="' + data.id + '"><span class="unroute" data-id="' + data.id + '">X</span><a href="user.php?uid=' + data.user_id + '"><li class="routed-name">' + data.user + '</li></a></div>')
-                }else{
+                } else {
                     alert("You've already routed this user.");
                 }
-                },
+            },
             dataType: "json"
         });
     });
 
-    $('body').on('click','.unroute', function(){
+    $('body').on('click', '.unroute', function () {
         $.ajax({
             type: "post",
             url: "includes/ajaxDispatcher.php",
@@ -342,9 +337,9 @@ $('.allNotifications').click(function(){
             error: function (req, text, error) {
                 alert('Error AJAX: ' + text + ' | ' + error);
             },
-            success:function(data){
-                if(data.result == 'OK') {
-                    $(".routed-users").find("[data-id="+data.router_id+"]").remove();
+            success: function (data) {
+                if (data.result == 'OK') {
+                    $(".routed-users").find("[data-id=" + data.router_id + "]").remove();
                 }
             },
             dataType: "json"
@@ -352,8 +347,7 @@ $('.allNotifications').click(function(){
     });
 
 
-
-/* After clicking on message */
+    /* After clicking on message */
 
     //$('.msg-click').click(function(){
     //    //var user_id = $(this).attr('user-id');
@@ -377,7 +371,6 @@ $('.allNotifications').click(function(){
     //    return false;
     //});
 ///* After clicking on message ends */
-
 
 
 });

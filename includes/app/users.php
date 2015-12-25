@@ -328,14 +328,13 @@ function getConversations($id)
     return $q;
 }
 
-function getLastMessage($conv_id, $sender,$ordering='DESC')
+function getLastMessage($conv_id, $sender, $ordering = 'DESC')
 {
     global $db_con;
-    $q = $db_con->query('SELECT `message`,`message_id` FROM `messages` WHERE `com_id`=' . $conv_id . ' AND `sender`=' . $sender . ' ORDER BY `created_on` '.$ordering.' ');
+    $q = $db_con->query('SELECT `message`,`message_id` FROM `messages` WHERE `com_id`=' . $conv_id . ' AND `sender`=' . $sender . ' ORDER BY `created_on` ' . $ordering . ' ');
     $res = $db_con->fetch_array($q);
     return $res['message'];
 }
-
 function sendMessage($data)
 {
     global $db_con;

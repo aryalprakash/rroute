@@ -32,8 +32,6 @@ $(document).ready(function () {
     });
 
 
-
-
     $(".signup-tabs ul li").click(function () {
         var selected_tab = $("li").index(this);
         var user_type = selected_tab + 1;
@@ -59,7 +57,6 @@ $(document).ready(function () {
     });
 
 
-
     $(".add-developer").click(function () {
         $(".add-developer-form").css('display', 'block');
     });
@@ -79,10 +76,10 @@ $(document).ready(function () {
             success: function (data) {
                 if (data['result'] == 'OK') {
                     $('#project_developer')
-                            .append($("<option></option>")
-                                    .attr("value", data['id'])
-                                    .attr("selected", "selected")
-                                    .text(name));
+                        .append($("<option></option>")
+                            .attr("value", data['id'])
+                            .attr("selected", "selected")
+                            .text(name));
 
                     $('#developer_name').val('');
                     $('#developer_email').val('');
@@ -97,7 +94,6 @@ $(document).ready(function () {
 
         return false;
     });
-
 
 
     $(".upload-video").click(function () {
@@ -142,7 +138,6 @@ $(document).ready(function () {
     });
 
 
-
     /*rate project*/
     $("#rate_project").click(function () {
         $('.rate-area').slideDown('slow');
@@ -150,10 +145,9 @@ $(document).ready(function () {
         $('.report-area').css('display', 'none');
         $('.route-area').css('display', 'none');
         $('.homeshare-area').css('display', 'none');
-        
+
         return false;
     });
-
     $("#save_rate_project").click(function () {
         var project_id = $(this).attr('data-id');
         var user_id = $(this).attr('data-user');
@@ -209,9 +203,9 @@ $(document).ready(function () {
 
     /*unroute project*/
     $("#routed_project").click(function () {
-        
+
         $('.route-area').slideDown('slow');
-        
+
         var project_id = $(this).attr('data-id');
         $.ajax({
             type: 'POST',
@@ -231,18 +225,18 @@ $(document).ready(function () {
         return false;
     });
     /*end route project*/
-    
+
     /*share project*/
     $(".router-item").click(function () {
         var project_id = $(this).attr('data-project');
         var sent_to = $(this).attr('data-id');
         var routed = 0;
-        
-        if($(this).is(":checked"))
+
+        if ($(this).is(":checked"))
             routed = 1;
-        
+
         //alert(routed);
-        
+
         $.ajax({
             type: 'POST',
             url: "includes/ajaxDispatcher.php",
@@ -252,15 +246,13 @@ $(document).ready(function () {
             },
             success: function (data) {
                 if (data['result'] == 'OK') {
-                    
+
                 }
             },
             dataType: "json"
         });
 
     });
-    
-
 
 
     /*like project*/
@@ -277,8 +269,8 @@ $(document).ready(function () {
                 if (data['result'] == 'OK') {
                     $('#like_project').css('display', 'none');
                     $('#liked_project').css('display', 'block');
-                    $('#liked_project').css('opacity', '0.6'); 
-                   // $('.likes-area').html(data['likes']);
+                    $('#liked_project').css('opacity', '0.6');
+                    // $('.likes-area').html(data['likes']);
                     $('.totalLikes').html(data['likes']);
 
                     $('.rate-area').css('display', 'none');
@@ -288,8 +280,8 @@ $(document).ready(function () {
                     $('.homeshare-area').css('display', 'none');
                     $('.share-area').css('display', 'none');
 
-                  //  $('.likes-area').slideDown("slow");
-                  //  $(".likes-area").delay(1500).slideUp('slow');
+                    //  $('.likes-area').slideDown("slow");
+                    //  $(".likes-area").delay(1500).slideUp('slow');
                 }
             },
             dataType: "json"
@@ -297,27 +289,26 @@ $(document).ready(function () {
         return false;
     });
     /*end like project*/
-    
+
     /*like idea*/
     $("#like_idea").click(function () {
-        var ideathread_id = $(this).attr('data-id');      
+        var ideathread_id = $(this).attr('data-id');
         $.ajax({
             type: 'POST',
             url: "includes/ajaxDispatcher.php",
             data: {
-            'ideathread_id': ideathread_id, 
-            'dispatcher': 'like-idea'
+                ideathread_id: ideathread_id, dispatcher: 'like-idea'
             },
             error: function (req, text, error) {
                 alert('Error AJAX: ' + text + ' | ' + error);
             },
             success: function (data) {
                 if (data['result'] == 'OK') {
-               
+
                     $('#like_idea').css('display', 'none');
                     $('#liked_idea').css('display', 'block');
-                    $('#liked_idea').css('opacity', '0.6'); 
-                   // $('.likes-area').html(data['likes']);
+                    $('#liked_idea').css('opacity', '0.6');
+                    // $('.likes-area').html(data['likes']);
                     $('.totalLikes').html(data['likes']);
 
                     $('.rate-area').css('display', 'none');
@@ -327,8 +318,8 @@ $(document).ready(function () {
                     $('.share-area').css('display', 'none');
                     $('.homeshare-area').css('display', 'none');
 
-                  //  $('.likes-area').slideDown("slow");
-                  //  $(".likes-area").delay(1500).slideUp('slow');
+                    //  $('.likes-area').slideDown("slow");
+                    //  $(".likes-area").delay(1500).slideUp('slow');
                 }
             },
             dataType: "json"
@@ -353,7 +344,7 @@ $(document).ready(function () {
                     $('#liked_project').css('display', 'none');
                     $('#like_project').css('display', 'block');
 
-                   // $('.likes-area').html(data['likes']);
+                    // $('.likes-area').html(data['likes']);
                     $('.totalLikes').html(data['likes']);
 
                     $('.rate-area').css('display', 'none');
@@ -362,8 +353,8 @@ $(document).ready(function () {
                     $('.homeshare-area').css('display', 'none');
                     $('.share-area').css('display', 'none');
 
-                  //  $('.likes-area').slideDown("slow");
-                   // $(".likes-area").delay(1500).slideUp('slow');
+                    //  $('.likes-area').slideDown("slow");
+                    // $(".likes-area").delay(1500).slideUp('slow');
 
                 }
             },
@@ -389,7 +380,7 @@ $(document).ready(function () {
                     $('#liked_idea').css('display', 'none');
                     $('#like_idea').css('display', 'block');
 
-                   // $('.likes-area').html(data['likes']);
+                    // $('.likes-area').html(data['likes']);
                     $('.totalLikes').html(data['likes']);
 
                     $('.rate-area').css('display', 'none');
@@ -398,8 +389,8 @@ $(document).ready(function () {
                     $('.homeshare-area').css('display', 'none');
                     $('.share-area').css('display', 'none');
 
-                  //  $('.likes-area').slideDown("slow");
-                   // $(".likes-area").delay(1500).slideUp('slow');
+                    //  $('.likes-area').slideDown("slow");
+                    // $(".likes-area").delay(1500).slideUp('slow');
 
                 }
             },
@@ -412,7 +403,7 @@ $(document).ready(function () {
 
     /*show comment form*/
     $("#comment_project").click(function () {
-   
+
         $('.rate-area').css('display', 'none');
         $('.likes-area').css('display', 'none');
         $('.report-area').css('display', 'none');
@@ -423,11 +414,10 @@ $(document).ready(function () {
         $('.comment-idea-textarea').css('display', 'block');
         $('#add-comment-btn').css('display', 'block');
         $(".comment-area").toggle("slow");
-        
+
         return false;
     });
-    
-    
+
 
     /*hide comment form*/
     $(".comment-textarea").keydown(function (e) {
@@ -455,7 +445,7 @@ $(document).ready(function () {
                             //$(".comment-area").append('<p class="success-comment">Your comment has been added</p>');
                             //$(".comment-area").delay(1500).slideUp('slow');
                             $(".comment-area .inbox-messages").html(data['content']);
-                            
+
                             $('#comment_project').text('Comented');
                             $('#comment_project').css('opacity', '0.6');
                         }
@@ -468,7 +458,7 @@ $(document).ready(function () {
             return false;
         }
     });
-    
+
     $(".comment-idea-textarea").keydown(function (e) {
         if (e.keyCode == 13) {
             var comment_text = $('.comment-idea-textarea').val();
@@ -494,7 +484,7 @@ $(document).ready(function () {
                             //$(".comment-area").append('<p class="success-comment">Your comment has been added</p>');
                             //$(".comment-area").delay(1500).slideUp('slow');
                             $(".comment-area .inbox-messages").html(data['content']);
-                            
+
                             $('#comment_project').text('Comented');
                             $('#comment_project').css('opacity', '0.6');
                         }
@@ -512,9 +502,9 @@ $(document).ready(function () {
 //$(".message-item").on("click", "div.delete", function() {
     /*$(".message-item .delete").on("click", function(event) {
      var comment_id = $(this).attr('data-id');
-     
+
      //alert();
-     
+
      $.ajax({
      type: 'POST',
      url: "includes/ajaxDispatcher.php",
@@ -530,19 +520,19 @@ $(document).ready(function () {
      },
      dataType: "json"
      });
-     
+
      $(this).parent().slideUp('slow');
-     
+
      return false;
      });*/
-     
-     /*delete ideathread comment*/
+
+    /*delete ideathread comment*/
 //$(".idea-message").on("click", "div.delete", function() {
     /*$(".idea-message .delete").on("click", function(event) {
      var comment_id = $(this).attr('data-id');
-     
+
      //alert();
-     
+
      $.ajax({
      type: 'POST',
      url: "includes/ajaxDispatcher.php",
@@ -558,14 +548,11 @@ $(document).ready(function () {
      },
      dataType: "json"
      });
-     
+
      $(this).parent().slideUp('slow');
-     
+
      return false;
      });*/
-    
-    
-    
 
 
     /*report_project project*/
@@ -593,7 +580,16 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: "includes/ajaxDispatcher.php",
-            data: {project_id: project_id, copyright: copyright, spam: spam, violent: violent, abusive: abusive, impersonation: impersonation, harassment: harassment, dispatcher: 'report-project'},
+            data: {
+                project_id: project_id,
+                copyright: copyright,
+                spam: spam,
+                violent: violent,
+                abusive: abusive,
+                impersonation: impersonation,
+                harassment: harassment,
+                dispatcher: 'report-project'
+            },
             error: function (req, text, error) {
                 alert('Error AJAX: ' + text + ' | ' + error);
             },
@@ -621,11 +617,6 @@ $(document).ready(function () {
             $('#user_id').val(ui.item.id)
         }
     });
-    
-    
-  
-
-
 
 
 //hide message sent text
@@ -646,37 +637,54 @@ $(document).ready(function () {
 
     /*send answer*/
     $(".answer-button").click(function () {
-        //var answer_block = $(this).attr('data-block');
+        var sender = $(this).attr('data-block');
+        var sent_time = $(this).attr('data-time');
+        var photo = $(this).attr('data-photo');
         var recipient = $(this).attr('data-user');
         var com_id = $(this).attr('data-id');
-
         var message = $('textarea').val();
-        console.log(com_id,message,recipient);
-
-        $.ajax({
-            type: 'POST',
-            url: "includes/ajaxDispatcher.php",
-            data: {user_id: recipient,message: message,com_id:com_id, dispatcher: 'reply'},
-            error: function (req, text, error) {
-                alert('Error AJAX: ' + text + ' | ' + error);
-            },
-            success: function (data) {
-                if (data['result'] == 'OK') {
-
-                    $('#reply-ans').delay(500).html('<p style="line-height: 2;">Your Message has been sent</p>');
-                    $('#reply-ans').val('');
-                    $('textarea').val('').delay(500);
-                    $('#reply-ans').delay(1000).hide('slow');
-                }else{
-                    $('#reply-ans').val().delay(500).html('<div style="line-height: 2;">Error</div>');
-                    $('#reply-ans').val('');
-                    $('textarea').val('')
-                    $('#reply-ans').delay(1000).hide('slow');
-                 }
-            },
-            dataType: "json"
-        });
-
+        var messagep = '<p>' + $('textarea').val() + '</p>'
+        console.log(com_id, message, recipient);
+        if (message === '') {
+            $('#reply-ans').delay(100).html('<p style="line-height: 2;"> Message Empty.</p>');
+            $('#reply-ans').val('');
+            $('#reply-ans').delay(500).hide('slow');
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajaxDispatcher.php",
+                data: {user_id: recipient, message: message, com_id: com_id, dispatcher: 'reply'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data['result'] == 'OK') {
+                        $(".message-item").before(
+                            '<div class="message-items"style="border-top:none;"><div class="message-author">' +
+                            '<div class="router-user-photo answer-photo">' +
+                            ' <a href="http://localhost/github/rangeenroute/user.php?uid=' + sender +
+                            '"><img src="' + photo + '" alt="' + sent_time + '">' +
+                            '</a>' +
+                            '<div class="router-user-name"></div>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="message-contents " text-align="">' + messagep + ' <p>                </p></div></div>'
+                        );
+                        //$('#message-contents').delay(500).append('<p style="line-height: 2;">Your Message has been sent</p>');
+                        $('#reply-ans').delay(500).html('<p style="line-height: 2;">Your Message has been sent</p>');
+                        $('#reply-ans').val('');
+                        $('textarea').val('').delay(1000);
+                        $('#reply-ans').delay(1000).hide('slow');
+                    } else {
+                        $('#reply-ans').val().delay(500).html('<div style="line-height: 2;">Error</div>');
+                        $('#reply-ans').val('');
+                        $('textarea').val('')
+                        $('#reply-ans').delay(1000).hide('slow');
+                    }
+                },
+                dataType: "json"
+            });
+        }
         return false;
     })
 
@@ -690,7 +698,6 @@ $(document).ready(function () {
         $('.pay-via-card-section').css('display', 'none');
         $('.pay-via-account-section').css('display', 'block');
     });
-
 
 
     $("#search_project").autocomplete({
@@ -827,7 +834,7 @@ $(document).ready(function () {
             $('#settings-report-area').slideUp('slow');
         }
     });
-    
+
     $(".top-messages").click(function () {
         if ($('.popup-alerts').is(":hidden")) {
             $('.popup-alerts').slideDown('slow');
@@ -836,18 +843,17 @@ $(document).ready(function () {
             $('.popup-alerts').slideUp('slow');
         }
     });
-    
-    
-    
+
+
     /*accept route*/
     $(".accept-route").click(function () {
 
         var routed_by = $(this).attr('data-routedby');
-        var user_id = $(this).attr('data-user');  
+        var user_id = $(this).attr('data-user');
         var notify_id = $(this).parent().parent().attr('data-id');
-        
+
         //alert(notify_id);
-        
+
         //check username and pass
         $.ajax({
             type: 'POST',
@@ -857,11 +863,11 @@ $(document).ready(function () {
                 alert('Error AJAX: ' + text + ' | ' + error);
             },
             success: function (data) {
-                if (data['result'] == 'OK') {                    
+                if (data['result'] == 'OK') {
                     //alert('#notifytext_'+ notify_id);
-                    $('#notifytext_'+ notify_id).html('Accepted!');
-                    
-                }                
+                    $('#notifytext_' + notify_id).html('Accepted!');
+
+                }
             },
             dataType: "json"
 
@@ -869,73 +875,84 @@ $(document).ready(function () {
 
         return false;
     });
-	
+
 
     $('html').on('click', '#acceptPayment', function () {
 
         var project_id = $(this).attr('data-projectId');
-        var created_by = $(this).attr('data-createdBy');  
-        var project_title = $(this).attr('data-projectTitle'); 
-		var amount = $(this).attr('data-amount'); 
-		$('<img src="images/bg_loader.gif" />').insertAfter($(this));
-		$(this).hide();
+        var created_by = $(this).attr('data-createdBy');
+        var project_title = $(this).attr('data-projectTitle');
+        var amount = $(this).attr('data-amount');
+        $('<img src="images/bg_loader.gif" />').insertAfter($(this));
+        $(this).hide();
         $.ajax({
             type: 'POST',
             url: "includes/ajaxDispatcher.php",
-            data: {project_id: project_id, created_by: created_by, project_title: project_title, amount:amount, dispatcher: 'add-transaction'},
+            data: {
+                project_id: project_id,
+                created_by: created_by,
+                project_title: project_title,
+                amount: amount,
+                dispatcher: 'add-transaction'
+            },
             error: function (req, text, error) {
                 alert('Error AJAX: ' + text + ' | ' + error);
             },
             success: function (data) {
-                if (data['result'] == 'OK') {                    
-					window.location = "/project_details.php?pid="+project_id;
-                }                
+                if (data['result'] == 'OK') {
+                    window.location = "/project_details.php?pid=" + project_id;
+                }
             },
             dataType: "json"
 
         });
 
         return false;
-    });	
-    
+    });
+
     $('html').on('click', '#notifyOwner', function () {
-    	
+
 
         var project_id = $(this).attr('data-projectId');
-        var created_by = $(this).attr('data-createdBy');  
-        var project_title = $(this).attr('data-projectTitle'); 
-		
-		$('<img src="images/bg_loader.gif" />').insertAfter($(this));
-		$(this).hide();
+        var created_by = $(this).attr('data-createdBy');
+        var project_title = $(this).attr('data-projectTitle');
+
+        $('<img src="images/bg_loader.gif" />').insertAfter($(this));
+        $(this).hide();
         $.ajax({
             type: 'POST',
             url: "includes/ajaxDispatcher.php",
-            data: {project_id: project_id, created_by: created_by, project_title: project_title, dispatcher: 'notifyOwner'},
+            data: {
+                project_id: project_id,
+                created_by: created_by,
+                project_title: project_title,
+                dispatcher: 'notifyOwner'
+            },
             error: function (req, text, error) {
                 alert('Error AJAX: ' + text + ' | ' + error);
             },
             success: function (data) {
-                if (data['result'] == 'OK') {  
-                console.log('bayo hai');                  
-					$('div#notifyTextContent').html('<p>Request has been sent to the owner. You will be notified after approval of your request.</p>');
-                }                
+                if (data['result'] == 'OK') {
+                    console.log('bayo hai');
+                    $('div#notifyTextContent').html('<p>Request has been sent to the owner. You will be notified after approval of your request.</p>');
+                }
             },
             dataType: "json"
 
         });
 
         return false;
-    });	
-    
-    
+    });
+
+
     /*accept route*/
     $(".decline-route").click(function () {
 
         var routed_by = $(this).attr('data-routedby');
-        var user_id = $(this).attr('data-user'); 
+        var user_id = $(this).attr('data-user');
         var notify_id = $(this).parent().parent().attr('data-id');
-               
-        
+
+
         //check username and pass
         $.ajax({
             type: 'POST',
@@ -946,8 +963,8 @@ $(document).ready(function () {
             },
             success: function (data) {
                 if (data['result'] == 'OK') {
-                    $('#notifytext_'+ notify_id).html('Declined!');
-                }                
+                    $('#notifytext_' + notify_id).html('Declined!');
+                }
             },
             dataType: "json"
 
@@ -957,87 +974,86 @@ $(document).ready(function () {
     });
 
 
-
-$("#searchInput").keyup(function () {
-    //split the current value of searchInput
-    var data = this.value.split(" ");
-    //create a jquery object of the rows
-    var jo = $("#fbody").find("tr");
-    if (this.value == "") {
-        jo.show();
-        return;
-    }
-    //hide all the rows
-    jo.hide();
-
-    //Recusively filter the jquery object to get results.
-    jo.filter(function (i, v) {
-        var $t = $(this);
-        for (var d = 0; d < data.length; ++d) {
-            if ($t.is(":contains('" + data[d] + "')")) {
-                return true;
-            }
+    $("#searchInput").keyup(function () {
+        //split the current value of searchInput
+        var data = this.value.split(" ");
+        //create a jquery object of the rows
+        var jo = $("#fbody").find("tr");
+        if (this.value == "") {
+            jo.show();
+            return;
         }
-        return false;
-    })
-    //show the rows that match.
-    .show();
-}).focus(function () {
-    this.value = "";
-    $(this).css({
-        "color": "black"
+        //hide all the rows
+        jo.hide();
+
+        //Recusively filter the jquery object to get results.
+        jo.filter(function (i, v) {
+                var $t = $(this);
+                for (var d = 0; d < data.length; ++d) {
+                    if ($t.is(":contains('" + data[d] + "')")) {
+                        return true;
+                    }
+                }
+                return false;
+            })
+            //show the rows that match.
+            .show();
+    }).focus(function () {
+        this.value = "";
+        $(this).css({
+            "color": "black"
+        });
+        $(this).unbind('focus');
+    }).css({
+        "color": "#C0C0C0"
     });
-    $(this).unbind('focus');
-}).css({
-    "color": "#C0C0C0"
-});
 
 
-$(".edit-create-password").click(function () {
+    $(".edit-create-password").click(function () {
         $('#password').focus();
-        
+
         return false;
     });
-    
-    
-$(".multiple-select").change(function () {
-if($(this).val().length > 3){
-var option = $("option:selected:last",this);
 
-	option.prop("selected", false);
-	alert("Maximum 3 co-founders are allowed");
-} else{
-    var selected_users = '';
-    $('.multiple-select :selected').each(function(i, selected){ 
-    		
-		selected_users = selected_users + '<span>' + $(selected).text() + '</span>';         
-	});
-}
-	$('.cofounder-selected-list').html(selected_users);
-}); 
+
+    $(".multiple-select").change(function () {
+        if ($(this).val().length > 3) {
+            var option = $("option:selected:last", this);
+
+            option.prop("selected", false);
+            alert("Maximum 3 co-founders are allowed");
+        } else {
+            var selected_users = '';
+            $('.multiple-select :selected').each(function (i, selected) {
+
+                selected_users = selected_users + '<span>' + $(selected).text() + '</span>';
+            });
+        }
+        $('.cofounder-selected-list').html(selected_users);
+    });
 // view project confirm
-	//$('')  
+    //$('')
 
 });
 
 
 /*$(".multiple-select").change(function () {
-    
-    var selected_users = '';
-    $('.multiple-select :selected').each(function(i, selected){ 
-    selected_users = selected_users + '<span>' + $(selected).text() + '</span>';         
-});
-alert('123');
-$('.cofounder-selected-list').html(selected_users);
-    
-     alert($(this).val());
 
-});*/
+ var selected_users = '';
+ $('.multiple-select :selected').each(function(i, selected){
+ selected_users = selected_users + '<span>' + $(selected).text() + '</span>';
+ });
+ alert('123');
+ $('.cofounder-selected-list').html(selected_users);
+
+ alert($(this).val());
+
+ });*/
 
 /* $("#co_founders").change(function () {         
-            var _clickedItemText = $(this).text();
-     alert(_clickedItemText);
-});*/
+ var _clickedItemText = $(this).text();
+ alert(_clickedItemText);
+ });*/
 
 
 /*jslint unparam: true */
@@ -1046,13 +1062,12 @@ $(function () {
     'use strict';
     // Change this to the location of your server-side upload handler:
 
-   // var url = 'https://www.rangeenroute.com/js/file-uploading/server/php/';
-    var url = "<?php echo SITE_URL; ?>;"+'/js/file-uploading/server/php/';
+    // var url = 'https://www.rangeenroute.com/js/file-uploading/server/php/';
+    var url = "<?php echo SITE_URL; ?>;" + '/js/file-uploading/server/php/';
     //var url =  'https://rangeen/js/file-uploading/server/php/';
 
     var base_url = 'https://rangeenroute.com/';
     //var base_url =  'http://rangeen/';
-
 
 
     //upload user photo
@@ -1076,8 +1091,7 @@ $(function () {
 
         }
     }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
-
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
 
 
     //upload user video for project step 3
@@ -1095,7 +1109,7 @@ $(function () {
 
         }
     }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
 
 
     //upload user video for project step 3
@@ -1114,10 +1128,9 @@ $(function () {
 
         }
     }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
-            
-            
-            
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+
     //upload product photo for project step 5
     $('#upload_product_image').fileupload({
         url: url,
@@ -1130,12 +1143,11 @@ $(function () {
             });
         },
         progressall: function (e, data) {
-            $('.upload-product-image').css('background-image', 'url(js/file-uploading/img/loading.gif)', 'width', '100%' );
+            $('.upload-product-image').css('background-image', 'url(js/file-uploading/img/loading.gif)', 'width', '100%');
 
         }
     }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');        
-
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
 
 
     $('#upload_picture_1').fileupload({
@@ -1153,7 +1165,7 @@ $(function () {
 
         }
     }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
 
 
     $('#upload_picture_2').fileupload({
@@ -1171,7 +1183,7 @@ $(function () {
 
         }
     }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
 
 
     $('#upload_picture_3').fileupload({
@@ -1189,7 +1201,7 @@ $(function () {
 
         }
     }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
 
 
     $('#upload_picture_4').fileupload({
@@ -1207,8 +1219,7 @@ $(function () {
 
         }
     }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
-
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
 
 
     $('#upload_picture_5').fileupload({
@@ -1226,7 +1237,7 @@ $(function () {
 
         }
     }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
 
 
 });
@@ -1237,8 +1248,8 @@ $(function () {
         beforeLoad: function (event, ui) {
             ui.jqXHR.error(function () {
                 ui.panel.html(
-                        "Couldn't load this tab. We'll try to fix this as soon as possible. " +
-                        "If this wouldn't be a demo.");
+                    "Couldn't load this tab. We'll try to fix this as soon as possible. " +
+                    "If this wouldn't be a demo.");
             });
         }
     });
@@ -1269,22 +1280,22 @@ function deleteComment(comment_id) {
     return false;
 }
 
-function deleteIdea(ideathread_id){
-	if(confirm('Are you sure you want to delete this?')){
-		$.ajax({
-	        type: 'POST',
-	        url: "includes/ajaxDispatcher.php",
-	        data: {ideathread_id: ideathread_id, dispatcher: 'delete-idea'},
-	        error: function (req, text, error) {
-	            alert('Error AJAX: ' + text + ' | ' + error);
-	        },
-	        success: function (data) {
-	            if (data['result'] == 'OK') {
-	                $('.idea_'+ ideathread_id).html('<div style="color: red; text-align: center; padding-top: 50px;">Your idea has been deleted.</div>');
-	            }
-	        },
-	        dataType: "json"
-	    });
+function deleteIdea(ideathread_id) {
+    if (confirm('Are you sure you want to delete this?')) {
+        $.ajax({
+            type: 'POST',
+            url: "includes/ajaxDispatcher.php",
+            data: {ideathread_id: ideathread_id, dispatcher: 'delete-idea'},
+            error: function (req, text, error) {
+                alert('Error AJAX: ' + text + ' | ' + error);
+            },
+            success: function (data) {
+                if (data['result'] == 'OK') {
+                    $('.idea_' + ideathread_id).html('<div style="color: red; text-align: center; padding-top: 50px;">Your idea has been deleted.</div>');
+                }
+            },
+            dataType: "json"
+        });
 
-	} 
+    }
 }

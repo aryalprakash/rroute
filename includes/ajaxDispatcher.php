@@ -43,11 +43,11 @@ switch ($action) {
             $project_title = getProjectTitle($_POST['project_id']);
             $sent_to = getProjectAuthor($_POST['project_id']);
             $author = getUserNameById($_POST['user_id']);
-            $url = SITE_URL.'/home.php?pid='.$_POST['project_id'];
+            $url = SITE_URL . '/home.php?pid=' . $_POST['project_id'];
             $text = $author . ' rated project ' . $project_title;
-            addNotification($sent_to, $text, $_POST['user_id'],$url);
+            addNotification($sent_to, $text, $_POST['user_id'], $url);
             addInteraction($_SESSION['uid'], 'rate', $sent_to, 'project', $_POST['project_id']);
-            
+
         } else
             $responce['result'] = '';
 
@@ -96,9 +96,9 @@ switch ($action) {
             $project_title = getProjectTitle($_POST['project_id']);
             $sent_to = getProjectAuthor($_POST['project_id']);
             $author = getUserNameById($_SESSION['uid']);
-            $url = SITE_URL.'/home.php?pid='.$_POST['project_id'];
-            $text =ucwords( $author) .' liked project ' . $project_title;
-            addNotification($sent_to, $text, $_SESSION['uid'],$url);
+            $url = SITE_URL . '/home.php?pid=' . $_POST['project_id'];
+            $text = ucwords($author) . ' liked project ' . $project_title;
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
 
             addInteraction($_SESSION['uid'], 'like', $sent_to, 'project', $_POST['project_id']);
 
@@ -107,12 +107,14 @@ switch ($action) {
 
         echo json_encode($responce);
         break;
-        
-     case 'like-idea':
+
+    case 'like-idea':
         require_once(DIR_APP . 'projects.php');
         require_once(DIR_APP . 'users.php');
         $id = AddIdeaLike($_POST['ideathread_id'], $_SESSION['uid']);
-       
+        print_r($id);
+        echo($id);
+
         if (!empty($id)) {
             $likes = getIdeaLikes($_POST['ideathread_id']);
             $responce['result'] = 'OK';
@@ -123,21 +125,20 @@ switch ($action) {
             $sent_to = getIdeaAuthor($_POST['ideathread_id']);
             $author = getUserNameById($sent_to);
             $user = getUserNameById($_SESSION['uid']);
-            $url = SITE_URL.'/home.php?iid='.$_POST['ideathread_id'];
-            $text = '<i>'.ucwords($user) .'</i>'. ' liked your ideathread ' . '<i>'.$ideathread_title.'</i>';
-            
-            addNotification($sent_to, $text, $_SESSION['uid'],$url);
+            $url = SITE_URL . '/home.php?iid=' . $_POST['ideathread_id'];
+            $text = '<i>' . ucwords($user) . '</i>' . ' liked your ideathread ' . '<i>' . $ideathread_title . '</i>';
+
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
             plusInteraction($_POST['ideathread_id']);
-            
-           
-            
+
+
             addInteraction($_SESSION['uid'], 'like', $sent_to, 'ideathread', $_POST['ideathread_id']);
-            
+
         } else
             $responce['result'] = '';
 
         echo json_encode($responce);
-        print_r(json_encode($response));
+        //print_r(json_encode($response));
         break;
 
     case 'remove-like-project':
@@ -173,7 +174,6 @@ switch ($action) {
         break;
 
 
-
     case 'reply':
         require_once(DIR_APP . 'users.php');
         $res = sendMessage($_POST);
@@ -194,7 +194,6 @@ switch ($action) {
         $id = addComment($_POST['project_id'], $_SESSION['uid'], $_POST['text']);
 
 
-
         if (!empty($id)) {
             $responce['result'] = 'OK';
             $responce['id'] = $id;
@@ -202,30 +201,30 @@ switch ($action) {
             $project_title = getProjectTitle($_POST['project_id']);
             $sent_to = getProjectAuthor($_POST['project_id']);
             $author = getUserNameById($_SESSION['uid']);
-            $url = SITE_URL.'/home.php?pid='.$_POST['project_id'];
+            $url = SITE_URL . '/home.php?pid=' . $_POST['project_id'];
             $text = $author . ' commented on your project ' . $project_title;
-            addNotification($sent_to, $text, $_SESSION['uid'],$url);
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
             addInteraction($_SESSION['uid'], 'comment', $sent_to, 'project', $_POST['project_id']);
 
             $messages = getComments($_POST['project_id']);
             $content = '';
             foreach ($messages as $ix => $m) {
-                $content.= '<div class="message-item';
+                $content .= '<div class="message-item';
                 if (($ix % 2) == 0)
-                    $content.= ' odd';
-                $content.= '" data-id="' . $ix . '">
+                    $content .= ' odd';
+                $content .= '" data-id="' . $ix . '">
  						<div class="message-author">';
 
                 $u = getUserData($m['created_by']);
 
-                $content.= '<div class="router-user-photo">
+                $content .= '<div class="router-user-photo">
         				<a href="user.php?uid=' . $u['user_id'] . '">';
                 if (empty($u['photo'])) {
-                    $content.= '<img src="uploads/avatars/nophoto.jpg" alt="">';
+                    $content .= '<img src="uploads/avatars/nophoto.jpg" alt="">';
                 } else {
-                    $content.= '<img src="uploads/avatars/' . $u['photo'] . '" alt="">';
+                    $content .= '<img src="uploads/avatars/' . $u['photo'] . '" alt="">';
                 }
-                $content.= '</a>
+                $content .= '</a>
 						<div class="router-user-name">
 						<a href="user.php?uid=' . $u['user_id'] . '">' . $u['first_name'] . '<br>' . $u['last_name'] . '</a>
 						</div>
@@ -235,9 +234,9 @@ switch ($action) {
 					 	<div class="message-content" data-id="' . $ix . '">' . $m['text'] . '</div>';
 
                 if ($m['created_by'] == $_SESSION['uid'])
-                    $content.= '<div class="delete delete_' . $m['comment_id'] . '" data-id="' . $m['comment_id'] . '" onclick="deleteComment(\'' . $m['comment_id'] . '\')"></div>';
+                    $content .= '<div class="delete delete_' . $m['comment_id'] . '" data-id="' . $m['comment_id'] . '" onclick="deleteComment(\'' . $m['comment_id'] . '\')"></div>';
 
-                $content.= '</div>';
+                $content .= '</div>';
             }
 
             $responce['content'] = $content;
@@ -246,7 +245,7 @@ switch ($action) {
 
         echo json_encode($responce);
         break;
-        
+
     case 'add-idea-comment':
         require_once(DIR_APP . 'projects.php');
         require_once(DIR_APP . 'users.php');
@@ -260,31 +259,31 @@ switch ($action) {
             $ideathread_title = getIdeaTitle($_POST['ideathread_id']);
             $sent_to = getIdeaAuthor($_POST['ideathread_id']);
             $author = getUserNameById($_SESSION['uid']);
-            $url = SITE_URL.'/home.php?iid='.$_POST['ideathread_id'];
+            $url = SITE_URL . '/home.php?iid=' . $_POST['ideathread_id'];
             $text = ucwords($author) . ' commented on your ideathread ' . $ideathread_title;
-            addNotification($sent_to, $text, $_SESSION['uid'],$url);
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
             addInteraction($_SESSION['uid'], 'comment', $sent_to, 'ideathread', $_POST['ideathread_id']);
 
             $messages = getIdeaComments($_POST['ideathread_id']);
-            
+
             $content = '';
             foreach ($messages as $ix => $m) {
-                $content.= '<div class="message-item';
+                $content .= '<div class="message-item';
                 if (($ix % 2) == 0)
-                    $content.= ' odd';
-                $content.= '" data-id="' . $ix . '">
+                    $content .= ' odd';
+                $content .= '" data-id="' . $ix . '">
  						<div class="message-author">';
 
                 $u = getUserData($m['created_by']);
 
-                $content.= '<div class="router-user-photo">
+                $content .= '<div class="router-user-photo">
         				<a href="user.php?uid=' . $u['user_id'] . '">';
                 if (empty($u['photo'])) {
-                    $content.= '<img src="uploads/avatars/nophoto.jpg" alt="">';
+                    $content .= '<img src="uploads/avatars/nophoto.jpg" alt="">';
                 } else {
-                    $content.= '<img src="uploads/avatars/' . $u['photo'] . '" alt="">';
+                    $content .= '<img src="uploads/avatars/' . $u['photo'] . '" alt="">';
                 }
-                $content.= '</a>
+                $content .= '</a>
 						<div class="router-user-name">
 						<a href="user.php?uid=' . $u['user_id'] . '">' . $u['first_name'] . '<br>' . $u['last_name'] . '</a>
 						</div>
@@ -294,9 +293,9 @@ switch ($action) {
 					 	<div class="message-content" data-id="' . $ix . '">' . $m['text'] . '</div>';
 
                 if ($m['created_by'] == $_SESSION['uid'])
-                    $content.= '<div class="delete delete_' . $m['comment_id'] . '" data-id="' . $m['comment_id'] . '" onclick="deleteComment(\'' . $m['comment_id'] . '\')"></div>';
+                    $content .= '<div class="delete delete_' . $m['comment_id'] . '" data-id="' . $m['comment_id'] . '" onclick="deleteComment(\'' . $m['comment_id'] . '\')"></div>';
 
-                $content.= '</div>';
+                $content .= '</div>';
             }
 
             $responce['content'] = $content;
@@ -324,7 +323,7 @@ switch ($action) {
 
         echo json_encode($responce);
         break;
-        
+
     case 'delete-idea-comment':
         require_once(DIR_APP . 'projects.php');
 
@@ -334,15 +333,15 @@ switch ($action) {
         $responce['result'] = 'OK';
 
         echo json_encode($responce);
-        break;    
-        
+        break;
+
     case 'delete-idea':
-    	require_once(DIR_APP . 'projects.php');
-    	deleteIdea($_POST['ideathread_id']);
-    	$response['result'] = 'OK';
-    	echo json_encode($response);
-    	break;
-    
+        require_once(DIR_APP . 'projects.php');
+        deleteIdea($_POST['ideathread_id']);
+        $response['result'] = 'OK';
+        echo json_encode($response);
+        break;
+
     case 'accept-route':
         require_once(DIR_APP . 'users.php');
 
@@ -352,7 +351,7 @@ switch ($action) {
 
         echo json_encode($responce);
         break;
-    
+
     case 'decline-route':
         require_once(DIR_APP . 'users.php');
 
@@ -362,78 +361,77 @@ switch ($action) {
 
         echo json_encode($responce);
         break;
-    
-    
+
+
     case 'share-project':
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
-        
+
         $routed = $_POST['routed'];
-        
+
         if ($routed) {
             addSuggestion($_POST['project_id'], $_POST['sent_to'], $_SESSION['uid']);
-            
-            $project_title = getProjectTitle($_POST['project_id']);            
+
+            $project_title = getProjectTitle($_POST['project_id']);
             $author = getUserNameById($_SESSION['uid']);
-            $url = SITE_URL.'/home.php?pid='.$_POST['project_id'];
+            $url = SITE_URL . '/home.php?pid=' . $_POST['project_id'];
             $text = $author . ' suggested project ' . $project_title;
-            addNotification($_POST['sent_to'], $text, $_SESSION['uid'],$url);
-        }
-        else
+            addNotification($_POST['sent_to'], $text, $_SESSION['uid'], $url);
+        } else
             deleteSuggestion($_POST['project_id'], $_POST['sent_to'], $_SESSION['uid']);
-            
+
 
         $responce['result'] = 'OK';
 
         echo json_encode($responce);
         break;
-		
-	case 'add-transaction':
+
+    case 'add-transaction':
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
 
-            $project_id = $_POST['project_id'];
-            $project_title = $_POST['project_title'];            
-			$user_id = $_SESSION['uid'];
-			$author_id = $_POST['created_by'];
-			$amount = $_POST['amount'];
+        $project_id = $_POST['project_id'];
+        $project_title = $_POST['project_title'];
+        $user_id = $_SESSION['uid'];
+        $author_id = $_POST['created_by'];
+        $amount = $_POST['amount'];
 
-            addTransaction($user_id, $amount, $project_title, $project_id, $author_id);
+        addTransaction($user_id, $amount, $project_title, $project_id, $author_id);
 
         $responce['result'] = 'OK';
 
         echo json_encode($responce);
         break;
-        
-        case 'notifyOwner':
+
+    case 'notifyOwner':
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
 
-            $project_id = $_POST['project_id'];
-            $project_title = $_POST['project_title'];            
-			$user_id = $_SESSION['uid'];
-			$author_id = $_POST['created_by'];
-			$user_name = getUserNameById($_SESSION['uid']);
-            $url = SITE_URL.'/home.php?iid='.$project_id;
-			$text = $user_name. ' wants to view your project '. $project_title;
-			
-		addNotification($author_id, $text, $user_id,$url);
-		
-	$responce['result'] = 'OK';
+        $project_id = $_POST['project_id'];
+        $project_title = $_POST['project_title'];
+        $user_id = $_SESSION['uid'];
+        $author_id = $_POST['created_by'];
+        $user_name = getUserNameById($_SESSION['uid']);
+        $url = SITE_URL . '/home.php?iid=' . $project_id;
+        $text = $user_name . ' wants to view your project ' . $project_title;
+
+        addNotification($author_id, $text, $user_id, $url);
+
+        $responce['result'] = 'OK';
 
         echo json_encode($responce);
-        break;	
-        
-        
-        case 'read-notifications':
+        break;
+
+
+    case 'read-notifications':
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
-        
+
         $user_id = $_SESSION['uid'];
         readNotifications($user_id);
-        
+
         $responce['result'] = 'OK';
-        
+
         echo json_encode($responce);
         break;
 
@@ -441,7 +439,7 @@ switch ($action) {
     case 'route-this-project':
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
-        $id = AddProjectRouter( $_POST['project_id'], $_SESSION['uid'], $_POST['sent_to']);
+        $id = AddProjectRouter($_POST['project_id'], $_SESSION['uid'], $_POST['sent_to']);
         if (!empty($id)) {
             $responce['result'] = 'OK';
             $responce['id'] = $id;
@@ -450,10 +448,10 @@ switch ($action) {
             addSuggestion($_POST['project_id'], $_POST['sent_to'], $_SESSION['uid']);
             $project_title = getProjectTitle($_POST['project_id']);
             $author = getUserNameById($_SESSION['uid']);
-            $url = SITE_URL.'/home.php?pid='.$_POST['project_id'];
+            $url = SITE_URL . '/home.php?pid=' . $_POST['project_id'];
             $text = $author . ' suggested project ' . $project_title;
             addNotification($_POST['sent_to'], $text, $_SESSION['uid'], $url);
-        }else{
+        } else {
             $responce['result'] = 'FALSE';
         }
 
@@ -463,30 +461,28 @@ switch ($action) {
     case 'unroute-this-user':
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
-        if(RemoveRouterId($_POST['router_id'])){
+        if (RemoveRouterId($_POST['router_id'])) {
             $responce['result'] = 'OK';
             $responce['router_id'] = $_POST['router_id'];
         }
-
         echo json_encode($responce);
         break;
 
     case 'search-route-user-lists':
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
-        $title=$_POST['title'];
-        $user_id=$_SESSION['uid'];
-        if( getUserNameBySearch($title,$user_id)){
+        $title = $_POST['title'];
+        $user_id = $_SESSION['uid'];
+        if (getUserNameBySearch($title, $user_id)) {
             $responce['result'] = 'OK';
         }
-
 
 //        if(RemoveRouterId($_POST['router_id'])){
 //            $responce['result'] = 'OK';
 //            $responce['router_id'] = $_POST['router_id'];
 //        }
 
-       // echo json_encode($responce);
+        // echo json_encode($responce);
         break;
 
 
