@@ -1962,7 +1962,7 @@ hr.delimiter.standrt {
     font-size: 15px;
 }
 
-.inbox-messages {
+.inboxs-messages {
     overflow-y: scroll;
     margin-top: 25px;
     height: 500px;
@@ -2387,7 +2387,7 @@ hr.delimiter.standrt {
     padding-right: 0px;
 }
 
-.comment-area .inbox-messages {
+.comment-area .inboxs-messages {
     max-height: 300px;
     overflow-y: auto;
 }

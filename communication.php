@@ -101,7 +101,7 @@ else
                             $own = getUserData($_SESSION['uid']);
                             $own_photo = $own['photo']; ?>
 
-                            <div class="inbox-messages">
+                            <div class="inboxs-messages">
                                 <?php
                                 $myconversations = getConversations($_SESSION['uid']);
 

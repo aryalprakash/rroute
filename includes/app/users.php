@@ -32,15 +32,12 @@ function registerUser($data)
         $date = '0000-00-00';
 
     $display_name = $db_con->escape($data['first_name']) . " " . $db_con->escape($data['last_name']);
-    //Redirect('http://www.google.com/', false);
     $q = "INSERT INTO `users` (`first_name`, `last_name`, `display_name`, `company_name`, `location`, `email`, `password`, `user_type`, `user_level`, `birthday`, `confirmed`)
 	   VALUES ('" . $db_con->escape($data['first_name']) . "', '" . $db_con->escape($data['last_name']) . "', '" . $display_name . "',  '', '', '" . $db_con->escape($data['email']) . "', '" . md5(sha1($db_con->escape($data['password']))) . "', " . $db_con->escape($data['user_type']) . ", 1, '" . $date . "', 0)";
-    //$q = "INSERT INTO users"
     $res = $db_con->query($q);
 
 
     $user_id = $db_con->insert_id();
-    // Redirect('http://www.google.com/', false);
     //if ($res)
     //login($db_con->escape($data['email']), $db_con->escape($data['password']));
 
@@ -160,7 +157,6 @@ function updateAccount($data)
     if (!$keep_preferred_only && !$keep_preferred_nickname)
         $display_name = $db_con->escape($data['first_name']) . ' ' . $db_con->escape($data['last_name']);
 
-    echo $display_name;
     print_r($display_name);
     $q = "UPDATE `users` SET
 		`first_name` = '" . $db_con->escape($data['first_name']) . "',

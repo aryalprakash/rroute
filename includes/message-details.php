@@ -12,7 +12,7 @@ $messages = getMessageDetails($_GET['conv']);
 <div class="user-name-tops">
   <a href ="<?php echo SITE_URL;?>/user.php?uid=<?php echo $conv_partner?>">  <?php echo ucwords(getUserNameById($conv_partner)); ?></a>
 </div>
-<div class="inbox-messages">
+<div class="inboxs-messages">
 
     <?php
     foreach ($messages as $message) {
