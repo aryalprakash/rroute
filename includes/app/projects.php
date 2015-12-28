@@ -467,7 +467,7 @@ function AddProjectLike($project_id, $routed_by)
     global $db_con;
 
     $insert = "INSERT INTO `liked_projects`(`project_id`, `liked_by`)
-		VALUES (" . $db_con->escape($project_id) . ", " . $db_con->escape($routed_by) . ")";
+		VALUES ($project_id,$routed_by)";
 
     $db_con->query($insert);
 
@@ -478,8 +478,8 @@ function AddIdeaLike($ideathread_id, $routed_by)
 {
     global $db_con;
 
-    $insert = "INSERT INTO `liked_ideas` (`ideathread_id`, `liked_by`)
-		VALUES ($db_con->escape($ideathread_id) ,$db_con->escape($routed_by))";
+    $insert = "INSERT INTO `liked_ideas`(`ideathread_id`, `liked_by`)
+		VALUES ( $ideathread_id  ,$routed_by)";
     $db_con->query($insert);
     return $db_con->insert_id();
 }
@@ -735,7 +735,7 @@ function getIdeaLikes($ideathread_id)
 {
     global $db_con;
 
-    $q = 'SELECT COUNT(`like_id`) as c FROM `liked_ideas` WHERE `ideathread_id` = ' . $ideathread_id;
+    $q = 'SELECT COUNT(`like_id`) as c FROM `liked_ideas` WHERE `ideathread_id` = '. $ideathread_id;
     $res = $db_con->query($q);
 
     $likes = $db_con->fetch_array($res);
@@ -1815,4 +1815,87 @@ function getProductImage($project_id)
 
 }
 
+
+//for adding trend in search_top
+/* ****************************************************************** */
+function search_popularity_update($q,$pid)
+{
+    global $db_con;
+
+    $q_date    = date('Y-m-d H:i:sO');
+    $old_date  = date('Y-m-d H:i:sO', strtotime('-1 week'));
+
+// DISCARD SEARCHES WITH NUMBERS IN THE TEXT - THEY ARE ALL LOOKING FOR DATES OR BIBLE PASSAGES, NOT IN OUR INDEX
+    $q_str     = $db_con->escape($q);
+    if (preg_match('[0-9]', $q_str))
+    {
+        return;
+    }
+
+// CONSTRUCT THE SOUNDEX AND METAPHONE, ACCOUNTING FOR PLURALS BY UNCONDITIONALLY ADDING LETTER 'S' TO THE END
+    $q_plural   = strtoupper($q_str) . 'S';
+    $q_phone    = metaphone($q_plural);
+    $q_dex      = soundex($q_plural);
+    $project_id = $pid;
+// FIND IDENTICAL SEARCH TERMS IN OUR DB TABLE
+    $sql = "SELECT *FROM `top_search_terms` WHERE `search_phone` ='".$q_phone."' AND `search_dex`='".$q_dex."' LIMIT 1";
+    $result=$db_con->query($sql);
+    //print_r($result);
+    $row = $db_con->fetch_array($result);
+    //print_r($row);
+
+// IF NO IDENTICAL TERMS, INSERT THIS INTO THE TABLE
+    if (empty($row))
+    {
+        $sql = "INSERT INTO `top_search_terms` (`project_id`, `search_terms`, `search_phone`, `search_dex`, `search_date`, `search_score`, `search_total` )VALUES ('".$project_id."','".$q_str."','".$q_phone."','".$q_dex."','".$q_date."',1,1)";
+
+
+        //print_r($sql);
+        $db_con->query($sql);
+//        if (!$result = $db_con->query($sql)) { //fatal_error ($sql);
+//            }
+    } else
+    {
+// INCREMENT THE SEARCH POPULARITY BY INCREASING THE COUNT
+        $search_score= $row["search_score"] + 1;
+        $search_total= $row["search_total"] + 1;
+        $_key= $row["_key"];
+        $sql= "UPDATE `top_search_terms` SET `search_score` =".$search_score.",`search_total` ='". $search_total."',`search_date` ='". $q_date."' WHERE `_key` = '".$_key."' LIMIT 1";
+
+        $db_con->query($sql);
+       // if (!$result= $db_con->query($sql)) { fatal_error ($sql); }
+    }
+
+// REDUCES THE SEARCH POPULARITY SCORE AS THE AGE OF OLDER SEARCHES INCREASES
+    $sql= "SELECT * FROM `top_search_terms` WHERE `search_date` <'".$old_date."'";
+    //print_r($sql);
+    $result=$db_con->query($sql);
+    //if (!$result = $db_con->query($sql)) { fatal_error ($sql); }
+    while ($row  = $db_con->fetch_array($result))
+    {
+        $_key        = $row["_key"];
+        $score       = $row["search_score"];
+        $last_date   = $row["search_date"];
+        $new_date    = date('Y-m-d H:i:sO', (strtotime($last_date) + (1 * 24 * 60 * 60)));    // MOVE SEARCH DATE FORWARD
+        $score--;                                                                            // DECREMENT POPULARITY SCORE
+
+        $u_sql       = "UPDATE `top_search_terms` SET `search_score` = $score, `search_date` = $new_date WHERE _key = $_key LIMIT 1";
+        if (!$u_result= $db_con->query($u_sql)) { fatal_error ($u_sql); }
+    }
+
+// IF THE POPULARITY SCORE GOES BELOW ZERO, DROP IT
+    $d_sql = "DELETE FROM `top_search_terms` WHERE `search_score` < 0";
+    if (!$d_result= $db_con->query($d_sql)) { fatal_error ($d_sql); }
+    return;
+}
+/* ****************************************************************** */
+
+function getProjectsInTop_search_term()
+{
+    global $db_con;
+
+    $query ='SELECT `project_id` FROM `top_search_terms`ORDER BY `search_total` DESC';
+    return $db_con->sql2array($query);
+
+}
 ?>

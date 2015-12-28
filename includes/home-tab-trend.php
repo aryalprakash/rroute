@@ -5,12 +5,12 @@ include_once('app/users.php');
 
 //$trend = calculateTrendForProject(6);
 
-$projects = getProjectsInTrend(); //print_r($projects);
-
+//$projects = getProjectsInTrend(); //print_r($projects); //original trend in project
+$projects = getProjectsInTop_search_term(); //print_r($projects);//created project
 if ($projects) {
 
     foreach ($projects as $pr) {
-        
+
         $project = getProjectById($pr['project_id']);
 
         $title = $project['project_title'];
@@ -26,20 +26,27 @@ if ($projects) {
             <?php $image = getFeaturingImage($project['project_id']);
             if (!empty($image)) {
                 ?>
-                <a href="home.php?pid=<?php echo $project['project_id']; ?>" class="recent-project-title" title="<?php echo $title; ?>"><img src="<?php echo SITE_URL . '/uploads/images/thumbs/' . $image; ?>" alt=""></a>
+                <a href="home.php?pid=<?php echo $project['project_id']; ?>" class="recent-project-title"
+                   title="<?php echo $title; ?>"><img src="<?php echo SITE_URL . '/uploads/images/thumbs/' . $image; ?>"
+                                                      alt=""></a>
             <?php } else { ?>
-                <a href="home.php?pid=<?php echo $project['project_id']; ?>" class="recent-project-title" title="<?php echo $title; ?>"><img src="<?php echo SITE_URL . '/uploads/avatars/nophoto.jpg'; ?>" alt=""></a>
-        <?php } ?>
+                <a href="home.php?pid=<?php echo $project['project_id']; ?>" class="recent-project-title"
+                   title="<?php echo $title; ?>"><img src="<?php echo SITE_URL . '/uploads/avatars/nophoto.jpg'; ?>"
+                                                      alt=""></a>
+            <?php } ?>
 
-            <div class="project-bottom-details">    
-            <a href="home.php?pid=<?php echo $project['project_id']; ?>" class="recent-project-title" title="<?php echo $title; ?>"><?php echo $short_title; ?></a>
-            <span class="project-rating"><?php echo calculateRating($project['project_id']); ?></span>
+            <div class="project-bottom-details">
+                <a href="home.php?pid=<?php echo $project['project_id']; ?>" class="recent-project-title"
+                   title="<?php echo $title; ?>"><?php echo $short_title; ?></a>
+                <span class="project-rating"><?php echo calculateRating($project['project_id']); ?></span>
             </div> <!-- project-bottom-details -->
 
-            <div class="project-author"><?php echo TimeAgo(date('Y-m-d', strtotime($project['created_on']))); ?> by <a href="user.php?uid=<?php echo $project['created_by']; ?>"><?php echo $user['display_name']; ?></a></div>
+            <div class="project-author"><?php echo TimeAgo(date('Y-m-d', strtotime($project['created_on']))); ?> by <a
+                    href="user.php?uid=<?php echo $project['created_by']; ?>"><?php echo $user['display_name']; ?></a>
+            </div>
 
         </div>
-    <?php
+        <?php
     }
 }
 ?>

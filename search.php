@@ -35,6 +35,7 @@ if (empty($_SESSION['logged_in']))
                             if ($projects) {
 
                             foreach ($projects as $project) {
+                                search_popularity_update($search,$project['project_id']);
 
                                 $user = getUserData($project['created_by']);
                                 //$user_email = getUserData($project['created_by']);
