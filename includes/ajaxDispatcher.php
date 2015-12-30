@@ -460,9 +460,13 @@ switch ($action) {
     case 'unroute-this-user':
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
+        $user = getUserNameById($_POST['user_id']);
         if (RemoveRouterId($_POST['router_id'])) {
             $responce['result'] = 'OK';
             $responce['router_id'] = $_POST['router_id'];
+            $responce['user'] = $user;
+        } else{
+            $responce['result'] = 'FALSE';
         }
         echo json_encode($responce);
         break;

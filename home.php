@@ -146,7 +146,7 @@ require_once(DIR_APP . 'users.php');
                 }
 
 
-//                $rank = getRankForProject($project['project_id']);
+                //                $rank = getRankForProject($project['project_id']);
                 ?>
                 <?php if (!isset($_GET['iid'])){ ?>
                     <div class="home-project-info">
@@ -241,19 +241,22 @@ require_once(DIR_APP . 'users.php');
                         <?php } ?>
 
 
-<!--                        --><?php //if (checkRoutedProject($project['project_id'], $_SESSION['uid'])) { ?>
-<!--                            <a href="#" class="project-action-btn route_project" id="routed_project"-->
-<!--                               data-id="--><?php //echo $project['project_id'] ?><!--" title="Unroute">Routed</a>-->
-<!--                            <a href="#" class="project-action-btn route_project" id="route_project"-->
-<!--                               data-id="--><?php //echo $project['project_id'] ?><!--" style="display: none;">Route</a>-->
-<!--                        --><?php //} else { ?>
+                        <!--                        --><?php //if (checkRoutedProject($project['project_id'], $_SESSION['uid'])) { ?>
+                        <!--                            <a href="#" class="project-action-btn route_project" id="routed_project"-->
+                        <!--                               data-id="-->
+                        <?php //echo $project['project_id'] ?><!--" title="Unroute">Routed</a>-->
+                        <!--                            <a href="#" class="project-action-btn route_project" id="route_project"-->
+                        <!--                               data-id="-->
+                        <?php //echo $project['project_id'] ?><!--" style="display: none;">Route</a>-->
+                        <!--                        --><?php //} else { ?>
 
-                            <a href="#" class="project-action-btn route_project" id="routed_project"
-                               data-id="<?php echo $project['project_id'] ?>" style="display: none;" title="Unroute">Routed</a>
-                            <a href="#" class="project-action-btn route_project" id="route_project"
-                               data-id="<?php echo $project['project_id'] ?>">Route</a>
+                        <a href="#" class="project-action-btn route_project" id="routed_project"
+                           data-id="<?php echo $project['project_id'] ?>" style="display: none;"
+                           title="Unroute">Routed</a>
+                        <a href="#" class="project-action-btn route_project" id="route_project"
+                           data-id="<?php echo $project['project_id'] ?>">Route</a>
 
-<!--                        --><?php //} ?>
+                        <!--                        --><?php //} ?>
 
                         <a href="#" class="project-action-btn" id="comment_project"
                            data-id="<?php echo $project['project_id'] ?>">Comment
@@ -277,7 +280,8 @@ require_once(DIR_APP . 'users.php');
                         <a href="#" class="project-action-btn" id="report_project"
                            data-id="<?php echo $project['project_id'] ?>">Report</a>
                         <a href="" class="project-action-btn " id="homeshare_project" data-id="">
-                            <img src="<?php echo SITE_URL; ?>/images/shareicon.png" width="30" height="20" align="center"/></a>
+                            <img src="<?php echo SITE_URL; ?>/images/shareicon.png" width="30" height="20"
+                                 align="center"/></a>
 
 
                     </div>
@@ -373,9 +377,10 @@ require_once(DIR_APP . 'users.php');
 
                     <!-- route -->
                     <div class="route-area">
-                        <div  style="width:296px;float:left;">
-                            <input type="text" id="route-search" placeholder="Type Your Router Name" data-id="<?php echo $_SESSION['uid']; ?>"/>
-                            <input type="hidden" id="route-button" value="Search" />
+                        <div style="width:296px;float:left;">
+                            <input type="text" id="route-search" placeholder="Type Your Router Name"
+                                   data-id="<?php echo $_SESSION['uid']; ?>"/>
+                            <input type="hidden" id="route-button" value="Search"/>
                             <ul id="route-result"></ul>
                         </div>
 
@@ -384,15 +389,16 @@ require_once(DIR_APP . 'users.php');
                                 <?php $routers = getRoutersForProject($project['project_id'], $_SESSION['uid']);
                                 if ($routers) {
                                     foreach ($routers as $router) {
-                                        echo '<div class="routed-users-list" data-id="'.$router['router_id'].'"><span class="unroute" data-id="'.$router['router_id'].'">X</span><a href="'.SITE_URL.'/user.php?uid='.$router['routed_to'].'"><li class="routed-name">'.getUserNameById($router['routed_to']).'</li></a></div>';
+                                        echo '<div class="routed-users-list" data-id="' . $router['router_id'] . '" user-id="'. $router['routed_to'].'"><span class="unroute" data-id="' . $router['router_id'] . '" user-id="'. $router['routed_to'].'">X</span><a href="' . SITE_URL . '/user.php?uid=' . $router['routed_to'] . '"><li class="routed-name">' . getUserNameById($router['routed_to']) . '</li></a></div>';
                                     }
-                                    }
-//                                    ?>
+                                }
+                                //                                    ?>
                             </ul>
+                            <div class="success-message"></div>
                         </div>
-<!--                        <div class="routers-set">-->
+                        <!--                        <div class="routers-set">-->
 
-<!--                        </div> <!-- routers-set -->
+                        <!--                        </div> <!-- routers-set -->
                     </div> <!-- route-area -->
 
 
@@ -422,26 +428,38 @@ require_once(DIR_APP . 'users.php');
                 }
                 } ?>
                 <!-- homeshare area  -->
-                <div class="homeshare-area active" >
+                <div class="homeshare-area share-active">
+                    <?php
+                    $urls =
+                    $title=urlencode($project['project_title']);
+                    $url=urlencode(SITE_URL . '/home.php?pid=' . $project['project_id']);
+                    $summary=$title;
+                    $image=urlencode(SITE_URL.'/images/icons/4.png');
+                    ?>
                     <a class="project-action-btns"
-                       href="http://www.facebook.com/sharer.php?u=<?php echo SITE_URL . '/home.php?pid=' . $project['project_id']; ?>"
-                       target="_blank" title="Click to share"><img src="./images/icons/facebook.png" width="40" height="40"
+
+                       href="http://www.facebook.com/sharer.php?s=100&amp;p[title]=<?php echo $title;?>&amp;p[summary]=<?php echo $summary;?>&amp;p[url]=<?php echo $url; ?>&amp;p[images][0]=<?php echo $image;?>','facebook','toolbar=0,status=0,width=548,height=325'"
+                       target="_blank" title="Click to share"><img src="./images/icons/facebook.png" width="40"
+                                                                   height="40"
                                                                    class="img-circle"></a>
                     <a class="project-action-btns"
                        href="https://plus.google.com/share?url=<?php echo SITE_URL . '/home.php?pid=' . $project['project_id']; ?>"
-                       target="_blank" title="Click to share"><img src="./images/icons/gplus.png" width="40" height="40"></a>
+                       target="_blank" title="Click to share"><img src="./images/icons/gplus.png" width="40"
+                                                                   height="40"></a>
                     <a class="project-action-btns"
-                       href="http://twitter.com/share?text=<?php echo substr($project['project_title'],0,50); ?>&url=<?php echo SITE_URL . '/home.php?pid=' . $project['project_id']; ?>"
-                       target="_blank" title="Click to share"><img src="./images/icons/twitter.png" width="40" height="40"></a>
+                       href="http://twitter.com/share?text=<?php echo substr($project['project_title'], 0, 50); ?>&url=<?php echo SITE_URL . '/home.php?pid=' . $project['project_id']; ?>&via=Rangeenroute"
+                       target="_blank" title="Click to share"><img src="./images/icons/twitter.png" width="40"
+                                                                   height="40"></a>
                     <a class="project-action-btns"
-                       href="http://www.linkedin.com/shareArticle?mini=true&url=<?php echo SITE_URL . '/home.php?pid=' .$project['project_id']; ?>"
-                       target="_blank" title="Click to share"><img src="./images/icons/linkedin.png" width="40" height="40"></a>
+                       href="http://www.linkedin.com/shareArticle?mini=true&url=<?php echo SITE_URL . '/home.php?pid=' . $project['project_id']; ?>"
+                       target="_blank" title="Click to share"><img src="./images/icons/linkedin.png" width="40"
+                                                                   height="40"></a>
                     <a class="project-action-btns"
-                       href="http://reddit.com/submit?url=<?php echo SITE_URL . '/home.php?pid=' .$project['project_id']; ?>&title=<?php echo $project['project_title']; ?>"
+                       href="http://reddit.com/submit?url=<?php echo SITE_URL . '/home.php?pid=' . $project['project_id']; ?>&title=<?php echo $project['project_title']; ?>"
                        target="_blank" title="Click to share"><img src="./images/icons/reddit.png" width="40"
                                                                    height="40"></a>
                     <a class="project-action-btns"
-                       href="mailto:?Subject=<?php echo $project['project_title'];?>&Body=<?php echo substr ($text,0,50).' for more visit. '.SITE_URL . '/home.php?pid=' . $project['project_id'];;
+                       href="mailto:?Subject=<?php echo $project['project_title']; ?>&Body=<?php echo substr($text, 0, 50) . ' for more visit. ' . SITE_URL . '/home.php?pid=' . $project['project_id'];;
                        ?>"
                        title="Click to share"><img src="./images/icons/email.png" width="40"
                                                    height="40"></a>
@@ -457,6 +475,7 @@ require_once(DIR_APP . 'users.php');
                     <li><a href="includes/home-tab-routed.php">Routed</a></li>
                     <li><a href="includes/home-tab-suggestions.php">Suggestions</a></li>
                     <li><a href="includes/home-tab-fundables.php">Fundables</a></li>
+                    <li><a href="includes/home-tab-fundabletest.php">Fundablestest</a></li>
 
                 </ul>
             </div>  <!-- home-tabs -->

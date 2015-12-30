@@ -783,7 +783,7 @@ function getIdeaComments($ideathread_id)
 {
     global $db_con;
 
-    $q = 'SELECT * FROM `ideathread_comments` WHERE `ideathread_id` = ' . $ideathread_id;
+    $q = 'SELECT * FROM `ideathread_comments` WHERE `ideathread_id` = ' . $ideathread_id ;
 
     $a = $db_con->sql2array($q);
 

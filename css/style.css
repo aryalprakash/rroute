@@ -1392,6 +1392,7 @@ a.upload-picture {
 .project-action {
     overflow: hidden;
     float: left;
+    width: 100%;
 }
 
 .project-action-btn {
@@ -2420,7 +2421,8 @@ hr.delimiter.standrt {
     float: left;
     margin-top: 10px;
     display: none;
-}
+
+    }
 
 .route-area .project-action-btn {
     float: left;
@@ -2481,7 +2483,7 @@ hr.delimiter.standrt {
 }
 
 .share-area {
-    width: 60px;
+    width: 51px;
     padding: 10px;
     margin-top: 0px;
     display: none;
@@ -2490,7 +2492,7 @@ hr.delimiter.standrt {
 }
 
 .homeshare-area {
-    width: 60px;
+    width: 510px;
     padding: 10px;
     margin-top: 0px;
     display: none;

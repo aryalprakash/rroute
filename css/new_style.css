@@ -197,6 +197,7 @@ h2.home-welcome {
 #route-result li:hover {
     background: #E2E7ED;
     height: 20px;
+
 }
 
 .route-area > a {
@@ -210,10 +211,11 @@ h2.home-welcome {
     border-right: 1px solid #cfc7c0;
 }
 
-.active {
-    border-style: solid;
-    border-width: 1px;
-    border-color: black;
+.share-active {
+    width: 360px;
+    float: right;
+    margin-right: 107px;
+    border: none;
 }
 
 .click-user {
@@ -257,7 +259,12 @@ h2.home-welcome {
 
 .route-area {
     height: 200px;
+    overflow: hidden;
     /*overflow: overlay;*/
+}
+
+.suc{
+    color:orangered; background: white; width: 295px; position: absolute; margin-top: -20px;
 }
 
 .user-name-tops {

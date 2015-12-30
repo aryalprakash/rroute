@@ -157,7 +157,7 @@ $(document).ready(function () {
         $('.report-area').css('display', 'none');
         $('.route-area').css('display', 'none');
 
-        $(".share-area").toggle("slow");
+        $(".share-area").toggle();
 
         return false;
     });
@@ -170,17 +170,16 @@ $(document).ready(function () {
         $('.report-area').css('display', 'none');
         $('.route-area').css('display', 'none');
 
-        $(".homeshare-area").toggle("slow");
-
+        $(".homeshare-area").toggle();
         return false;
     });
     //for active class
     $('#route_project,#homeshare_project,#share_project,#comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').on('click', function () {
 
         //if ( $( "#route_project" ).hasClass( "active" ) ) {
-        $('#route_project,#share_project,#comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').removeClass('active');
+        $('#route_project,#share_project, #comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').removeClass('active');
         //} else {
-        $(this).addClass('active');
+        //$(this).addClass('active');
         // }
 
     });
@@ -320,7 +319,9 @@ $(document).ready(function () {
             },
             success: function (data) {
                 if (data.result == 'OK') {
-                    $(".routed-users").prepend('<div class="routed-users-list" data-id="' + data.id + '"><span class="unroute" data-id="' + data.id + '">X</span><a href="user.php?uid=' + data.user_id + '"><li class="routed-name">' + data.user + '</li></a></div>')
+                    $(".success-message").html('<p style="color:forestgreen;" class="suc">Routed to '+data.user+'.</p>');
+                    $(".suc").fadeOut(4000);
+                    $(".routed-users").prepend('<div class="routed-users-list" data-id="' + data.id + '"><span class="unroute" data-id="' + data.id + '" user-id="'+data.user_id+'">X</span><a href="user.php?uid=' + data.user_id + '"><li class="routed-name">' + data.user + '</li></a></div>')
                 } else {
                     alert("You've already routed this user.");
                 }
@@ -330,20 +331,26 @@ $(document).ready(function () {
     });
 
     $('body').on('click', '.unroute', function () {
-        $.ajax({
-            type: "post",
-            url: "includes/ajaxDispatcher.php",
-            data: {router_id: $(this).attr("data-id"), dispatcher: 'unroute-this-user'},
-            error: function (req, text, error) {
-                alert('Error AJAX: ' + text + ' | ' + error);
-            },
-            success: function (data) {
-                if (data.result == 'OK') {
-                    $(".routed-users").find("[data-id=" + data.router_id + "]").remove();
-                }
-            },
-            dataType: "json"
-        });
+        var r = confirm("Are You Sure Want to Unroute this user?");
+        if (r == true) {
+            $.ajax({
+                type: "post",
+                url: "includes/ajaxDispatcher.php",
+                data: {router_id: $(this).attr("data-id"), user_id: $(this).attr("user-id"), dispatcher: 'unroute-this-user'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data.result == 'OK') {
+                        console.log(data);
+                        $(".routed-users").find("[data-id=" + data.router_id + "]").remove();
+                        $(".success-message").html('<p style="color: orangered;" class="suc">Unrouted to '+data.user+'.</p>');
+                        $(".suc").fadeOut(4000);
+                    }
+                },
+                dataType: "json"
+            });
+        }
     });
 
 

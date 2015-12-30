@@ -446,7 +446,7 @@ $(document).ready(function () {
                             //$(".comment-area").delay(1500).slideUp('slow');
                             $(".comment-area .inbox-messages").html(data['content']);
 
-                            $('#comment_project').text('Comented');
+                            $('#comment_project').text('Commented');
                             $('#comment_project').css('opacity', '0.6');
                         }
                     },
@@ -653,7 +653,7 @@ $(document).ready(function () {
             $.ajax({
                 type: 'POST',
                 url: "includes/ajaxDispatcher.php",
-                data: {user_id: recipient, message: message, com_id: com_id, dispatcher: 'reply'},
+                data: {user_id: recipient, message: messagep, com_id: com_id, dispatcher: 'reply'},
                 error: function (req, text, error) {
                     alert('Error AJAX: ' + text + ' | ' + error);
                 },
@@ -661,20 +661,21 @@ $(document).ready(function () {
                     if (data['result'] == 'OK') {
                         $(".message-item").before(
                             '<div class="message-items"style="border-top:none;"><div class="message-author">' +
-                            '<div class="router-user-photo answer-photo">' +
+                            '<div class="router-user-photo photo-right">' +
                             ' <a href="http://localhost/github/rangeenroute/user.php?uid=' + sender +
-                            '"><img src="' + photo + '" alt="' + sent_time + '">' +
+                            '"><img src="' + photo + '" title="' + sent_time + '">' +
                             '</a>' +
-                            '<div class="router-user-name"></div>' +
                             '</div>' +
                             '</div>' +
-                            '<div class="message-contents " text-align="">' + messagep + ' <p>                </p></div></div>'
+                            '<div class="message-right">' + messagep + ' <p>                </p></div></div>'
                         );
+
                         //$('#message-contents').delay(500).append('<p style="line-height: 2;">Your Message has been sent</p>');
-                        $('#reply-ans').delay(500).html('<p style="line-height: 2;">Your Message has been sent</p>');
-                        $('#reply-ans').val('');
+                        //$('#reply-ans').delay(500).html('<p style="line-height: 2;">Your Message has been sent</p>');
+                        //$('#reply-ans').val('');
                         $('textarea').val('').delay(1000);
-                        $('#reply-ans').delay(1000).hide('slow');
+                        //$('#reply-ans').delay(1000).hide('slow');
+                        $('.inbox-messages').scrollTop($(".answer-box").offset().top+200);
                     } else {
                         $('#reply-ans').val().delay(500).html('<div style="line-height: 2;">Error</div>');
                         $('#reply-ans').val('');
