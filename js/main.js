@@ -662,8 +662,8 @@ $(document).ready(function () {
                         $(".message-item").before(
                             '<div class="message-items"style="border-top:none;"><div class="message-author">' +
                             '<div class="router-user-photo photo-right">' +
-                            ' <a href="http://localhost/github/rangeenroute/user.php?uid=' + sender +
-                            '"><img src="' + photo + '" title="' + sent_time + '">' +
+                            ' <a href="/user.php?uid=' + sender +
+                            '"><img src="uploads/avatars/' + photo + '" title="' + sent_time + '">' +
                             '</a>' +
                             '</div>' +
                             '</div>' +
