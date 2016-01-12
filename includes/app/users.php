@@ -768,5 +768,45 @@ function getMessageRecipient($conv_id)
         return $res['sender'];
 
 }
+/***********for Investor **************/
+function getInvestorData($investor_id)
+{
+    global $db_con;
 
+    $res = $db_con->query("SELECT * FROM `investors` WHERE `investor_id` = " . $investor_id . " LIMIT 1");
+    //print_r($res);
+
+    return $db_con->fetch_array($res);
+}
+
+function getFootnoteByAuthorForInvestor($investor_id, $created_by)
+{
+    global $db_con;
+
+    $query = 'SELECT `investor_id` FROM `footnotes` WHERE `investor_id` = ' . $investor_id . ' AND `created_by` = ' . $created_by;
+    $res = $db_con->query($query);
+
+    $user = $db_con->fetch_array($res);
+    return $user['investor_id'];
+}
+
+function addFootNoteForInvestor($data)
+{
+    global $db_con;
+
+    $q = "INSERT INTO `footnotes` SET
+            `investor_id` = " . $data['investor_id'] . ", `text` = '" . $db_con->escape($data['footnote']) . "', `created_by` = " . $_SESSION['uid'];
+
+    $res = $db_con->query($q);
+}
+
+function getFootnotesForInvestor($investor_id)
+{
+    global $db_con;
+
+    $query = 'SELECT * FROM `footnotes` WHERE `investor_id` = ' . $investor_id;
+    return $db_con->sql2array($query);
+}
+
+/*********** for investor ends **********/
 ?>

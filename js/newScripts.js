@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     var SITE_URL = "<?php echo SITE_URL; ?>";
     $("#rewardType")
@@ -141,10 +142,10 @@ $(document).ready(function () {
         $('.likes-area').css('display', 'none');
         $('.comment-area').css('display', 'none');
         $('.report-area').css('display', 'none');
-        $('.share-area').css('display', 'none');
+       // $('.share-area').css('display', 'none');
         $('.homeshare-area').css('display', 'none');
 
-        $(".route-area").slideDown("slow");
+        $(".route-area").slideToggle('slow');
 
         return false;
     });
@@ -157,7 +158,7 @@ $(document).ready(function () {
         $('.report-area').css('display', 'none');
         $('.route-area').css('display', 'none');
 
-        $(".share-area").toggle();
+        $(".share-area").slideToggle('slow');
 
         return false;
     });
@@ -170,19 +171,19 @@ $(document).ready(function () {
         $('.report-area').css('display', 'none');
         $('.route-area').css('display', 'none');
 
-        $(".homeshare-area").toggle();
+        $(".homeshare-area").slideToggle('slow');
         return false;
     });
     //for active class
-    $('#route_project,#homeshare_project,#share_project,#comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').on('click', function () {
+   // $('#route_project,#homeshare_project,#share_project,#comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').on('click', function () {
 
         //if ( $( "#route_project" ).hasClass( "active" ) ) {
-        $('#route_project,#share_project, #comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').removeClass('active');
+        //$('#route_project,#share_project, #comment_project,#like_project,#rate_project,#report_project,#like_idea,#liked_idea').removeClass('active');
         //} else {
         //$(this).addClass('active');
         // }
 
-    });
+   // });
     //end share project
 
     //tooltip dekhaune
@@ -378,6 +379,53 @@ $(document).ready(function () {
     //    return false;
     //});
 ///* After clicking on message ends */
+
+    //$('.finalize').click(function () {
+    //   console.log('now you can start coding.');
+    //
+    //});
+/********for apllying project box*****/
+    $("#apply_project_button").click(function () {
+        $(".apply-project-area").slideToggle("slow");
+        return false;
+    });
+
+    $(".apply-project-bottom").click(function () {
+        //alert($('input[type="checkbox"]:checked').length);
+        $('input[type="checkbox"]:checked').each(function(){
+            var project_id = $(this).data('id');
+            var investor_id=$(this).data('value');
+            console.log(project_id,investor_id)
+            //$.ajax({
+            //    type: 'POST',
+            //    url: "includes/ajaxDispatcher.php",
+            //    data: {project_id:project_id,investor_id:investor_id, dispatcher:'apply-for-fund'},
+            //    error: function (req, text, error) {
+            //        alert('Error AJAX: ' + text + ' | ' + error);
+            //    },
+            //    success: function (data) {
+            //        if (data['result'] == 'OK') {
+            //            $(".apply-success").css('display', 'block');
+            //            $(".apply-project-area").delay(1500).slideUp('slow');
+            //            $('.apply-success').css('display', 'none');
+            //
+            //        }
+            //    },
+            //    dataType: "json"
+            //});
+            //return false;
+        });
+
+    });
+
+        //$('.apply-project-area').each(
+        //    function() {
+        //       var len= $('input[type="checkbox"]:checked').length;
+        //
+        //
+        //    }
+        //);
+
 
 
 });

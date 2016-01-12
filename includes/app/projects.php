@@ -9,13 +9,13 @@ function getCategories()
     return $res;
 }
 
-/*function getDevelopers() {
-    global $db_con;
-
-    $res = $db_con->sql2array("SELECT * FROM `developers`");
-
-    return $res;
-}*/
+//function getDevelopers() {
+//    global $db_con;
+//
+//    $res = $db_con->sql2array("SELECT * FROM `developers`");
+//
+//    return $res;
+//}
 
 function addProject($data)
 {
@@ -193,7 +193,9 @@ function getProjectById($project_id)
 {
     global $db_con;
     $pid = $project_id;
+
     $res = $db_con->query("SELECT * FROM `projects` WHERE `project_id` =" . $pid . " LIMIT 1");
+    //print_r($res);
     return $db_con->fetch_array($res);
 }
 
@@ -598,10 +600,7 @@ function getUserRateForProject($project_id, $user_id)
     $query = 'SELECT `value` FROM `rating` WHERE `project_id` = ' . $project_id . ' AND `user_id` = ' . $user_id;
 
     $res = $db_con->query($query);
-
-
     $rate = $db_con->fetch_array($res);
-
     if (!isset($rate))
         return false;
     return $rate['value'];
@@ -620,7 +619,6 @@ function rateProject($project_id, $user_id, $value)
     } else {
         $query = 'UPDATE `rating` SET `value` = ' . $value . ' WHERE `project_id` = ' . $project_id . ' AND `user_id` = ' . $user_id;
     }
-
     $id = $db_con->query($query);
 
     $query = 'UPDATE `projects` SET `avr_rating` = (SELECT AVG(value) FROM `rating` WHERE `project_id` = ' . $project_id . ') WHERE `project_id` = ' . $project_id;
@@ -628,6 +626,7 @@ function rateProject($project_id, $user_id, $value)
 
     return $id;
 }
+
 
 function getRating($project_id)
 {
@@ -1774,6 +1773,7 @@ function deleteIdea($ideathread_id)
     return $db_con->query($query);
 
 }
+//for updating number of investor in projects
 
 function plusInteraction($ideathread_id)
 {
@@ -1838,7 +1838,8 @@ function search_popularity_update($q,$pid)
     $q_dex      = soundex($q_plural);
     $project_id = $pid;
 // FIND IDENTICAL SEARCH TERMS IN OUR DB TABLE
-    $sql = "SELECT *FROM `top_search_terms` WHERE `search_phone` ='".$q_phone."' AND `search_dex`='".$q_dex."' LIMIT 1";
+    //$sql = "SELECT *FROM `top_search_terms` WHERE `search_phone` ='".$q_phone."' AND `search_dex`='".$q_dex."' LIMIT 1";
+    $sql = "SELECT *FROM `top_search_terms` WHERE `project_id` ='".$project_id."' LIMIT 1";
     $result=$db_con->query($sql);
     //print_r($result);
     $row = $db_con->fetch_array($result);
@@ -1880,7 +1881,7 @@ function search_popularity_update($q,$pid)
         $score--;                                                                            // DECREMENT POPULARITY SCORE
 
         $u_sql       = "UPDATE `top_search_terms` SET `search_score` = $score, `search_date` = $new_date WHERE _key = $_key LIMIT 1";
-        if (!$u_result= $db_con->query($u_sql)) { fatal_error ($u_sql); }
+         $db_con->query($u_sql);
     }
 
 // IF THE POPULARITY SCORE GOES BELOW ZERO, DROP IT
@@ -1898,4 +1899,194 @@ function getProjectsInTop_search_term()
     return $db_con->sql2array($query);
 
 }
+/*********************fundable projects*****************/
+
+function addProjectToFundable($id){
+    global $db_con;
+    $q = "INSERT INTO `fundables` (`project_id`)VALUES ('".$id."')";
+    $db_con->query($q);
+}
+function checkFundableProject($id){
+    //print_r($id);
+    global $db_con;
+    $q="SELECT `project_id` FROM `fundables` WHERE `project_id` ='".$id."' LIMIT 1";
+    $res = $db_con->query($q);
+    return $db_con->fetch_array($res);
+}
+
+//function getFundableProjects(){
+//    //this function is need to check the update value for each project
+//    global $db_con;
+//
+//    $q = "SELECT * FROM `fundables` WHERE 1 ORDER BY `created_on` DESC";
+//    $res =$db_con->query($q);
+//    //print_r($res);
+//   while($row=$db_con->fetch_array($res)){
+//       $date1=strtotime($row['created_on']);
+//        $id =$row['fundable_id'];
+//        $date2 = $date1+(31*24*60*60);
+//       $remdays = intval(ceil(($date2-time())/(60*60*24)));
+//       //$fund_status = $row['fund_status'];
+//           $qu = "UPDATE `fundables` SET `days_rem`='" . $remdays . "'WHERE `fundable_id`=" . $id;//does not work
+//           //print_r($qu);
+//           $db_con->query($qu);
+//    }
+//
+//    $qes = "SELECT * FROM `fundables` WHERE `days_rem`>'0' ORDER BY `created_on` DESC";
+//    //$res =$db_con->query($q);
+//    return $db_con->sql2array($qes);
+//
+//
+//}
+/*****************funding table new 7-01-2016************************/
+function getFundingsProject(){
+    global $db_con;
+    $q = "SELECT DISTINCT `project_id`FROM `fundings` WHERE 1 ORDER BY  `funded_on` DESC ";
+    return $db_con->sql2array($q);
+
+
+}
+
+function countInvestor($project_id){
+
+    global $db_con;
+    $q = "SELECT   COUNT(DISTINCT (`funded_by`))AS total FROM `fundings`  WHERE `project_id`=".$project_id;
+    $res =$db_con->query($q);
+    $row=$db_con->fetch_array($res);
+    return $row['total'] ;
+
+}
+function getTotalRaised($project_id){
+    global $db_con;
+    $q ="SELECT SUM(`fund_amount`)AS raised FROM `fundings` WHERE `project_id`=".$project_id;
+    //print_r($q);
+    $res=$db_con->query($q);
+    $row =$db_con->fetch_array($res);
+    return $row['raised'];
+
+}
+/*******************************************/
+
+
+function getFundableProjects(){
+    //this function is need to check the update value for each project
+    global $db_con;
+
+    $q = "SELECT * FROM `fundables` WHERE 1 ORDER BY `created_on` DESC";
+    $res =$db_con->query($q);
+    //print_r($res);
+    while($row=$db_con->fetch_array($res)){
+        $date1=strtotime($row['created_on']);
+        $id =$row['fundable_id'];
+        $project_id=$row['project_id'];
+        $date2 = $date1+(31*24*60*60);
+        $remdays = intval(ceil(($date2-time())/(60*60*24)));
+        $fund_status = $row['fund_status'];
+        $cycle=$row['cycle'];
+        if($fund_status==1){continue;}
+        else {
+            if ($remdays < 1) {
+                $checktrend = checkProjectInTrend($project_id);
+                if ($checktrend) {
+//                    $cycle="SELECT `cycle` FROM `fundables` WHERE `fundable_id`=".$id."LIMIT 1";
+//                    $res=$db_con->fetch_array($db_con->query($cycle));
+                    if($cycle==0)
+                    {$x=$remdays+(31*24*60*60);
+                        $qu = "UPDATE `fundables` SET `days_rem`='" . $x . "',`cycle`='".$cycle."'WHERE `fundable_id`=" . $id;//does not work
+                        //print_r($qu);
+                        $db_con->query($qu);
+                    }else
+                    {$quer="DELETE `fundable_id` FROM `fundables` WHERE `fundable_id`=".$id;
+                        $db_con->query($quer);}
+
+                }else{
+                    $quer="DELETE `fundable_id` FROM `fundables` WHERE `fundable_id`=".$id;
+                    $db_con->query($quer);
+                }
+            }
+
+        }
+    }
+
+    $qes = "SELECT * FROM `fundables` WHERE `days_rem`>'0' ORDER BY `created_on` DESC";
+    //$res =$db_con->query($q);
+    return $db_con->sql2array($qes);
+
+
+}
+
+function updateFundableProjects($id){
+    if($id =='id') {
+        global $db_con;
+        $sql = "SELECT * FROM `fundables` WHERE `days_rem` >0";
+        $result = $db_con->query($sql);
+        //if (!$result = $db_con->query($sql)) { fatal_error ($sql); }
+        while ($row = $db_con->fetch_array($result)) {
+            $fundable_id = $row["fundable_id"];
+            $rem = $row["days_rem"];
+            //$last_date   = $row["search_date"];
+            //$new_date    = date('Y-m-d H:i:sO', (strtotime($last_date) + (1 * 24 * 60 * 60)));    // MOVE SEARCH DATE FORWARD
+            $rem--;                                                                            // DECREMENT POPULARITY SCORE
+
+            $q= "UPDATE `fundables` SET `days_rem` ='". $rem."' WHERE `fundable_id` =".$fundable_id;
+            //print_r($q);
+            $db_con->query($q);
+//            if (!$u_result = $db_con->query($u_sql)) {
+//                fatal_error($u_sql);
+            }
+        }
+    }
+
+function updateProjectByInvestorCount($pid){
+    global $db_con;
+    $sql= "SELECT * FROM `projects` WHERE `project_id`=".$pid."LIMIT 1";
+    $result=$db_con->query($sql);
+
+    while ($row  = $db_con->fetch_array($result))
+    {
+        $count       = $row["investor_count"];
+        $project_id       = $row["project_id"];
+        $count--;
+        $u_sql       = "UPDATE `projects` SET `projects.investor_count` =".$count." WHERE `project_id` =".$project_id." LIMIT 1";
+        $db_con->query($u_sql);
+    }
+}
+
+function getUserType($user_id)
+{
+    global $db_con;
+
+    $res = $db_con->query("SELECT * FROM `users` WHERE `user_id` = " . $user_id . " LIMIT 1");
+
+    return $db_con->fetch_array($res);
+}
+/***********investor list from table investors **********/
+function getAllInvestors()
+{
+    global $db_con;
+
+    $query = "SELECT `investor_id`, `company_name`, `photo`, `location`,`email` FROM `investors` WHERE 1  ORDER BY `investor_id` DESC";
+
+    return $db_con->sql2array($query);
+}
+function searchInvestor($search)
+{
+    global $db_con;
+
+    $query = "SELECT `investor_id`, `company_name`, `photo`, `location`,`email` FROM `investors` WHERE ( `company_name` LIKE '%" . $search . "%' OR `email` LIKE '%" . $search . "%' ) ORDER BY `investor_id` DESC";
+
+    return $db_con->sql2array($query);
+}
+function getInvestorEvents($id){
+    global $db_con;
+    $query = "SELECT * FROM `investor_events` WHERE `investor_id`='".$id."'ORDER BY `created_on`";
+    return $db_con->sql2array($query);
+}
+function getInvestorfundedProjects($id){
+    global $db_con;
+    $query = "SELECT * FROM `investor_projects` WHERE `investor_id`='".$id."'ORDER BY `created_on`";
+    return $db_con->sql2array($query);
+}
+/************Investors ends************************************************/
+
 ?>

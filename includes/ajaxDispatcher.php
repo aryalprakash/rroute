@@ -1,9 +1,8 @@
 <?php
 
 require_once('config.php');
-
+//if(isset($_POST['dispatcher']))
 $action = $_POST['dispatcher'];
-
 
 switch ($action) {
 
@@ -34,9 +33,7 @@ switch ($action) {
     case 'rate-project':
         require_once(DIR_APP . 'projects.php');
         require_once(DIR_APP . 'users.php');
-
         $id = rateProject($_POST['project_id'], $_POST['user_id'], $_POST['value']);
-
         if ($id) {
             $responce['result'] = 'OK';
 
@@ -233,7 +230,7 @@ switch ($action) {
 					 	<div class="message-content" data-id="' . $ix . '">' . $m['text'] . '</div>';
 
                 if ($m['created_by'] == $_SESSION['uid'])
-                    $content .= '<div class="delete delete_' . $m['comment_id'] . '" data-id="' . $m['comment_id'] . '" onclick="deleteComment(\'' . $m['comment_id'] . '\')"></div>';
+                    $content .= '<div class="delete delete_' . $m['comment_id'] . '" data-id="' . $m['comment_id'] . '" onclick="deleteComment(' . $m['comment_id'] . ')"></div>';
 
                 $content .= '</div>';
             }
@@ -292,7 +289,7 @@ switch ($action) {
 					 	<div class="message-content" data-id="' . $ix . '">' . $m['text'] . '</div>';
 
                 if ($m['created_by'] == $_SESSION['uid'])
-                    $content .= '<div class="delete delete_' . $m['comment_id'] . '" data-id="' . $m['comment_id'] . '" onclick="deleteComment(\'' . $m['comment_id'] . '\')"></div>';
+                    $content .= '<div class="delete delete_' . $m['comment_id'] . '" data-id="' . $m['comment_id'] . '" onclick="deleteComment(' . $m['comment_id'] . ')"></div>';
 
                 $content .= '</div>';
             }
@@ -465,7 +462,7 @@ switch ($action) {
             $responce['result'] = 'OK';
             $responce['router_id'] = $_POST['router_id'];
             $responce['user'] = $user;
-        } else{
+        } else {
             $responce['result'] = 'FALSE';
         }
         echo json_encode($responce);
@@ -488,6 +485,16 @@ switch ($action) {
         // echo json_encode($responce);
         break;
 
-
+    case 'apply-project':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
+        $project_id = $_POST['project_id'];
+        $user_id = $_SESSION['uid'];
+        $investor_id=$_POST['investor_id'];
+        $responce['result']='OK';
+        break;
 }
+
+
+
 ?>

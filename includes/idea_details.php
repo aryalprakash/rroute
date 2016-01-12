@@ -120,11 +120,11 @@ else
 
 <div class="project-action">
     <?php if ($project_exists) {
-        echo '<a href="' . $source . '" class="project-action-btn inactive showRate"'.'"id="route_project"  >Rate</a>';
-        echo '<a href="' . $source . '" class="project-action-btn inactive showRoute"'.'"id="route_project" "data-id="'.$ideathread_id.'" >Route</a>';
+        echo '<a href="' . $source . '" class="project-action-btn inactive showRate"' . '"id="route_project"  >Rate</a>';
+        echo '<a href="' . $source . '" class="project-action-btn inactive showRoute"' . '"id="route_project" "data-id="' . $ideathread_id . '" >Route</a>';
     } else {
         echo '<a href="#" class="project-action-btn inactive showtooltipRate" id ="rate_project" data-id="">Rate</a>';
-        echo '<a href="#" class="project-action-btn inactive showtooltipRoute" id="route_project" data-id="'.$ideathread_id.'">Route</a>';
+        echo '<a href="#" class="project-action-btn inactive showtooltipRoute" id="route_project" data-id="' . $ideathread_id . '">Route</a>';
     }
     ?>
 
@@ -148,10 +148,8 @@ else
 
 
     <a href="#" class="project-action-btn" id="report_project" data-id="<?php echo $ideathread_id; ?>">Report</a>
-        <a href="" class="project-action-btn " id="share_project" data-id="">
-            <img src="<?php echo SITE_URL; ?>/images/shareicon.png" width="30" height="20" align="center"/></a>
-
-
+    <a href="" class="project-action-btn " id="share_project" data-id="">
+        <img src="<?php echo SITE_URL; ?>/images/shareicon.png" width="30" height="20" align="center"/></a>
 
 
 </div>
@@ -232,12 +230,13 @@ else
 </div>
 <!-- Router Area-->
 <div id="container" class="route-area">
-    <div  style="width:296px;float:left;">
-    <input type="text" id="route-search" placeholder="Type Your Router Name"/>
-    <input type="hidden" id="route-button" value="Search" />
-    <ul id="route-result"></ul>
+    <div style="width:296px;float:left;">
+        <input type="text" id="route-search" placeholder="Type Your Router Name"/>
+        <input type="hidden" id="route-button" value="Search"/>
+        <ul id="route-result"></ul>
     </div>
-    <div style="width:1px;height:50px;float:left;border-left: 2px solid black;position:relative;top:10%;bottom:10%;"></div>
+    <div
+        style="width:1px;height:50px;float:left;border-left: 2px solid black;position:relative;top:10%;bottom:10%;"></div>
     <div style="width:296px;float:right;margin-left:-20px;">
         <ul class="routed-users">
 
@@ -245,29 +244,29 @@ else
     </div>
 </div>
 <!-- share Area-->
-<div class="share-area active" >
-<a class="project-action-btns"
-   href="http://www.facebook.com/sharer.php?u=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>"
-   target="_blank" title="Click to share"><img src="./images/icons/facebook.png" width="40" height="40"
-                                               class="img-circle"></a>
-<a class="project-action-btns"
-   href="https://plus.google.com/share?url=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>"
-   target="_blank" title="Click to share"><img src="./images/icons/gplus.png" width="40" height="40"></a>
-<a class="project-action-btns"
-   href="http://twitter.com/share?text=Rangeenroute&url=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>"
-   target="_blank" title="Click to share"><img src="./images/icons/twitter.png" width="40" height="40"></a>
-<a class="project-action-btns"
-   href="http://www.linkedin.com/shareArticle?mini=true&url=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>"
-   target="_blank" title="Click to share"><img src="./images/icons/linkedin.png" width="40" height="40"></a>
-<a class="project-action-btns"
-   href="http://reddit.com/submit?url=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>&title=<?php echo $title; ?>"
-   target="_blank" title="Click to share"><img src="./images/icons/reddit.png" width="40"
-                                               height="40"></a>
-<a class="project-action-btns"
-   href="mailto:?Subject=<?php echo $title;?>&Body=<?php echo substr ($description,0,50).' for more visit. '.SITE_URL . '/home.php?iid=' . $ideathread_id;
-   ?>"
-   title="Click to share"><img src="./images/icons/email.png" width="40"
-                               height="40"></a>
+<div class="share-area share-active">
+    <a class="project-action-btns"
+       href="http://www.facebook.com/sharer.php?u=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>"
+       target="_blank" title="Click to share"><img src="./images/icons/facebook.png" width="40" height="40"
+                                                   class="img-circle"></a>
+    <a class="project-action-btns"
+       href="https://plus.google.com/share?url=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>"
+       target="_blank" title="Click to share"><img src="./images/icons/gplus.png" width="40" height="40"></a>
+    <a class="project-action-btns"
+       href="http://twitter.com/share?text=<?php echo substr($title, 0, 50) ?>&url=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>&via=Rangeenroute"
+       target="_blank" title="Click to share"><img src="./images/icons/twitter.png" width="40" height="40"></a>
+    <a class="project-action-btns"
+       href="http://www.linkedin.com/shareArticle?mini=true&url=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>"
+       target="_blank" title="Click to share"><img src="./images/icons/linkedin.png" width="40" height="40"></a>
+    <a class="project-action-btns"
+       href="http://reddit.com/submit?url=<?php echo SITE_URL . '/home.php?iid=' . $ideathread_id; ?>&title=<?php echo $title; ?>"
+       target="_blank" title="Click to share"><img src="./images/icons/reddit.png" width="40"
+                                                   height="40"></a>
+    <a class="project-action-btns"
+       href="mailto:?Subject=<?php echo $title; ?>&Body=<?php echo substr($description, 0, 50) . ' for more visit. ' . SITE_URL . '/home.php?iid=' . $ideathread_id;
+       ?>"
+       title="Click to share"><img src="./images/icons/email.png" width="40"
+                                   height="40"></a>
 </div>
 
 </div>

@@ -592,6 +592,13 @@ h2.home-signup span {
 .left-navigation ul li.settings-item a:hover {
     background: url('../images/icons/settings_active.png') no-repeat 1px center;
 }
+.left-navigation ul li.investor-item a {
+    background: url('../images/icons/investor.png') no-repeat 3px center;
+}
+
+.left-navigation ul li.investor-item a:hover {
+    background: url('../images/icons/investor_active.png') no-repeat 3px center;
+}
 
 .left-navigation.home {
     height: 100%;
@@ -2501,13 +2508,13 @@ hr.delimiter.standrt {
 }
 
 .route-area, .report-area, .comment-area {
-    width: 598px;
-    padding: 10px;
-    margin-top: 10px;
-    display: none;
-    float: left;
-    border: 1px solid #d9dee4;
-}
+     width: 598px;
+     padding: 10px;
+     margin-top: 10px;
+     display: none;
+     float: left;
+     border: 1px solid #d9dee4;
+ }
 
 .route-area input[type="text"] {
     width: 250px;
@@ -2866,7 +2873,7 @@ img.fancybox {
 }
 
 .ui-slider-range.ui-widget-header {
-    background: rgb(250, 250, 250) !important;
+    background: rgb(217, 222, 228) !important;
 
 }
 
@@ -2933,7 +2940,7 @@ img.fancybox {
 }
 
 .title-colored {
-    margin: 10px;
+    margin: 9px;
     font-size: 16px;
     color: rgb(255, 79, 0);
 }

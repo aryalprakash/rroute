@@ -140,7 +140,7 @@ $(document).ready(function () {
 
     /*rate project*/
     $("#rate_project").click(function () {
-        $('.rate-area').slideDown('slow');
+        $('.rate-area').slideToggle('slow');
         $('.comment-area').css('display', 'none');
         $('.report-area').css('display', 'none');
         $('.route-area').css('display', 'none');
@@ -202,28 +202,28 @@ $(document).ready(function () {
 
 
     /*unroute project*/
-    $("#routed_project").click(function () {
-
-        $('.route-area').slideDown('slow');
-
-        var project_id = $(this).attr('data-id');
-        $.ajax({
-            type: 'POST',
-            url: "includes/ajaxDispatcher.php",
-            data: {project_id: project_id, dispatcher: 'remove-route-project'},
-            error: function (req, text, error) {
-                alert('Error AJAX: ' + text + ' | ' + error);
-            },
-            success: function (data) {
-                if (data['result'] == 'OK') {
-                    $('#routed_project').css('display', 'none');
-                    $('#route_project').css('display', 'block');
-                }
-            },
-            dataType: "json"
-        });
-        return false;
-    });
+    //$("#routed_project").click(function () {
+    //
+    //    $('.route-area').slideDown('slow');
+    //
+    //    var project_id = $(this).attr('data-id');
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: "includes/ajaxDispatcher.php",
+    //        data: {project_id: project_id, dispatcher: 'remove-route-project'},
+    //        error: function (req, text, error) {
+    //            alert('Error AJAX: ' + text + ' | ' + error);
+    //        },
+    //        success: function (data) {
+    //            if (data['result'] == 'OK') {
+    //                $('#routed_project').css('display', 'none');
+    //                $('#route_project').css('display', 'block');
+    //            }
+    //        },
+    //        dataType: "json"
+    //    });
+    //    return false;
+    //});
     /*end route project*/
 
     /*share project*/
@@ -413,7 +413,7 @@ $(document).ready(function () {
         $(".comment-area p").remove();
         $('.comment-idea-textarea').css('display', 'block');
         $('#add-comment-btn').css('display', 'block');
-        $(".comment-area").toggle("slow");
+        $(".comment-area").slideToggle("slow");
 
         return false;
     });
@@ -563,7 +563,7 @@ $(document).ready(function () {
         $('.route-area').css('display', 'none');
         $('.share-area').css('display', 'none');
         $('.homeshare-area').css('display', 'none');
-        $(".report-area").toggle("slow");
+        $(".report-area").slideToggle("slow");
 
         return false;
     });
@@ -663,7 +663,7 @@ $(document).ready(function () {
                             '<div class="message-items"style="border-top:none;"><div class="message-author">' +
                             '<div class="router-user-photo photo-right">' +
                             ' <a href="/user.php?uid=' + sender +
-                            '"><img src="uploads/avatars/' + photo + '" title="' + sent_time + '">' +
+                            '"><img src="'+photo + '" title="' + sent_time + '">' +
                             '</a>' +
                             '</div>' +
                             '</div>' +
@@ -1064,7 +1064,7 @@ $(function () {
     // Change this to the location of your server-side upload handler:
 
     // var url = 'https://www.rangeenroute.com/js/file-uploading/server/php/';
-    var url = "<?php echo SITE_URL; ?>;" + '/js/file-uploading/server/php/';
+    var url = '/github/rangeenroute/js/file-uploading/server/php/';//this should be '/js/file-uploading/server/php/'
     //var url =  'https://rangeen/js/file-uploading/server/php/';
 
     var base_url = 'https://rangeenroute.com/';

@@ -31,6 +31,7 @@ if (empty($_SESSION['logged_in']))
                             $ideathreads = searchIdeathreads($search/*$_POST['search_text']*/);
 
                             $users = searchUser($search/*$_POST['search_text']*/);
+                            $investors=searchInvestor($search);
                             
                             if ($projects) {
 
@@ -107,7 +108,6 @@ if (empty($_SESSION['logged_in']))
                             }
 
 
-
                             else if($users){
 
                                 foreach ($users as $user) {
@@ -131,7 +131,7 @@ if (empty($_SESSION['logged_in']))
                         <div class="right" style="width:639px; float:right;">
                             <div class="form-item no-height">
                                 <ul class="user-info-left">
-                                <li><div class="content-title" style="font-size:30px;"><a href="user.php?uid=<?php echo ucwords($user['user_id']); ?>" style="text-decoration:none; color:#FF4F03;"><?php echo $user['display_name'] ?></a></div></li>
+                                <li><div class="content-title-search" ><a href="user.php?uid=<?php echo ucwords($user['user_id']); ?>" style="text-decoration:none; color:#FF4F03;"><?php echo $user['display_name'] ?></a></div></li>
                                 <li><h2><?php echo $user['location'] ?></h2></li>
                                 <li><h2 style="color:#4a77a4;"><?php echo $user['email'] ?></h2></li>
                                 </ul>
@@ -143,6 +143,40 @@ if (empty($_SESSION['logged_in']))
 
                       <?php  }
 
+                    }
+
+                    else if($investors){
+
+                                foreach ($investors as $investor) {
+                                    # code...
+                                    echo '<div style="width:100%; height:200px;">
+
+                        <div class="left" style="width:250px; float:left;">
+                            <div class="user-photo">';?>
+
+                                <?php
+                                if (empty($user['photo'])) {
+                                    echo '<img src="uploads/avatars/nophoto.jpg" style="width:200px;" alt="">';
+                                } else {
+                                    echo '<img src="uploads/avatars/' . $investor['photo'] . '" style="width:200px;" alt="">';
+                                }
+                                ?>
+
+                            </div>
+                         </div>
+
+                        <div class="right" style="width:639px; float:right;">
+                            <div class="form-item no-height">
+                                <ul class="user-info-left">
+                                <li><div class="content-title-search" ><a href="investor.php?iuid=<?php echo ucwords($investor['investor_id']); ?>" style="text-decoration:none; color:#FF4F03;"><?php echo $investor['company_name'] ?></a></div></li>
+                                <li><h2><?php echo $investor['location'] ?></h2></li>
+                                <li><h2 style="color:#4a77a4;"><?php echo $investor['email'] ?></h2></li>
+                                </ul>
+                            </div>
+                        </div>
+                        </div>
+
+                      <?php  }
                     }
 
                     else {
