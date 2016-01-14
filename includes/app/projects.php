@@ -2088,5 +2088,44 @@ function getInvestorfundedProjects($id){
     return $db_con->sql2array($query);
 }
 /************Investors ends************************************************/
+/*******************how to show single blog post***************************/
 
+function getBlogPostById($post_id)
+{
+    global $db_con;
+    $pid = $post_id;
+
+    $res = $db_con->query("SELECT * FROM `blog_posts` WHERE `post_id` =" . $pid . " LIMIT 1");
+    //print_r($res);
+    return $db_con->fetch_array($res);
+}
+function getAllBlogPost(){
+    global $db_con;
+
+    $query = 'SELECT * FROM `blog_posts` WHERE 1 ORDER BY `created_on` DESC';
+
+    return $db_con->sql2array($query);
+}
+
+function addBlogPost($data)
+{
+    $target_dir = "uploads/images/blogposts/";
+    $target_file = $target_dir . basename($_FILES["thumbnailImg"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+    move_uploaded_file($_FILES["thumbnailImg"]["tmp_name"], $target_file);
+
+
+    global $db_con;
+
+    $query = "INSERT INTO `blog_posts`(`title`,`description`,`category`,`created_by`,`verified`,`thumbnail_img`)
+                VALUES('" . $db_con->escape($data['title']) . "','" . $db_con->escape($data['description']) . "','" . $db_con->escape($data['category']) . "'," . $_SESSION['uid'] . ",'0','" . $target_file . "')";
+
+    $db_con->query($query);
+    $message = 'Status: Received, In-Review';
+    return $message;
+
+
+}
+/******************how to show single blog post ends **********************/
 ?>

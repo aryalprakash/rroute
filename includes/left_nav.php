@@ -12,5 +12,6 @@
         <li class="settings-item <?php if (CURRENT_PAGE == 'account') echo 'active'; ?>"><a
                 href="account.php">Settings</a></li>
         <li class="investor-item"><a href="investor.php">Investors</a></li>
+        <li class="blog-item"><a href="blog_posts.php">Blog</a></li>
     </ul>
 </div> <!-- left-navigation -->

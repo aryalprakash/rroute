@@ -599,6 +599,13 @@ h2.home-signup span {
 .left-navigation ul li.investor-item a:hover {
     background: url('../images/icons/investor_active.png') no-repeat 3px center;
 }
+.left-navigation ul li.blog-item a {
+    background: url('../images/icons/blog.png') no-repeat 3px center;
+}
+
+.left-navigation ul li.blog-item a:hover {
+    background: url('../images/icons/blog_active.png') no-repeat 3px center;
+}
 
 .left-navigation.home {
     height: 100%;
@@ -690,7 +697,15 @@ h2.home-signup span {
     margin-bottom: 25px;
     text-decoration: none;
 }
-
+.post-title{
+    font-family: 'museo_sans100';
+    font-size: 30px;
+    color: #181818;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+.post-title>a{text-decoration: none;}
+.post-title>a:hover{color:#FF4F03;}
 .content-title .project-title:hover {
     text-decoration: underline;
 }
@@ -710,6 +725,11 @@ h2.home-signup span {
 }
 
 .content-left-col {
+    width: 410px;
+    overfow: hidden;
+    float: left;
+}
+.content-left-colm {
     width: 410px;
     overfow: hidden;
     float: left;
@@ -826,12 +846,22 @@ h2.home-signup span {
     position: relative;
     overflow: hidden;
 }
+.content-block .post-photo {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+    overflow: hidden;
+}
 
+.content-block .post-photo img {
+    width: 150px;
+}
 .content-block .user-photo img {
     width: 208px;
 }
 
-.content-block .user-photo .name-block {
+.content-block .user-photo .name-block,.name-block {
     height: 33px;
     line-height: 33px;
     position: absolute;
@@ -845,7 +875,6 @@ h2.home-signup span {
     padding-left: 15px;
     width: 193px;
 }
-
 .content-block .middle-label a {
     color: #ff4f00;
     font-size: 11px;
@@ -1123,6 +1152,9 @@ a.upload-picture {
 
 .content-left-col.project-details {
     width: 235px;
+}
+.content-left-colm.project-details {
+    width: 175px;
 }
 
 .content-right-col.project-details {

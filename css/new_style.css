@@ -325,3 +325,8 @@ h2.home-welcome {
     color: #181818;
     text-decoration: none;
 }
+.footnote a {text-decoration: none;
+text-orientation: none;}
+.footnote a.visited{color: #1700EE;  }
+.my-projects-list a{text-decoration: none;font-size: 18px;}
+.my-projects-list>li a.visited{color: #1700EE;}
