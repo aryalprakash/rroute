@@ -19,6 +19,9 @@ if (isset($_POST['add_foonote']))
         <?php include(DIR_INCLUDE . 'left_nav.php'); ?>
 
         <div class="main-content">
+            <div class="upload-project-progress">
+                <span class="pagetitle">Investors</span>
+            </div>
            <?php  if(!isset($_GET['iuid']))
             include_once('investorslist.php');
              else

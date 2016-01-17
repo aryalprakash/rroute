@@ -2,18 +2,22 @@
 include('includes/header.php');
 require_once(DIR_APP . 'users.php');
 require_once(DIR_APP . 'projects.php');
-if (empty($_SESSION['logged_in']))
-    redirect('index.php');
+//if (empty($_SESSION['logged_in']))
+//    redirect('index.php');
 ?>
     <div class="inner-page-wrapper">
 
         <div class="inner-page content">
 
-            <?php include(DIR_INCLUDE . 'left_nav.php'); ?>
+            <?php if (!empty($_SESSION['logged_in']))
+                 include(DIR_INCLUDE . 'left_nav.php');
+            ?>
 
             <div class="main-content">
-
-                <?php  if(!isset($_GET['post_id']))
+                <div class="upload-project-progress">
+                    <span class="pagetitle">Blog</span>
+                </div>
+                <?php  if(!isset($_GET['id']))
                     require(DIR_INCLUDE .'blog_postlists.php');
                 else
                     require(DIR_INCLUDE . 'blog_post.php');

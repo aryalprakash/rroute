@@ -7,18 +7,19 @@ if ($posts) {
         <div class="content-left-colm project-details">
             <div class="post-photo">
                 <?php if (empty($post['thumbnail_img'])) {
-                    echo '<a href="blog_posts.php?post_id=' . $post['post_id'] . '"><img src="uploads/avatars/nophoto.jpg" alt=""></a>';
+                    echo '<img src=' . SITE_URL . '/uploads/avatars/nophoto.jpg.' . ' alt="">';
+                    echo '<a href="blog.php?id=' . $post['post_id'] . '"><img src="'.SITE_URL.'/uploads/avatars/nophoto.jpg" alt=""></a>';
                 } else {
                     $photo =$post['thumbnail_img'];
-                    echo '<a href="blog_posts.php?post_id=' . $post['post_id'] . '"><img src="' . $photo . '" alt=""></a>';
+                    echo '<a href="blog.php?id=' . $post['post_id'] . '"><img src="'.SITE_URL.'/uploads/images/blogposts/'. $photo . '" alt=""></a>';
                 }
                 ?>
                 <div class="name-block"><?php echo 'Author: '.ucwords($user['display_name']); ?></div>
             </div>
         </div>
-        <div class="post-title"><a href="blog_posts.php?post_id=<?php echo $post['post_id']; ?>"><?php echo ucwords($post['title']);?></a></div>
+        <div class="post-title"><a href="blog.php?id=<?php echo $post['post_id']; ?>"><?php echo ucwords($post['title']);?></a></div>
 
-        <p> <?php echo substr($post['description'],0,150); ?></p>
+        <p> <?php echo substr($post['description'],0,150); ?>...<a href="blog.php?id=<?php echo $post['post_id'];?>" title="Read More.">More</a></p>
 
 
         <!--<div class="content-title">-->

@@ -12,7 +12,12 @@ if (isset($_POST['title'])) {
 }
 
 ?>
-
+    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea"
+        });
+    </script>
     <div class="inner-page-wrapper">
 
         <div class="upload inner-page content">
@@ -33,11 +38,13 @@ if (isset($_POST['title'])) {
                     else echo '
 		<div class="pagesubtitle">Share post for Blog.</div><br/></br>
 
-		<form action="uploadblogpost.php" method="post" enctype="multipart/form-data">
+		<form action="uploadblogpost.php" method="post" novalidate enctype="multipart/form-data">
 		<div class="form-item"><input type="text" name = "title" id="ideathread_title"  placeholder="Post Title" maxlength="95" required></div></br>
-		<div class="form-item" style="height:inherit;"><textarea name="description" id="description"  style="width:570px !important;" placeholder="Details" maxlength="5000" required></textarea></div></br>
-		<div class="form-item"><input type="text" name="category" id = "source_url"  placeholder="Category (comma separated value.)" required></div></br>
-		<div class="form-item"><label>Thumbnail </label><input type="file" accept="image/*" name="thumbnailImg"  id="thumbnailImg" placeholder="Input an image file for thumbnail"></div></br>
+
+
+		<div class="form-item" style="height:inherit;"><textarea name="description" id="description"  style="width:570px !important;" placeholder="Details" required></textarea></div></br>
+<!--	<div class="form-item"><input type="text" name="category" id = "source_url"  placeholder="Category (comma separated value.)" required></div></br> -->
+		<div class="form-item"><label>Featuring Image</label><input type="file" accept="image/*" name="thumbnailImg"  id="thumbnailImg" placeholder="Input an image file for thumbnail"></div></br>
 	<!--<div class="form-item"><input type="text" name="original_creator" id="original_creator"  placeholder="Suggest the original creator" required></div>-->
 		<br/>
 		<div class="form-item">
