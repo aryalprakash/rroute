@@ -426,6 +426,208 @@ $(document).ready(function () {
         //    }
         //);
 
+    $('body').on('click', '.admin-delete-project', function () {
+
+        if (confirm('Are you sure you want to delete this?')) {
+            var project_id=$(this).attr("data-id");
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajaxDispatcher.php",
+                data: {project_id: project_id, dispatcher: 'delete-project'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data['result'] == 'OK') {
+                        //$('.del_idea-'+post_id).slideUp('slow');
+                        //$('.idealist_' + post_id).html('<div style="color: red; text-align: center; padding-top: 50px;">Your idea has been deleted.</div>');
+                        $('.del-project-'+project_id).closest('tr').slideUp('slow').delay(500);
+                        $('.del-project-'+project_id).closest('tr').remove().delay(1000);
 
 
+                        // alert("done");
+                    }
+                },
+                dataType: "json"
+            });
+
+        }
+
+    });
+
+    $('body').on('click', '.admin-delete-blogpost', function () {
+
+        if (confirm('Are you sure you want to delete this?')) {
+            var post_id=$(this).attr("data-id");
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajaxDispatcher.php",
+                data: {post_id: post_id, dispatcher: 'delete-blogpost'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data['result'] == 'OK') {
+                        //$('.del_idea-'+post_id).slideUp('slow');
+                        //$('.idealist_' + post_id).html('<div style="color: red; text-align: center; padding-top: 50px;">Your idea has been deleted.</div>');
+                        $('.del-blogpost-'+post_id).closest('tr').slideUp('slow').delay(500);
+                        $('.del-blogpost-'+post_id).closest('tr').remove().delay(1000);
+
+
+                        // alert("done");
+                    }
+                },
+                dataType: "json"
+            });
+
+        }
+
+    });
+
+    $('body').on('click', '.admin-delete-idea', function () {
+
+        if (confirm('Are you sure you want to delete this?')) {
+            var ideathread_id=$(this).attr("data-id")
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajaxDispatcher.php",
+                data: {ideathread_id: ideathread_id, dispatcher: 'delete-ideathread'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data['result'] == 'OK') {
+                        //$('.del_idea-'+ideathread_id).slideUp('slow');
+                        //$('.idealist_' + ideathread_id).html('<div style="color: red; text-align: center; padding-top: 50px;">Your idea has been deleted.</div>');
+                        $('.del-idea-'+ideathread_id).closest('tr').slideUp('slow').delay(500);
+                            $('.del-idea-'+ideathread_id).closest('tr').remove().delay(1000);
+
+
+                       // alert("done");
+                    }
+                },
+                dataType: "json"
+            });
+
+        }
+
+    });
+
+
+    $('body').on('click', '.admin-accept-ideathread', function () {
+
+        if (confirm('Are you sure you want to update status?')) {
+            var ideathread_id=$(this).attr("data-id");
+            console.log(ideathread_id);
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajaxDispatcher.php",
+                data: {ideathread_id: ideathread_id, dispatcher: 'accept-ideathread'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data['result'] == 'OK') {
+                        $('#status_'+ideathread_id).text('Published.');
+                        $('.accept_'+ideathread_id).attr('value','Reject');
+
+                    }else {
+                        $('#status_'+ideathread_id).text('Unpublished.');
+                        $('.accept_'+ideathread_id).attr('value','Accept');
+                    }
+                },
+                dataType: "json"
+            });
+
+        }
+
+    });
+
+    $('body').on('click', '.admin-accept-project', function () {
+
+        if (confirm('Are you sure you want to update status?')) {
+            var project_id=$(this).attr("data-id");
+            console.log(project_id);
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajaxDispatcher.php",
+                data: {project_id: project_id, dispatcher: 'accept-project'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data['result'] == 'OK') {
+                        $('#projectstatus_'+project_id).text('Published.');
+                        $('.projectaccept_'+project_id).attr('value','Reject');
+
+                    }else {
+                        $('#projectstatus_'+project_id).text('Unpublished.');
+                        $('.projectaccept_'+project_id).attr('value','Accept');
+                    }
+                },
+                dataType: "json"
+            });
+
+        }
+
+    });
+    $('body').on('click', '.admin-accept-blogpost', function () {
+
+        if (confirm('Are you sure you want to update status?')) {
+            var post_id=$(this).attr("data-id");
+            console.log(post_id);
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajaxDispatcher.php",
+                data: {post_id: post_id, dispatcher: 'accept-blogpost'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data['result'] == 'OK') {
+                        $('#blogpoststatus_'+post_id).text('Published.');
+                        $('.blogpostaccept_'+post_id).attr('value','Reject');
+
+                    }else {
+                        $('#blogpoststatus_'+post_id).text('Unpublished.');
+                        $('.blogpostaccept_'+post_id).attr('value','Accept');
+                    }
+                },
+                dataType: "json"
+            });
+
+        }
+
+    });
+
+
+    /* rate project admin */
+    $('body').on('click','#admin_rate_project',function () {
+        var pid = $(this).attr("data-id");
+        $('.admin-rate-area-'+pid).slideToggle('slow');
+        return false;
+    });
+    $('body').on('click','#admin_save_rate_project',function () {
+        var project_id = $(this).attr('data-id');
+        var user_id = $(this).attr('data-user');
+        var value = $('#rating_value').val();
+
+        $.ajax({
+            type: 'POST',
+            url: "includes/ajaxDispatcher.php",
+            data: {project_id: project_id, user_id: user_id, value: value, dispatcher: 'rate-project'},
+            error: function (req, text, error) {
+                alert('Error AJAX: ' + text + ' | ' + error);
+            },
+            success: function (data) {
+                if (data['result'] == 'OK') {
+                    $('.admin_rate_project_'+project_id).attr('value','Rated');
+                    $('.admin_rate_project_'+project_id).css('opacity', '0.6');
+                    $('.admin-rate-area').slideUp('slow');
+                }
+            },
+            dataType: "json"
+        });
+        return false;
+    });
 });

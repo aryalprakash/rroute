@@ -328,5 +328,97 @@ h2.home-welcome {
 .footnote a {text-decoration: none;
 text-orientation: none;}
 .footnote a.visited{color: #1700EE;  }
-.my-projects-list a{text-decoration: none;font-size: 18px;}
+.my-projects-list a{text-decoration: none;/*font-size: 18px;*/}
 .my-projects-list>li a.visited{color: #1700EE;}
+.ver-admin-page{
+    width: 12px;
+    padding-left:10px;
+}
+
+table#t02 tr:nth-child(even) {
+    background-color: #fff;
+}
+table#t02 tr:nth-child(odd) {
+    background-color:#f2f4f7;
+}
+table#t02 th	{
+    background-color: #4a77a4;//#FF4F03;
+    color: white;
+}
+.adminlist-table {
+    width: 100%;
+    /*border: 1px solid #d6dbe2;*/
+    border-collapse: collapse;
+}
+
+.adminlist-table td, .adminlist-table th {
+    /*border: 1px solid #d6dbe2;*/
+    border-collapse: collapse;
+    height: 30px;
+    text-align: left;
+    vertical-align: middle;
+    padding:5px;
+    border-collapse: collapse
+}
+
+.adminlist-table th {
+    background: #f2f4f7;
+}
+.adminlist-table td {
+    color: #4a77a4;
+}
+
+.adminlist-table td.bold {
+    font-family: "museo_sans900";
+
+}
+.adminlist-table td>a{text-decoration: none;color:#4a77a4;}
+
+.admin-rate-area {
+    overflow: hidden;
+    margin-top: 5px;
+    float: left;
+    display: none;
+}
+
+.admin-rate-area input {
+    float: left;
+    width: 40px;
+    height: 30px;
+    /*line-height: 40px;*/
+    text-align: center;
+    border: 1px solid #d9dee4;
+    padding: 0;
+}
+
+.admin-rate-area .admin-slider-area {
+    float: left;
+    width: 345px;
+    height: 30px;
+    line-height: 40px;
+    text-align: center;
+    border: 1px solid #d9dee4;
+    border-left: none;
+}
+
+.admin-rate-area .admin-slider-area span.rate-range {
+    float: left;
+    display: block;
+    width: 25px;
+   line-height:30px;
+}
+
+.admin-rate-area .admin-slider-area #admin-slider-range {
+    float: left;
+    width: 250px;
+    margin: 8px 5px 0 5px;
+    border: #d9dee4 solid 1px;
+}
+
+.admin-rate-area .admin-slider-area .project-action-btn {
+    padding: 0 0px;
+    height: 20px;
+    line-height: 21px;
+    margin-top: 5px;
+    width: 28px;
+}

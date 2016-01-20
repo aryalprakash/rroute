@@ -138,7 +138,7 @@ $(document).ready(function () {
     });
 
 
-    /*rate project*/
+    /*rate project general */
     $("#rate_project").click(function () {
         $('.rate-area').slideToggle('slow');
         $('.comment-area').css('display', 'none');
@@ -148,6 +148,7 @@ $(document).ready(function () {
 
         return false;
     });
+
     $("#save_rate_project").click(function () {
         var project_id = $(this).attr('data-id');
         var user_id = $(this).attr('data-user');
@@ -1034,6 +1035,7 @@ $(document).ready(function () {
     });
 // view project confirm
     //$('')
+
 
 });
 

@@ -1,5 +1,56 @@
 <?php
+function updateStatusProject($id)
+{
+    global $db_con;
+    $q = "SELECT `status` FROM `projects` WHERE `project_id`=" . $id;
+    $res = $db_con->fetch_array($db_con->query($q));
 
+    if ($res['status'] == '1') {
+        $query = "UPDATE `projects` SET `status`='0' WHERE `project_id`=" . $id;
+        $db_con->query($query);
+        return 'rejected';
+    } else {
+        $query = "UPDATE `projects` SET `status`='1' WHERE `project_id`=" . $id;
+        $db_con->query($query);
+        return 'accepted';
+    }
+}
+function updateStatusIdea($id){
+    global $db_con;
+    $q="SELECT `status` FROM `ideathreads` WHERE `ideathread_id`=".$id;
+    $res = $db_con->fetch_array($db_con->query($q));
+
+    if($res['status']=='approved'){
+        $query="UPDATE `ideathreads` SET `status`='notapproved' WHERE `ideathread_id`=".$id;
+        $db_con->query($query);
+        return 'rejected';
+    }else{
+        $query="UPDATE `ideathreads` SET `status`='approved' WHERE `ideathread_id`=".$id;
+        $db_con->query($query);
+        return 'accepted';
+    }
+
+}
+function updateStatusBlogPost($id)
+{
+    global $db_con;
+    $q = "SELECT `verified` FROM `blog_posts` WHERE `post_id`=" . $id;
+    $res = $db_con->fetch_array($db_con->query($q));
+
+    if ($res['verified'] == '1') {
+        $query = "UPDATE `blog_posts` SET `verified`='0' WHERE `post_id`=" . $id;
+        $db_con->query($query);
+        return 'rejected';
+    } else {
+        $query = "UPDATE `blog_posts` SET `verified`='1' WHERE `post_id`=" . $id;
+        $db_con->query($query);
+        return 'accepted';
+    }
+}
+function getDateformat($timestamp){
+    $date =strtotime($timestamp);
+    return date('M d,Y h:i A', $date);
+}
 function getCategories()
 {
     global $db_con;
@@ -343,7 +394,12 @@ function searchUser($search)
 
     return $db_con->sql2array($query);
 }
-
+function getAllProjects()
+{
+    global $db_con;
+    $query = 'SELECT `project_id`, `project_title`, `created_on`, `created_by`,`status` FROM `projects`WHERE 1 ORDER BY `project_id` DESC';
+    return $db_con->sql2array($query);
+}
 //function getAllRecentProjects($id,$limit = '')
 function getAllRecentProjects()
 {
@@ -353,6 +409,7 @@ function getAllRecentProjects()
 
     return $db_con->sql2array($query);
 }
+
 
 function getAllUserProjects($created_by)
 {
@@ -913,6 +970,17 @@ function getIdeaTitle($ideathread_id)
     return $ideathread['ideathread_title'];
 
 }
+function getBlogPostTitle($post_id)
+{
+    global $db_con;
+
+    $q = 'SELECT `title` FROM `blog_posts` WHERE `post_id` = ' . $post_id;
+    $res = $db_con->query($q);
+    $post = $db_con->fetch_array($res);
+
+    return $post['title'];
+
+}
 
 function getProjectAuthor($project_id)
 {
@@ -925,7 +993,6 @@ function getProjectAuthor($project_id)
     return $project['created_by'];
 
 }
-
 function getIdeaAuthor($ideathread_id)
 {
     global $db_con;
@@ -935,6 +1002,17 @@ function getIdeaAuthor($ideathread_id)
     $ideathread = $db_con->fetch_array($res);
 
     return $ideathread['created_by'];
+
+}
+function getBlogPostAuthor($post_id)
+{
+    global $db_con;
+
+    $q = 'SELECT `created_by` FROM `blog_posts` WHERE `post_id` = ' . $post_id;
+    $res = $db_con->query($q);
+    $post = $db_con->fetch_array($res);
+
+    return $post['created_by'];
 
 }
 
@@ -1755,6 +1833,13 @@ function getIdeas($user)
 
     return $a;
 }
+function getAllIdeathread(){
+    global $db_con;
+
+    $query = 'SELECT * FROM `ideathreads` WHERE 1 ORDER BY `created_on` DESC';
+
+    return $db_con->sql2array($query);
+}
 
 function getIdeaById($ideathread_id)
 {
@@ -1765,10 +1850,27 @@ function getIdeaById($ideathread_id)
     return $db_con->fetch_array($res);
 }
 
+
 function deleteIdea($ideathread_id)
 {
     global $db_con;
     $query = 'DELETE FROM `ideathreads` WHERE `ideathread_id` = ' . $ideathread_id;
+
+    return $db_con->query($query);
+
+}
+function deleteProject($project_id)
+{
+    global $db_con;
+    $query = 'DELETE FROM `projects` WHERE `project_id` = ' . $project_id;
+
+    return $db_con->query($query);
+
+}
+function deleteBlogPost($post_id)
+{
+    global $db_con;
+    $query = 'DELETE FROM `blog_posts` WHERE `post_id` = ' . $post_id;
 
     return $db_con->query($query);
 
@@ -2095,9 +2197,16 @@ function getBlogPostById($post_id)
     global $db_con;
     $pid = $post_id;
 
-    $res = $db_con->query("SELECT * FROM `blog_posts` WHERE `post_id` =" . $pid . " LIMIT 1");
+    $res = $db_con->query("SELECT * FROM `blog_posts` WHERE `post_id` =" . $pid ." LIMIT 1");
     //print_r($res);
     return $db_con->fetch_array($res);
+}
+function getAllBlogPostVerified(){
+    global $db_con;
+
+    $query = 'SELECT * FROM `blog_posts` WHERE `verified`='.'1'.' ORDER BY `created_on` DESC';
+
+    return $db_con->sql2array($query);
 }
 function getAllBlogPost(){
     global $db_con;
@@ -2109,17 +2218,18 @@ function getAllBlogPost(){
 
 function addBlogPost($data)
 {
-    $target_dir = "uploads/images/blogposts/";
-    $target_file = $target_dir . basename($_FILES["thumbnailImg"]["name"]);
+   $target_dir = "uploads/images/blogposts/";
+    //$target_file = $target_dir . basename($_FILES["thumbnailImg"]["name"]);
+    $target_file =$_FILES["thumbnailImg"]["name"];
     $uploadOk = 1;
     $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-    move_uploaded_file($_FILES["thumbnailImg"]["tmp_name"], $target_file);
+    move_uploaded_file($_FILES["thumbnailImg"]["tmp_name"], $target_dir.basename($target_file));
 
 
     global $db_con;
 
     $query = "INSERT INTO `blog_posts`(`title`,`description`,`category`,`created_by`,`verified`,`thumbnail_img`)
-                VALUES('" . $db_con->escape($data['title']) . "','" . $db_con->escape($data['description']) . "','" . $db_con->escape($data['category']) . "'," . $_SESSION['uid'] . ",'0','" . $target_file . "')";
+                VALUES('" . $db_con->escape($data['title']) . "','" . $db_con->escape($data['description']) . "',''," . $_SESSION['uid'] . ",'0','" . $target_file . "')";
 
     $db_con->query($query);
     $message = 'Status: Received, In-Review';

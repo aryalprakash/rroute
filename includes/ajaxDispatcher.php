@@ -331,13 +331,51 @@ switch ($action) {
         echo json_encode($responce);
         break;
 
-    case 'delete-idea':
+    case 'delete-idea'://for user
         require_once(DIR_APP . 'projects.php');
         deleteIdea($_POST['ideathread_id']);
         $response['result'] = 'OK';
         echo json_encode($response);
         break;
-
+    case 'delete-ideathread'://for admin
+        require_once(DIR_APP . 'projects.php');
+        $project_title = getIdeaTitle($_POST['ideathread_id']);
+        //$author = getUserNameById($_SESSION['uid']);
+        $sent_to = getIdeaAuthor($_POST['ideathread_id']);
+       // $url = SITE_URL . '/home.php?iid=' . $_POST['ideathread_id'];
+        $url = '';
+        $text = 'Your Ideathread  "'.  $project_title.'" has been removed.';
+        addNotification($sent_to,$text, $_SESSION['uid'], $url);
+        deleteIdea($_POST['ideathread_id']);
+        $response['result'] = 'OK';
+        echo json_encode($response);
+        break;
+    case 'delete-project':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
+        $project_title = getProjectTitle($_POST['project_id']);
+        //$author = getUserNameById($_SESSION['uid']);
+        $url = '';
+        $sent_to = getProjectAuthor($_POST['project_id']);
+        $text = 'Your Project  "'.  $project_title.'" has been removed.';
+        addNotification($sent_to, $text, $_SESSION['uid'], $url);
+        deleteProject($_POST['project_id']);
+        $response['result'] = 'OK';
+        echo json_encode($response);
+        break;
+    case 'delete-blogpost':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
+        $project_title = getBlogPostTitle($_POST['post_id']);
+        //$author = getUserNameById($_SESSION['uid']);
+        $url = '';
+        $sent_to = getBlogPostAuthor($_POST['post_id']);
+        $text = 'Your Blog Post  "'.  $project_title.'" has been removed.';
+        addNotification($sent_to, $text, $_SESSION['uid'], $url);
+        deleteBlogPost($_POST['post_id']);
+        $response['result'] = 'OK';
+        echo json_encode($response);
+        break;
     case 'accept-route':
         require_once(DIR_APP . 'users.php');
 
@@ -485,14 +523,46 @@ switch ($action) {
         // echo json_encode($responce);
         break;
 
-    case 'apply-project':
+//    case 'apply-project':
+//        require_once(DIR_APP . 'users.php');
+//        require_once(DIR_APP . 'projects.php');
+//        $project_id = $_POST['project_id'];
+//        $user_id = $_SESSION['uid'];
+//        $investor_id=$_POST['investor_id'];
+//        $responce['result']='OK';
+//        break;
+    case 'accept-project':
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
         $project_id = $_POST['project_id'];
-        $user_id = $_SESSION['uid'];
-        $investor_id=$_POST['investor_id'];
-        $responce['result']='OK';
+        $res =updateStatusProject($project_id);
+        if($res=='accepted') {$responce['result']='OK';
+        }
+        else {$responce['result']='reject';}
+        echo json_encode($responce);
         break;
+
+    case 'accept-ideathread':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
+        $ideathread_id = $_POST['ideathread_id'];
+        $res =updateStatusIdea($ideathread_id);
+        if($res=='accepted') {$responce['result']='OK';
+        }
+        else {$responce['result']='reject';}
+        echo json_encode($responce);
+        break;
+    case 'accept-blogpost':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
+        $post_id = $_POST['post_id'];
+        $res =updateStatusBlogPost($post_id);
+        if($res=='accepted') {$responce['result']='OK';
+        }
+        else {$responce['result']='reject';}
+        echo json_encode($responce);
+        break;
+
 }
 
 

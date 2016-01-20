@@ -856,6 +856,7 @@ h2.home-signup span {
 
 .content-block .post-photo img {
     width: 150px;
+    height:150px;
 }
 .content-block .user-photo img {
     width: 208px;
@@ -2218,7 +2219,7 @@ hr.delimiter.standrt {
 }
 
 .finance-table td, .finance-table th {
-    border: 1px solid #d6dbe2;
+    /*border: 1px solid #d6dbe2;*/
     border-collapse: collapse;
     height: 35px;
     text-align: center;
@@ -2229,9 +2230,13 @@ hr.delimiter.standrt {
     background: #f2f4f7;
     color: #4a77a4;
 }
+.finance-table td {
+    color: #4a77a4;
+}
 
 .finance-table td.bold {
     font-family: "museo_sans900";
+
 }
 
 .finance.advertisement input[type=button] {
@@ -2385,6 +2390,8 @@ hr.delimiter.standrt {
     margin-top: 5px;
     width: 63px;
 }
+
+
 
 /*.project-action-btn.inactive { opacity: 0.6; }*/
 
