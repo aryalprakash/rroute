@@ -21,8 +21,12 @@ redirect('index.php');?>
                         <li><a href="admin/projectlists.php">Projects</a></li>
                         <li><a href="admin/ideathreadlists.php">Ideathreds</a></li>
                         <li><a href="admin/blogpostlists.php">blogs</a></li>
+                        <li><a href="admin/userslists.php">Users</a></li>
+                        <li><a href="admin/investorlists.php">Investors</a></li>
                         <li><a href="admin/add_investor.php">Add Investor</a></li>
-                        <li><a href="admin/new.php">TBD</a></li>
+                        <li><a href="admin/add_post.php">Add Post</a></li>
+
+
 
                     </ul>
                 </div>

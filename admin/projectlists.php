@@ -18,6 +18,7 @@ if ($projects) {?>
                 <th>Status</th>
                 <th>Accept/Reject</th>
                 <th>Delete</th>
+                <th>Acceptor</th>
             </tr>
             <?php
             foreach ($projects as $ix=>$project){
@@ -39,7 +40,7 @@ if ($projects) {?>
                            data-id="<?php echo $project['project_id'] ?>" value="Rate" style="color:#5577A9"/>
                     <?php } ?>
                 </td>
-                <td><a href="<?php echo SITE_URL."/project_details.php?pid=".$project['project_id']; ?>"><?php echo $project['project_title'];//this page need to restrict ?> </a>
+                <td><a href="<?php echo SITE_URL."/project_details.php?pid=".$project['project_id']; ?>"><?php echo substr($project['project_title'],0,40);//this page need to restrict ?> </a>
 
                     <div class="admin-rate-area admin-rate-area-<?php echo $project['project_id'] ?>">
                         <script>
@@ -74,10 +75,11 @@ if ($projects) {?>
 
                 <td id ="projectstatus_<?php echo $project['project_id']; ?>"><?php if ($project['status']=='0') echo "Unpublished."; else echo "Published.";  ?></td>
 
-                <td><a class=""><input type="button" data-id="<?php echo $project['project_id']; ?>"   class="admin-accept-project projectaccept_<?php echo $project['project_id']; ?>" value ="<?php if($project['status']=='1') echo "Reject"; else echo "Accept"; ?>"style="color:#5577A9"></a></td>
+                <td><a class=""><input type="button"data-user="<?php echo getUserFNameById($_SESSION['uid']); ?>" data-id="<?php echo $project['project_id']; ?>"   class="admin-accept-project projectaccept_<?php echo $project['project_id']; ?>" value ="<?php if($project['status']=='1') echo "Reject"; else echo "Accept"; ?>"style="color:#5577A9"></a></td>
                 <td><a class ="admin-delete-project del-project-<?php echo $project['project_id'] ?>" data-id="<?php echo $project['project_id']; ?>" ><img src="images/icons/delete.png" title="delete"/>
 <!--                        <input type="button" class="delete-project-admin" style="color:red;" value="X">-->
                         <a></td>
+                <td id="project_acceptor_<?php echo $project['project_id']; ?>"><?php echo getUserFNameById($project['accepted_by']); ?></td>
             </tr>
 
             <?php }?>

@@ -311,7 +311,7 @@ h2.home-welcome {
     float: right;
     border: 1px solid #d9dee4;
     position: absolute;
-    top: 90px;
+    top: 141px;
     left: 655px;
     right: 10px;
     background-color: rgba(237, 242, 247, 1);
@@ -332,7 +332,7 @@ text-orientation: none;}
 .my-projects-list>li a.visited{color: #1700EE;}
 .ver-admin-page{
     width: 12px;
-    padding-left:10px;
+    padding-left:5px;
 }
 
 table#t02 tr:nth-child(even) {
@@ -422,3 +422,18 @@ table#t02 th	{
     margin-top: 5px;
     width: 28px;
 }
+/*for photo userlist*/
+.userlists-photo {
+    height: 50px;
+    float: left;
+    //margin-left: 25px;
+    //margin-bottom: 20px;
+    overflow: hidden;
+}
+.userlists-photo img {
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+    float: left;
+}
+/*  */

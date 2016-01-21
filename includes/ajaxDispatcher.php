@@ -536,9 +536,23 @@ switch ($action) {
         require_once(DIR_APP . 'projects.php');
         $project_id = $_POST['project_id'];
         $res =updateStatusProject($project_id);
-        if($res=='accepted') {$responce['result']='OK';
+        if($res=='accepted') {
+            $project_title = getProjectTitle($_POST['project_id']);
+            //$author = getUserNameById($_SESSION['uid']);
+            $url = SITE_URL . '/home.php?pid=' . $_POST['project_id'];
+            $sent_to = getProjectAuthor($_POST['project_id']);
+            $text = 'Your Project  "'.  $project_title.'" has been Published.';
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
+            $responce['result']='OK';
         }
-        else {$responce['result']='reject';}
+        else {
+            $project_title = getProjectTitle($_POST['project_id']);
+            //$author = getUserNameById($_SESSION['uid']);
+            $url = SITE_URL . '/home.php?pid=' . $_POST['project_id'];
+            $sent_to = getProjectAuthor($_POST['project_id']);
+            $text = 'Your Project  "'.  $project_title.'" has been Rejected.';
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
+            $responce['result']='reject';}
         echo json_encode($responce);
         break;
 
@@ -547,9 +561,23 @@ switch ($action) {
         require_once(DIR_APP . 'projects.php');
         $ideathread_id = $_POST['ideathread_id'];
         $res =updateStatusIdea($ideathread_id);
-        if($res=='accepted') {$responce['result']='OK';
+        if($res=='accepted') {
+            $project_title = getIdeaTitle($_POST['ideathread_id']);
+            //$author = getUserNameById($_SESSION['uid']);
+            $url = SITE_URL . '/home.php?iid=' . $_POST['ideathread_id'];
+            $sent_to = getIdeaAuthor($_POST['ideathread_id']);
+            $text = 'Your Project  "'.  $project_title.'" has been Published.';
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
+            $responce['result']='OK';
         }
-        else {$responce['result']='reject';}
+        else {
+            $project_title = getIdeaTitle($_POST['ideathread_id']);
+            //$author = getUserNameById($_SESSION['uid']);
+            $url = SITE_URL . '/home.php?iid=' . $_POST['ideathread_id'];
+            $sent_to = getIdeaAuthor($_POST['ideathread_id']);
+            $text = 'Your Project  "'.  $project_title.'" has been Rejected.';
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
+            $responce['result']='reject';}
         echo json_encode($responce);
         break;
     case 'accept-blogpost':
@@ -557,11 +585,65 @@ switch ($action) {
         require_once(DIR_APP . 'projects.php');
         $post_id = $_POST['post_id'];
         $res =updateStatusBlogPost($post_id);
-        if($res=='accepted') {$responce['result']='OK';
+        if($res=='accepted') {
+            $project_title = getBlogPostTitle($_POST['post_id']);
+            //$author = getUserNameById($_SESSION['uid']);
+            $url = SITE_URL . '/home.php?id=' . $_POST['post_id'];
+            $sent_to = getBlogPostAuthor($_POST['post_id']);
+            $text = 'Your Blog Post  "'.  $project_title.'" has been Published.';
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
+            $responce['result']='OK';
         }
-        else {$responce['result']='reject';}
+        else {
+            $project_title = getBlogPostTitle($_POST['post_id']);
+            //$author = getUserNameById($_SESSION['uid']);
+            $url = SITE_URL . '/home.php?id=' . $_POST['post_id'];
+            $sent_to = getBlogPostAuthor($_POST['post_id']);
+            $text = 'Your Blog Post  "'.  $project_title.'" has been Rejected.';
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
+            $responce['result']='reject';}
         echo json_encode($responce);
         break;
+
+    case 'accept-user':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
+        $user_id = $_POST['user_id'];
+        $res =updateStatusUser($user_id);
+        if($res=='accepted') {
+            //$project_title = getIdeaTitle($_POST['ideathread_id']);
+            //$author = getUserNameById($_SESSION['uid']);
+            $url = SITE_URL . '/user.php?uid=' . $user_id;
+            $sent_to =$user_id;//getIdeaAuthor($_POST['ideathread_id']);
+            $text = 'Your Profile has been Verified.';
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
+            $responce['result']='OK';
+        }
+        else {
+            //$project_title = getIdeaTitle($_POST['ideathread_id']);
+            //$author = getUserNameById($_SESSION['uid']);
+            $url = SITE_URL . '/user.php?uid=' . $user_id;
+            $sent_to = $user_id;
+            $text = 'Your verification has been canceled!';
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
+            $responce['result']='reject';}
+        echo json_encode($responce);
+        break;
+
+//    case 'post-blogpost':
+//        require_once(DIR_APP . 'users.php');
+//        require_once(DIR_APP . 'projects.php');
+//
+//        $title = $_POST['title'];
+//        $description = $_POST['description'];
+//        $user_id = $_SESSION['uid'];
+//        $image = $_POST['image'];
+//        $message = addBlogPost($_POST);
+//        $responce['result'] = 'OK';
+//
+//        echo json_encode($responce);
+//        break;
+
 
 }
 

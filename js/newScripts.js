@@ -518,11 +518,12 @@ $(document).ready(function () {
 
         if (confirm('Are you sure you want to update status?')) {
             var ideathread_id=$(this).attr("data-id");
-            console.log(ideathread_id);
+            var session_user=$(this).attr("data-user");
+
             $.ajax({
                 type: 'POST',
                 url: "includes/ajaxDispatcher.php",
-                data: {ideathread_id: ideathread_id, dispatcher: 'accept-ideathread'},
+                data: {ideathread_id: ideathread_id,session_user:session_user, dispatcher: 'accept-ideathread'},
                 error: function (req, text, error) {
                     alert('Error AJAX: ' + text + ' | ' + error);
                 },
@@ -530,10 +531,12 @@ $(document).ready(function () {
                     if (data['result'] == 'OK') {
                         $('#status_'+ideathread_id).text('Published.');
                         $('.accept_'+ideathread_id).attr('value','Reject');
+                        $('#ideathread_acceptor_'+ideathread_id).attr('value',session_user);
 
                     }else {
                         $('#status_'+ideathread_id).text('Unpublished.');
                         $('.accept_'+ideathread_id).attr('value','Accept');
+                        $('#ideathread_acceptor_'+ideathread_id).attr('value',session_user);
                     }
                 },
                 dataType: "json"
@@ -547,11 +550,11 @@ $(document).ready(function () {
 
         if (confirm('Are you sure you want to update status?')) {
             var project_id=$(this).attr("data-id");
-            console.log(project_id);
+            var session_user=$(this).attr("data-user");
             $.ajax({
                 type: 'POST',
                 url: "includes/ajaxDispatcher.php",
-                data: {project_id: project_id, dispatcher: 'accept-project'},
+                data: {project_id: project_id,session_user:session_user, dispatcher: 'accept-project'},
                 error: function (req, text, error) {
                     alert('Error AJAX: ' + text + ' | ' + error);
                 },
@@ -559,10 +562,13 @@ $(document).ready(function () {
                     if (data['result'] == 'OK') {
                         $('#projectstatus_'+project_id).text('Published.');
                         $('.projectaccept_'+project_id).attr('value','Reject');
+                        $('#project_acceptor_'+project_id).attr('value',session_user);
+
 
                     }else {
                         $('#projectstatus_'+project_id).text('Unpublished.');
                         $('.projectaccept_'+project_id).attr('value','Accept');
+                        $('#project_acceptor_'+project_id).attr('value',session_user);
                     }
                 },
                 dataType: "json"
@@ -575,11 +581,12 @@ $(document).ready(function () {
 
         if (confirm('Are you sure you want to update status?')) {
             var post_id=$(this).attr("data-id");
-            console.log(post_id);
+            var session_user=$(this).attr("data-user");
+            console.log(session_user);
             $.ajax({
                 type: 'POST',
                 url: "includes/ajaxDispatcher.php",
-                data: {post_id: post_id, dispatcher: 'accept-blogpost'},
+                data: {post_id: post_id,session_user:session_user, dispatcher: 'accept-blogpost'},
                 error: function (req, text, error) {
                     alert('Error AJAX: ' + text + ' | ' + error);
                 },
@@ -587,10 +594,12 @@ $(document).ready(function () {
                     if (data['result'] == 'OK') {
                         $('#blogpoststatus_'+post_id).text('Published.');
                         $('.blogpostaccept_'+post_id).attr('value','Reject');
+                        $('#blogpost_acceptor_'+post_id).attr('value',session_user);
 
                     }else {
                         $('#blogpoststatus_'+post_id).text('Unpublished.');
                         $('.blogpostaccept_'+post_id).attr('value','Accept');
+                        $('#blogpost_acceptor_'+post_id).attr('value',session_user);
                     }
                 },
                 dataType: "json"
@@ -599,7 +608,29 @@ $(document).ready(function () {
         }
 
     });
-
+    //$('body').on('click','#save_blogpost',function(){
+    //
+    //    var title=$('#post_title').attr('value');
+    //    var description=$('#post_description').attr('value');
+    //    var image =$('#thumbnailImg').attr('value');
+    //    $.ajax({
+    //        type:'POST',
+    //        url:"includes/ajaxDispatcher.php",
+    //        data:{title:title,description:description,image:image,dispatcher:'post-blogpost'},
+    //        error: function (req, text, error) {
+    //            alert('Error AJAX: ' + text + ' | ' + error);
+    //        },
+    //        success: function (data) {
+    //            if (data['result'] == 'OK') {
+    //                //$('.postedblogpost').css('display', 'block');
+    //                $('postedblogpost').slideDown('slow');
+    //                $(".apply-project-area").delay(500).slideUp('slow');
+    //            }
+    //        },
+    //        dataType: "json"
+    //    });
+    //    return false;
+    //});
 
     /* rate project admin */
     $('body').on('click','#admin_rate_project',function () {
@@ -630,4 +661,43 @@ $(document).ready(function () {
         });
         return false;
     });
+//user verify-deny click event
+    $('body').on('click', '.admin-accept-user', function () {
+
+        if (confirm('Are you sure you want to update user status?')) {
+            var user_id=$(this).attr("data-id");
+            var session_user=$(this).attr("data-user");
+
+            console.log(user_id);
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajaxDispatcher.php",
+                data: {user_id: user_id,session_user:session_user, dispatcher: 'accept-user'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data['result'] == 'OK') {
+                        $('#userstatus_'+user_id).text('Yes.');
+                        $('.useraccept_'+user_id).attr('value','Deny');
+                        $('<img src="images/4.png" alt=""  title="Verified."class="ver-admin-page">').appendTo('#username_'+user_id);
+                        $('#user_acceptor_'+user_id).attr('value',session_user);
+                    }else {
+                        $('#userstatus_'+user_id).text('No.');
+                        $('.useraccept_'+user_id).attr('value','Verify');
+                        $('#username_'+user_id).find('.ver-admin-page').hide();
+                        $('#user_acceptor_'+user_id).attr('value',session_user);
+                    }
+                },
+                dataType: "json"
+            });
+
+        }
+
+    });
+
+    //
+
+    //fancy box to view clicked verified documents
+    $(".fancybox").fancybox({});
 });
