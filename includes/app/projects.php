@@ -6,11 +6,11 @@ function updateStatusProject($id)
     $res = $db_con->fetch_array($db_con->query($q));
 
     if ($res['status'] == '1') {
-        $query = "UPDATE `projects` SET `status`='0' WHERE `project_id`=" . $id;
+        $query = "UPDATE `projects` SET `status`='0',`accepted_by`=".$_SESSION['uid']." WHERE `project_id`=" . $id;
         $db_con->query($query);
         return 'rejected';
     } else {
-        $query = "UPDATE `projects` SET `status`='1' WHERE `project_id`=" . $id;
+        $query = "UPDATE `projects` SET `status`='1',`accepted_by`=".$_SESSION['uid']." WHERE `project_id`=" . $id;
         $db_con->query($query);
         return 'accepted';
     }
@@ -21,11 +21,11 @@ function updateStatusIdea($id){
     $res = $db_con->fetch_array($db_con->query($q));
 
     if($res['status']=='approved'){
-        $query="UPDATE `ideathreads` SET `status`='notapproved' WHERE `ideathread_id`=".$id;
+        $query="UPDATE `ideathreads` SET `status`='notapproved',`accepted_by`=".$_SESSION['uid']." WHERE `ideathread_id`=".$id;
         $db_con->query($query);
         return 'rejected';
     }else{
-        $query="UPDATE `ideathreads` SET `status`='approved' WHERE `ideathread_id`=".$id;
+        $query="UPDATE `ideathreads` SET `status`='approved',`accepted_by`=".$_SESSION['uid']." WHERE `ideathread_id`=".$id;
         $db_con->query($query);
         return 'accepted';
     }
@@ -38,11 +38,43 @@ function updateStatusBlogPost($id)
     $res = $db_con->fetch_array($db_con->query($q));
 
     if ($res['verified'] == '1') {
-        $query = "UPDATE `blog_posts` SET `verified`='0' WHERE `post_id`=" . $id;
+        $query = "UPDATE `blog_posts` SET `verified`='0',`accepted_by`=".$_SESSION['uid']." WHERE `post_id`=" . $id;
         $db_con->query($query);
         return 'rejected';
     } else {
-        $query = "UPDATE `blog_posts` SET `verified`='1' WHERE `post_id`=" . $id;
+        $query = "UPDATE `blog_posts` SET `verified`='1',`accepted_by`=".$_SESSION['uid']." WHERE `post_id`=" . $id;
+        $db_con->query($query);
+        return 'accepted';
+    }
+}
+function updateStatusUser($id)
+{
+    global $db_con;
+    $q = "SELECT `verified` FROM `users` WHERE `user_id`=" . $id;
+    $res = $db_con->fetch_array($db_con->query($q));
+
+    if ($res['verified'] == '1') {
+        $query = "UPDATE `users` SET `verified`='0',`accepted_by`=".$_SESSION['uid']." WHERE `user_id`=" . $id;
+        $db_con->query($query);
+        return 'rejected';
+    } else {
+        $query = "UPDATE `users` SET `verified`='1',`accepted_by`=".$_SESSION['uid']." WHERE `user_id`=" . $id;
+        $db_con->query($query);
+        return 'accepted';
+    }
+}
+function updateStatusInvestor($id)
+{
+    global $db_con;
+    $q = "SELECT `verified` FROM `investors` WHERE `investor_id`=" . $id;
+    $res = $db_con->fetch_array($db_con->query($q));
+
+    if ($res['verified'] == '1') {
+        $query = "UPDATE `investors` SET `verified`='0',`accepted_by`=".$_SESSION['uid']." WHERE `investor_id`=" . $id;
+        $db_con->query($query);
+        return 'rejected';
+    } else {
+        $query = "UPDATE `investors` SET `verified`='1',`accepted_by`=".$_SESSION['uid']." WHERE `investor_id`=" . $id;
         $db_con->query($query);
         return 'accepted';
     }
@@ -397,7 +429,7 @@ function searchUser($search)
 function getAllProjects()
 {
     global $db_con;
-    $query = 'SELECT `project_id`, `project_title`, `created_on`, `created_by`,`status` FROM `projects`WHERE 1 ORDER BY `project_id` DESC';
+    $query = 'SELECT `project_id`, `project_title`, `created_on`, `created_by`,`status`,`accepted_by` FROM `projects`WHERE 1 ORDER BY `project_id` DESC';
     return $db_con->sql2array($query);
 }
 //function getAllRecentProjects($id,$limit = '')
@@ -2237,5 +2269,6 @@ function addBlogPost($data)
 
 
 }
+
 /******************how to show single blog post ends **********************/
 ?>

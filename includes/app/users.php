@@ -544,6 +544,17 @@ function getUserNameById($user_id)
 
     return $user['first_name'] . '&nbsp;' . $user['last_name'];
 }
+function getUserFNameById($user_id)
+{
+    global $db_con;
+
+    $query = 'SELECT `first_name`, `last_name`  FROM `users` WHERE `user_id` = ' . $user_id;
+    $res = $db_con->query($query);
+
+    $user = $db_con->fetch_array($res);
+
+    return $user['first_name'];
+}
 
 
 function isMyRouter($user_id)
@@ -689,6 +700,14 @@ function getAllUsers()
 
     return $db_con->sql2array($query);
 }
+function getAllUsersData()
+{
+    global $db_con;
+
+    $query = 'SELECT `user_id`, `display_name`,`verify_file`, `accepted_by`,`email`,`photo`,`verified` FROM `users` WHERE 1 ORDER BY `photo` DESC';
+
+    return $db_con->sql2array($query);
+}
 
 
 function countNotifications($user_id)
@@ -769,7 +788,7 @@ function getMessageRecipient($conv_id)
 
 }
 /***********for Investor **************/
-function getInvestorData($investor_id)
+function getInvestorById($investor_id)
 {
     global $db_con;
 
@@ -778,6 +797,15 @@ function getInvestorData($investor_id)
 
     return $db_con->fetch_array($res);
 }
+function getAllInvestorData()
+{
+    global $db_con;
+
+    $query = 'SELECT * FROM `investors` WHERE 1 ORDER BY `company_name` ASC';
+
+    return $db_con->sql2array($query);
+}
+
 
 function getFootnoteByAuthorForInvestor($investor_id, $created_by)
 {

@@ -531,12 +531,12 @@ $(document).ready(function () {
                     if (data['result'] == 'OK') {
                         $('#status_'+ideathread_id).text('Published.');
                         $('.accept_'+ideathread_id).attr('value','Reject');
-                        $('#ideathread_acceptor_'+ideathread_id).attr('value',session_user);
+                        $('#ideathread_acceptor_'+ideathread_id).text(session_user);
 
                     }else {
                         $('#status_'+ideathread_id).text('Unpublished.');
                         $('.accept_'+ideathread_id).attr('value','Accept');
-                        $('#ideathread_acceptor_'+ideathread_id).attr('value',session_user);
+                        $('#ideathread_acceptor_'+ideathread_id).text(session_user);
                     }
                 },
                 dataType: "json"
@@ -562,13 +562,13 @@ $(document).ready(function () {
                     if (data['result'] == 'OK') {
                         $('#projectstatus_'+project_id).text('Published.');
                         $('.projectaccept_'+project_id).attr('value','Reject');
-                        $('#project_acceptor_'+project_id).attr('value',session_user);
+                        $('#project_acceptor_'+project_id).text(session_user);
 
 
                     }else {
                         $('#projectstatus_'+project_id).text('Unpublished.');
                         $('.projectaccept_'+project_id).attr('value','Accept');
-                        $('#project_acceptor_'+project_id).attr('value',session_user);
+                        $('#project_acceptor_'+project_id).text(session_user);
                     }
                 },
                 dataType: "json"
@@ -594,12 +594,12 @@ $(document).ready(function () {
                     if (data['result'] == 'OK') {
                         $('#blogpoststatus_'+post_id).text('Published.');
                         $('.blogpostaccept_'+post_id).attr('value','Reject');
-                        $('#blogpost_acceptor_'+post_id).attr('value',session_user);
+                        $('#blogpost_acceptor_'+post_id).text(session_user);
 
                     }else {
                         $('#blogpoststatus_'+post_id).text('Unpublished.');
                         $('.blogpostaccept_'+post_id).attr('value','Accept');
-                        $('#blogpost_acceptor_'+post_id).attr('value',session_user);
+                        $('#blogpost_acceptor_'+post_id).text(session_user);
                     }
                 },
                 dataType: "json"
@@ -681,12 +681,12 @@ $(document).ready(function () {
                         $('#userstatus_'+user_id).text('Yes.');
                         $('.useraccept_'+user_id).attr('value','Deny');
                         $('<img src="images/4.png" alt=""  title="Verified."class="ver-admin-page">').appendTo('#username_'+user_id);
-                        $('#user_acceptor_'+user_id).attr('value',session_user);
+                        $('#user_acceptor_'+user_id).text(session_user);
                     }else {
                         $('#userstatus_'+user_id).text('No.');
                         $('.useraccept_'+user_id).attr('value','Verify');
                         $('#username_'+user_id).find('.ver-admin-page').hide();
-                        $('#user_acceptor_'+user_id).attr('value',session_user);
+                        $('#user_acceptor_'+user_id).text(session_user)
                     }
                 },
                 dataType: "json"
@@ -696,8 +696,49 @@ $(document).ready(function () {
 
     });
 
-    //
+    //investor show hide
+
+    //user verify-deny click event
+    $('body').on('click', '.admin-accept-investor', function () {
+
+        if (confirm('Are you sure you want to update investor status?')) {
+            var investor_id=$(this).attr("data-id");
+            var session_user=$(this).attr("data-user");
+
+            console.log(investor_id);
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajaxDispatcher.php",
+                data: {investor_id: investor_id,session_user:session_user, dispatcher: 'publish-investor'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data['result'] == 'OK') {
+                        $('#investorstatus_'+investor_id).text('Yes.');
+                        $('.investoraccept_'+investor_id).attr('value','Hide');
+                        $('<img src="images/4.png" alt=""  title="Verified."class="ver-admin-page">').appendTo('#investorname_'+investor_id);
+                        $('#investor_acceptor_'+investor_id).text(session_user);
+                    }else {
+                        $('#investorstatus_'+investor_id).text('No.');
+                        $('.investoraccept_'+investor_id).attr('value','Show');
+                        $('#investorname_'+investor_id).find('.ver-admin-page').hide();
+                        $('#investor_acceptor_'+investor_id).text(session_user)
+                    }
+                },
+                dataType: "json"
+            });
+
+        }
+
+    });
 
     //fancy box to view clicked verified documents
     $(".fancybox").fancybox({});
+
+    //uploading investor image
+
+
+
+
 });
