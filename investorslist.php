@@ -13,7 +13,7 @@ foreach ($users as $user) { ?>
                 if (empty($user['photo'])) {
                     echo '<img src="uploads/avatars/nophoto.jpg" style="width:200px;" alt="">';
                 } else {
-                    echo '<img src="uploads/avatars/' . $user['photo'] . '" style="width:200px;" alt="">';
+                    echo '<img src="uploads/avatars/investors/' . $user['photo'] . '" style="width:200px;" alt="">';
                 }
                 ?>
             </div>

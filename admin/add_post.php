@@ -1,8 +1,8 @@
 <?php
-if (isset($_POST['title'])) {
-    //	$_POST['filename'] = $filename;
-    $message = addBlogPost($_POST);
-}
+//if (isset($_POST['title'])) {
+//    //	$_POST['filename'] = $filename;
+//    $message = addBlogPost($_POST);
+//}
 
 ?>
 <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
@@ -18,10 +18,10 @@ if (isset($_POST['title'])) {
 <!--    <div class="postedblogpost" style="text-color:red;">Your Post Has been submitted.</div>-->
     <div class="content-block">
         <?php
-        if (isset($message))
-            echo '<span style="color: rgb(255, 79, 3);font-size: 16px;">' . $message . '</span>';
-        else{?>
-		<form action="uploadblogpost.php" method="post" novalidate enctype="multipart/form-data">
+//        if (isset($message))
+//            echo '<span style="color: rgb(255, 79, 3);font-size: 16px;">' . $message . '</span>';
+//        else{?>
+		<form action="admin/processblogpost.php" method="post" novalidate enctype="multipart/form-data">
 		<div class="form-item"><input type="text" name = "title" id="post_title"  placeholder="Post Title" maxlength="95" required></div></br>
 
 
@@ -33,10 +33,11 @@ if (isset($_POST['title'])) {
 		<div class="form-item">
 		<input type="submit"  value="Submit" class="upload-next" name="save_blogpost" id="save_blogpost">
 		</div>
-		</form>;
+		</form>
 
 
     </div>
-    <?php }?>
+<!--    --><?php //}?>
 
 </div> <!-- main-content -->
+

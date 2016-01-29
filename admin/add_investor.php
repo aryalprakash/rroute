@@ -35,7 +35,7 @@ $message = addBlogPost($_POST);
         text-align: center;
     }
     .form-style-2 input.input-field{
-        width: 48%;
+        width: 55%;
 
     }
 
@@ -70,7 +70,7 @@ $message = addBlogPost($_POST);
     .form-style-2 input[type=button]{
         border: none;
         padding: 8px 15px 8px 15px;
-        background: #FF8500;
+        /*background: #FF8500;*/
         color: #fff;
         box-shadow: 1px 1px 4px #DADADA;
         -moz-box-shadow: 1px 1px 4px #DADADA;
@@ -97,8 +97,8 @@ $message = addBlogPost($_POST);
     <?php
     if (isset($message))
         echo '<span style="color: rgb(255, 79, 3);font-size: 16px;">' . $message . '</span>';?>
-
     <div class="form-style-2">
+
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" >
             <label for="field1"><span>Name <span class="required">*</span></span><input type="text" class="input-field" name="field1" value="" placeholder="Company Name" /></label>
             <label for="field2"><span>Email <span class="required">*</span></span><input type="text" class="input-field" name="field2" value=""placeholder="Email" /></label>
@@ -107,8 +107,28 @@ $message = addBlogPost($_POST);
             <label for="field1"><span>Partners <span class="required">*</span></span><input type="text" class="input-field" name="field1" value=""placeholder="Partners(john doe,Ram)" /></label>
             <label for="field5"><span>About <span class="required">*</span></span><textarea name="field5"id="description" class="textarea-field" placeholder="About"></textarea></label>
             <label for="field3"><span>Avatar</span></span><input type="file" accept="image/*" name="thumbnailImg"  id="thumbnailImg" placeholder="Input an image file for thumbnail"/></label>
+            <div class=""id="image_preview"><img id="previewing" src="uploads/avatars/nophoto.jpg" /></div>
             <label><span>&nbsp;</span><input type="submit"  value="Submit" class="upload-next" name="add_investors"/></label>
         </form>
-    </div>
 
+    </div>
+<script type="text/javascript">
+    // for just displaying uploading images
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#previewing').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#thumbnailImg").change(function(){
+        readURL(this);
+    });
+</script>
 

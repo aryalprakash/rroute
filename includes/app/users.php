@@ -91,10 +91,10 @@ function updateUser($data)
 
     if (!empty($_POST['photo'])) {
         if (!empty($_POST['photo_updated'])) {
-            if (copy('/js/file-uploading/server/php/files/' . $_POST['photo'], 'uploads/avatars/' . $_POST['photo']) && copy('js/file-uploading/server/php/files/thumbnail/' . $_POST['photo'], 'uploads/avatars/thumbs/' . $_POST['photo'])) {
+            if (copy('js/file-uploading/server/php/files/' . $_POST['photo'], 'uploads/avatars/' . $_POST['photo']) && copy('js/file-uploading/server/php/files/thumbnail/' . $_POST['photo'], 'uploads/avatars/thumbs/' . $_POST['photo'])) {
                 $photo = $_POST['photo'];
-                unlink('/js/file-uploading/server/php/files/' . $_POST['photo']);
-                unlink('/js/file-uploading/server/php/files/thumbnail/' . $_POST['photo']);
+                unlink('js/file-uploading/server/php/files/' . $_POST['photo']);
+                unlink('js/file-uploading/server/php/files/thumbnail/' . $_POST['photo']);
             } else
                 $photo = '';
         } else
@@ -126,6 +126,45 @@ function updateUser($data)
     #removed https://www.youtube.com/playlist?list=PLfdtiltiRHWEbLm0ErHe7HgEOVIO26R_o
     return $db_con->query($q);
 }
+
+//update investor
+function updateInvestor($data)
+{
+    global $db_con;
+
+//    if (checkdate(intval($data['month']), intval($data['day']), intval($data['year'])))
+//        $date = $data['year'] . '-' . $data['month'] . '-' . $data['day'];
+//    else
+        $date = date('m/d/Y h:i:s a', time());
+
+    if (!empty($_POST['photo'])) {
+        if (!empty($_POST['photo_updated'])) {
+            if (copy('js/file-uploading/server/php/files/' . $_POST['photo'], 'uploads/avatars/investors/' . $_POST['photo']) && copy('js/file-uploading/server/php/files/thumbnail/' . $_POST['photo'], 'uploads/avatars/investors/thumbs/' . $_POST['photo'])) {
+                $photo = $_POST['photo'];
+                unlink('js/file-uploading/server/php/files/' . $_POST['photo']);
+                unlink('js/file-uploading/server/php/files/thumbnail/' . $_POST['photo']);
+            } else
+                $photo = '';
+        } else
+            $photo = $_POST['photo'];
+    } else
+        $photo = '';
+
+    $q = "UPDATE `investors` SET
+		`company_name` = '" . $db_con->escape($data['company_name']) . "',
+		`location` = '" . $db_con->escape($data['location']) . "',
+		`email` = '" . $db_con->escape($data['email']) . "',
+		`phone` = '" . $db_con->escape($data['phone']) . "',
+		`website` = '" . $db_con->escape($data['website']) . "',
+		`about` = '" . $db_con->escape($data['about']) . "',
+		`photo` = '" . $photo . "',
+		`updated_on` = '" . $date . "'
+		 WHERE `investor_id` = " . $data['investor_id'];
+
+    #removed https://www.youtube.com/playlist?list=PLfdtiltiRHWEbLm0ErHe7HgEOVIO26R_o
+    return $db_con->query($q);
+}
+
 
 function updateAccount($data)
 {
@@ -837,4 +876,11 @@ function getFootnotesForInvestor($investor_id)
 }
 
 /*********** for investor ends **********/
+/************Return User role***********/
+function userRole($id){
+    global $db_con;
+    $q=$db_con->query("SELECT `role` FROM `users` WHERE `user_id`='".$id."'LIMIT 1");
+    $res =$db_con->fetch_array($q);
+    return $res['role'];
+}
 ?>

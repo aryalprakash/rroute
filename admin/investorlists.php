@@ -58,7 +58,7 @@ if ($investors) {?>
 
                 <td id="investorstatus_<?php echo $investor['investor_id']; ?>"><?php if ($investor['verified']=='0') echo "No."; else echo "Yes.";  ?></td>
                 <td><a class=""><input type="button"data-investor="<?php echo getuserFNameById($_SESSION['uid']); ?>" data-id="<?php echo $investor['investor_id']; ?>"  class="admin-accept-investor investoraccept_<?php echo $investor['investor_id']; ?>" value ="<?php if($investor['verified']=='1') echo "Hide"; else echo "Show"; ?>" <?php if($investor['investor_id']==$_SESSION['uid'])echo'style="opacity:0.5"'. 'disabled'; ?>></a></td>
-               <td> <a href="<?php echo SITE_URL.'/admin/edit_investor.php?iuid='.$investor['investor_id'];  ?>"><input type="button" value="Edit"/></a></td>
+               <td> <a href="<?php echo SITE_URL.'/edit_investor.php?iuid='.$investor['investor_id'];  ?>"><input type="button" value="Edit"/></a></td>
                 <td ><a class ="admin-delete-investor del-investor-<?php echo $investor['investor_id']; ?>" data-id="<?php echo $investor['investor_id']; ?>"
                     ><img src="images/icons/delete.png" title="delete" <?php if($investor['investor_id']==$_SESSION['uid'])echo'style="opacity:0.5"'. 'disabled'; ?>/>
                         <!--                        <input type="button" class="delete-project-admin" style="color:red;" value="X">-->

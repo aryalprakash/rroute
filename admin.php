@@ -5,7 +5,10 @@ require_once(DIR_APP . 'projects.php');
 require_once(DIR_APP . 'users.php');
 
 if (empty($_SESSION['logged_in']))
-redirect('index.php');?>
+redirect('index.php');
+if(userRole($_SESSION['uid'])=='User')
+    redirect('home.php');
+?>
 <div class="inner-page-wrapper">
 
         <div class="account inner-page content">
@@ -26,13 +29,8 @@ redirect('index.php');?>
                         <li><a href="admin/add_investor.php">Add Investor</a></li>
                         <li><a href="admin/add_post.php">Add Post</a></li>
 
-
-
                     </ul>
                 </div>
-
-
-
 
             </div>
 

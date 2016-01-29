@@ -1,6 +1,6 @@
 <?php
 $uid = intval($_GET['iuid']);
-$investor = getInvestorData($uid);
+$investor = getInvestorById($uid);
 $userverification =getUserData($_SESSION['uid']);
 
 if (!$investor){
@@ -36,7 +36,8 @@ exit();}?>
                 if (empty($investor['photo'])) {
                     echo '<img src=' . SITE_URL . '/uploads/avatars/nophoto.jpg.' . ' alt="">';
                 } else {
-                    echo '<img src=' . SITE_URL . '/uploads/avatars/' . $investor['photo'] . ' alt="">';
+                    echo '<img src="' . SITE_URL . '/uploads/avatars/investors/'. $investor['photo'].'" alt="">';
+                    //echo '<img src="uploads/avatars/investors/' . $investor['photo'] . '" style="width:200px;" alt="">';
                 }
                 ?>
                 <div class="name-block"><a
@@ -50,10 +51,11 @@ exit();}?>
                 <ul class="user-info-left">
                     <li><label>Name:</label><?php echo ucwords($investor['company_name']); ?></li>
                     <li><label>Current City:</label><?php echo $investor['location'] ?></li>
+                    <li><label>Website:</label><a href="<?php echo $investor['website']; ?>"><?php echo $investor['website'] ?></a></li>
                 </ul>
 
                 <ul class="user-info-right">
-                    <li><label>tbd:</label><?php echo $investor['investor_id'] ?></li>
+                    <li><label>phone:</label><?php echo $investor['phone'] ?></li>
                     <li><label>Email:</label><?php echo $investor['email'] ?></li>
                 </ul>
             </div>
@@ -61,7 +63,7 @@ exit();}?>
             <p align="justify"><?php echo $investor['about']; ?></p>
         </div>
     </div>
-    <div class="my-projects content-block">
+    <div class=" content-block">
 
         <div class="content-title"><?php
             //                        if ($own_profile)
@@ -76,11 +78,12 @@ exit();}?>
             <div class="my-projects-list">
                 <ul>
                    <li><a href ="<?php echo $event['url']; ?>"> <?php echo $event['events'] ?></a></li>
+                    <li><?php echo getDateformat($event['event_date']); ?></li>
                 </ul>
             </div>
         <?php }}?>
     </div>
-    <div class="my-projects content-block">
+    <div class=" content-block">
 
         <div class="content-title"><?php
             //                        if ($own_profile)
@@ -108,7 +111,7 @@ exit();}?>
             ?> Investor List
         </div>
         <div class="form-item no-height">
-
+         <?php $arr =explode(',',$investor['co_investors']); for( $i=0; $i<sizeof($arr);$i++){echo $arr[$i];if($i>=(intval(sizeof($arr))-1)){echo '';}else {echo' , ';}} ?>
         </div>
     </div> <!-- my-routers content-block -->
 
