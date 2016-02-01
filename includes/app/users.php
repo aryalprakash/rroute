@@ -157,7 +157,7 @@ function updateInvestor($data)
 		`phone` = '" . $db_con->escape($data['phone']) . "',
 		`website` = '" . $db_con->escape($data['website']) . "',
 		`about` = '" . $db_con->escape($data['about']) . "',
-		`photo` = '" . $photo . "',
+		`photo` = '" .$db_con->escape($photo) . "',
 		`updated_on` = '" . $date . "'
 		 WHERE `investor_id` = " . $data['investor_id'];
 

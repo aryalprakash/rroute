@@ -31,6 +31,19 @@ function updateStatusIdea($id){
     }
 
 }
+
+function rejectIdeathread($id){
+    global $db_con;
+    $query = "UPDATE `ideathreads` SET `status`='rejected',`accepted_by`=".$_SESSION['uid']." WHERE `ideathread_id`=". $id;
+    $db_con->query($query);
+    return;
+}
+function rejectProject($id){
+    global $db_con;
+    $query = "UPDATE `projects` SET `status`='2',`accepted_by`=".$_SESSION['uid']." WHERE `project_id`=" . $id;
+    $db_con->query($query);
+    return;
+}
 function updateStatusBlogPost($id)
 {
     global $db_con;
@@ -46,6 +59,13 @@ function updateStatusBlogPost($id)
         $db_con->query($query);
         return 'accepted';
     }
+}
+function rejectBlogpost($id){
+    global $db_con;
+    $query = "UPDATE `blog_posts` SET `verified`='2',`accepted_by`=".$_SESSION['uid']." WHERE `post_id`=" . $id;
+    $db_con->query($query);
+    return;
+
 }
 function updateStatusUser($id)
 {
@@ -2243,7 +2263,7 @@ function getAllBlogPostVerified(){
 function getAllBlogPost(){
     global $db_con;
 
-    $query = 'SELECT * FROM `blog_posts` WHERE 1 ORDER BY `created_on` DESC';
+    $query = 'SELECT * FROM `blog_posts` WHERE 1 ORDER BY `verified` ASC,`created_on` ';
 
     return $db_con->sql2array($query);
 }
@@ -2266,8 +2286,26 @@ function addBlogPost($data)
     $db_con->query($query);
     $message = 'Status: Received, In-Review';
     return $message;
+}
+function addInvestor($data)
+{
+    $target_dir = "uploads/avatars/investors/";
+    //$target_file = $target_dir . basename($_FILES["thumbnailImg"]["name"]);
+
+    $target_file =$_FILES["thumbnailImg"]["name"];
+    $uploadOk = 1;
+    $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+    move_uploaded_file($_FILES["thumbnailImg"]["name"], $target_dir.basename($target_file));
 
 
+    global $db_con;
+
+    $query = "INSERT INTO `investors`(`name`,`email`,`phone`,`accepted_by`,`about`,`co_investors`,`location`,`photo`)
+                VALUES('" . $db_con->escape($data['name']) . "','" . $db_con->escape($data['email']) . "','" . $db_con->escape($data['phone']) . "'," . $_SESSION['uid'] . ",'" . $db_con->escape($data['about']) . "','" . $db_con->escape($data['partners']) . "','" . $db_con->escape($data['location']) . "','" . $target_file . "')";
+
+    $db_con->query($query);
+    $message = 'Status: Received, In-Review';
+    return $message;
 }
 
 /******************how to show single blog post ends **********************/

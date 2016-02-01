@@ -1,7 +1,15 @@
 <?php
 $id = intval($_GET['id']);
+
 $post = getBlogPostById($id);
 if (!empty($post)){
+    $usrtype=userRole($_SESSION['uid']);
+    if($post['verified']=='0'&& $usrtype!='Admin'){ ?>
+        <div class="content-block">
+        <div class="content-title">Restricted Content.</div>
+  <?php  }else
+    {
+
 $user = getUserData($post['created_by']);
 ?>
     <div class="content-block">
@@ -42,6 +50,7 @@ $user = getUserData($post['created_by']);
         </div>
     </div>
 <?php }
+}
 
 else { ?>
     <div class="content-block">

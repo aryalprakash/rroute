@@ -1,5 +1,6 @@
+
 <?php
-$posts = getAllBlogPost();
+$posts = getAllBlogPostVerified();
 if ($posts) {
     foreach ($posts as $post){
         $user =getUserData($post['created_by']);
@@ -7,8 +8,10 @@ if ($posts) {
         <div class="content-left-colm project-details">
             <div class="post-photo">
                 <?php if (empty($post['thumbnail_img'])) {
-                    echo '<img src=' . SITE_URL . '/uploads/avatars/nophoto.jpg.' . ' alt="">';
-                    echo '<a href="blog.php?id=' . $post['post_id'] . '"><img src="'.SITE_URL.'/uploads/avatars/nophoto.jpg" alt=""></a>';
+
+                    echo '<a href="blog.php?id=' . $post['post_id'] . '"><img src="'.SITE_URL.'/uploads/avatars/nophoto.jpg" alt="">';
+                     //echo '<img src=' . SITE_URL . '/uploads/avatars/nophoto.jpg.' . ' alt="">';
+                   echo  '</a>';
                 } else {
                     $photo =$post['thumbnail_img'];
                     echo '<a href="blog.php?id=' . $post['post_id'] . '"><img src="'.SITE_URL.'/uploads/images/blogposts/'. $photo . '" alt=""></a>';

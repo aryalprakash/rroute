@@ -13,5 +13,10 @@
                 href="account.php">Settings</a></li>
         <li class="investor-item"><a href="investor.php">Investors</a></li>
         <li class="blog-item"><a href="blog.php">Blog</a></li>
+
+        <?php $usrtype=userRole($_SESSION['uid']);
+        if($usrtype=='Admin'){
+            echo'<li class="settings-item"><a href="admin.php">'.'Admin'.'</a></li>';
+        }?>
     </ul>
 </div> <!-- left-navigation -->

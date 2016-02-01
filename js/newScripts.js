@@ -523,20 +523,54 @@ $(document).ready(function () {
             $.ajax({
                 type: 'POST',
                 url: "includes/ajaxDispatcher.php",
-                data: {ideathread_id: ideathread_id,session_user:session_user, dispatcher: 'accept-ideathread'},
+                data: {ideathread_id: ideathread_id, session_user:session_user, dispatcher: 'accept-ideathread'},
                 error: function (req, text, error) {
                     alert('Error AJAX: ' + text + ' | ' + error);
                 },
                 success: function (data) {
                     if (data['result'] == 'OK') {
-                        $('#status_'+ideathread_id).text('Published.');
-                        $('.accept_'+ideathread_id).attr('value','Reject');
+                        $('#status_'+ideathread_id).text('Yes');
+                        $('.accept_'+ideathread_id).attr('value','Unpublish');
                         $('#ideathread_acceptor_'+ideathread_id).text(session_user);
-
+                        $('#ideathreadstatusrej_'+ideathread_id).text('Accepted');
+                        $('.ideathreadreject_'+ideathread_id).attr("disabled",true);
+                        $('.ideathreadreject_'+ideathread_id).css({"opacity":"0.4"});
                     }else {
-                        $('#status_'+ideathread_id).text('Unpublished.');
-                        $('.accept_'+ideathread_id).attr('value','Accept');
+                        $('#status_'+ideathread_id).text('No');
+                        $('.accept_'+ideathread_id).attr('value','Publish');
+                        $('#ideathreadstatusrej_'+ideathread_id).text('Accepted');
                         $('#ideathread_acceptor_'+ideathread_id).text(session_user);
+                    }
+                },
+                dataType: "json"
+            });
+
+        }
+
+    });
+
+    $('body').on('click', '.admin-reject-ideathread', function () {
+
+        if (confirm('Are you sure you want to Reject IdeaThread?')) {
+            var ideathread_id=$(this).attr("data-id");
+            var session_user=$(this).attr("data-user");
+            console.log(ideathread_id,session_user);
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajaxDispatcher.php",
+                data: {ideathread_id:ideathread_id,session_user:session_user, dispatcher: 'reject-ideathread'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data['result'] == 'OK') {
+                        //$('#blogpoststatus_'+post_id).text('No');
+                        // $('.blogpostaccept_'+post_id).attr('value','Accept');
+                        $('.accept_'+ideathread_id).css("opacity:0.4", "disabled");
+                        $('#ideathread_acceptor_'+ideathread_id).text(session_user);
+                        $('#ideathreadstatusrej_'+ideathread_id).text('Rejected');
+                        $('.ideathreadreject_'+ideathread_id).css("opacity:0.4", "disabled");
+
                     }
                 },
                 dataType: "json"
@@ -560,15 +594,19 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     if (data['result'] == 'OK') {
-                        $('#projectstatus_'+project_id).text('Published.');
-                        $('.projectaccept_'+project_id).attr('value','Reject');
+                        $('#projectstatus_'+project_id).text('Yes');
+                        $('.projectaccept_'+project_id).attr('value','Unpublish');
                         $('#project_acceptor_'+project_id).text(session_user);
+                        $('#projectstatusrej_'+project_id).text('Accepted');
+                        $('.projectreject_'+project_id).attr("disabled",true);
+                        $('.projectreject_'+project_id).css({"opacity":"0.4"});
 
 
                     }else {
-                        $('#projectstatus_'+project_id).text('Unpublished.');
+                        $('#projectstatus_'+project_id).text('No');
                         $('.projectaccept_'+project_id).attr('value','Accept');
                         $('#project_acceptor_'+project_id).text(session_user);
+                        $('#projectstatusrej_'+project_id).text('Accepted');
                     }
                 },
                 dataType: "json"
@@ -577,6 +615,42 @@ $(document).ready(function () {
         }
 
     });
+
+    $('body').on('click', '.admin-reject-project', function () {
+
+        if (confirm('Are you sure you want to Reject Project?')) {
+            var project_id=$(this).attr("data-id");
+            var session_user=$(this).attr("data-user");
+            //console.log(session_user,post_id);
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajaxDispatcher.php",
+                data: {project_id: project_id,session_user:session_user, dispatcher: 'reject-project'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data['result'] == 'OK') {
+                        console.log(session_user,project_id);
+                        //$('#blogpoststatus_'+post_id).text('No');
+                        // $('.blogpostaccept_'+post_id).attr('value','Accept');
+                        $('.projectaccept_'+project_id).css({"opacity":"0.4"});
+                        $('.projectaccept_'+project_id).attr("disabled",true);
+                        $('#project_acceptor_'+project_id).text(session_user);
+                        $('#projectstatusrej_'+project_id).text('Rejected');
+                        $('.projectreject_'+project_id).attr("disabled",true);
+                        $('.projectreject_'+project_id).css({"opacity":"0.4"});
+
+                    }
+                },
+                dataType: "json",
+            });
+
+        }
+
+    });
+
+
     $('body').on('click', '.admin-accept-blogpost', function () {
 
         if (confirm('Are you sure you want to update status?')) {
@@ -592,14 +666,18 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     if (data['result'] == 'OK') {
-                        $('#blogpoststatus_'+post_id).text('Published.');
-                        $('.blogpostaccept_'+post_id).attr('value','Reject');
+                        $('#blogpoststatus_'+post_id).text('Yes');
+                        $('.blogpostaccept_'+post_id).attr('value','Unpublish');
                         $('#blogpost_acceptor_'+post_id).text(session_user);
+                        $('#blogpoststatusrej_'+post_id).text('Accepted');
+                        $('.blogpostreject_'+post_id).attr("disabled",true);
+                        $('.blogpostreject_'+post_id).css({"opacity":"0.4"});
 
                     }else {
-                        $('#blogpoststatus_'+post_id).text('Unpublished.');
+                        $('#blogpoststatus_'+post_id).text('No');
                         $('.blogpostaccept_'+post_id).attr('value','Accept');
                         $('#blogpost_acceptor_'+post_id).text(session_user);
+                        $('#poststatusrej_'+post_id).text('Accepted')
                     }
                 },
                 dataType: "json"
@@ -608,6 +686,40 @@ $(document).ready(function () {
         }
 
     });
+    $('body').on('click', '.admin-reject-blogpost', function () {
+
+        if (confirm('Are you sure you want to Reject Blog Post?')) {
+            var post_id=$(this).attr("data-id");
+            var session_user=$(this).attr("data-user");
+            //console.log(session_user,post_id);
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajaxDispatcher.php",
+                data: {post_id: post_id,session_user:session_user, dispatcher: 'reject-blogpost'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data['result'] == 'OK') {
+                        console.log(session_user,post_id);
+                        //$('#blogpoststatus_'+post_id).text('No');
+                        // $('.blogpostaccept_'+post_id).attr('value','Accept');
+                        $('.blogpostaccept_'+post_id).css({"opacity":"0.4"});
+                        $('.blogpostaccept_'+post_id).attr("disabled",true);
+                        $('#blogpost_acceptor_'+post_id).text(session_user);
+                        $('#blogpoststatusrej_'+post_id).text('Rejected');
+                        $('.blogpostreject_'+post_id).attr("disabled",true);
+                        $('.blogpostreject_'+post_id).css({"opacity":"0.4"});
+
+                    }
+                },
+                dataType: "json",
+            });
+
+        }
+
+    });
+
     //$('body').on('click','#save_blogpost',function(){
     //
     //    var title=$('#post_title').attr('value');

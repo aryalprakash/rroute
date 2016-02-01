@@ -2,10 +2,9 @@
 
 require_once('config.php');
 //if(isset($_POST['dispatcher']))
-$action = $_POST['dispatcher'];
+$action =$_POST['dispatcher'];
 
 switch ($action) {
-
     case 'login':
         $user_id = login($_POST['email'], $_POST['password'], $_POST['remember']);
 
@@ -342,10 +341,10 @@ switch ($action) {
         $project_title = getIdeaTitle($_POST['ideathread_id']);
         //$author = getUserNameById($_SESSION['uid']);
         $sent_to = getIdeaAuthor($_POST['ideathread_id']);
-       // $url = SITE_URL . '/home.php?iid=' . $_POST['ideathread_id'];
+        // $url = SITE_URL . '/home.php?iid=' . $_POST['ideathread_id'];
         $url = '';
-        $text = 'Your Ideathread  "'.  $project_title.'" has been removed.';
-        addNotification($sent_to,$text, $_SESSION['uid'], $url);
+        $text = 'Your Ideathread  "' . $project_title . '" has been removed.';
+        addNotification($sent_to, $text, $_SESSION['uid'], $url);
         deleteIdea($_POST['ideathread_id']);
         $response['result'] = 'OK';
         echo json_encode($response);
@@ -357,7 +356,7 @@ switch ($action) {
         //$author = getUserNameById($_SESSION['uid']);
         $url = '';
         $sent_to = getProjectAuthor($_POST['project_id']);
-        $text = 'Your Project  "'.  $project_title.'" has been removed.';
+        $text = 'Your Project  "' . $project_title . '" has been removed.';
         addNotification($sent_to, $text, $_SESSION['uid'], $url);
         deleteProject($_POST['project_id']);
         $response['result'] = 'OK';
@@ -370,7 +369,7 @@ switch ($action) {
         //$author = getUserNameById($_SESSION['uid']);
         $url = '';
         $sent_to = getBlogPostAuthor($_POST['post_id']);
-        $text = 'Your Blog Post  "'.  $project_title.'" has been removed.';
+        $text = 'Your Blog Post  "' . $project_title . '" has been removed.';
         addNotification($sent_to, $text, $_SESSION['uid'], $url);
         deleteBlogPost($_POST['post_id']);
         $response['result'] = 'OK';
@@ -535,24 +534,24 @@ switch ($action) {
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
         $project_id = $_POST['project_id'];
-        $res =updateStatusProject($project_id);
-        if($res=='accepted') {
+        $res = updateStatusProject($project_id);
+        if ($res == 'accepted') {
             $project_title = getProjectTitle($_POST['project_id']);
             //$author = getUserNameById($_SESSION['uid']);
             $url = SITE_URL . '/home.php?pid=' . $_POST['project_id'];
             $sent_to = getProjectAuthor($_POST['project_id']);
-            $text = 'Your Project  "'.  $project_title.'" has been Published.';
+            $text = 'Your Project  "' . $project_title . '" has been Published.';
             addNotification($sent_to, $text, $_SESSION['uid'], $url);
-            $responce['result']='OK';
+            $responce['result'] = 'OK';
+        } else {
+            $project_title = getProjectTitle($_POST['project_id']);
+            //$author = getUserNameById($_SESSION['uid']);
+            $url = SITE_URL . '/home.php?pid=' . $_POST['project_id'];
+            $sent_to = getProjectAuthor($_POST['project_id']);
+            $text = 'Your Project  "' . $project_title . '" has been Unpublished.';
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
+            $responce['result'] = 'reject';
         }
-        else {
-            $project_title = getProjectTitle($_POST['project_id']);
-            //$author = getUserNameById($_SESSION['uid']);
-            $url = SITE_URL . '/home.php?pid=' . $_POST['project_id'];
-            $sent_to = getProjectAuthor($_POST['project_id']);
-            $text = 'Your Project  "'.  $project_title.'" has been Rejected.';
-            addNotification($sent_to, $text, $_SESSION['uid'], $url);
-            $responce['result']='reject';}
         echo json_encode($responce);
         break;
 
@@ -560,152 +559,142 @@ switch ($action) {
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
         $ideathread_id = $_POST['ideathread_id'];
-        $res =updateStatusIdea($ideathread_id);
-        if($res=='accepted') {
+        $res = updateStatusIdea($ideathread_id);
+        if ($res == 'accepted') {
             $project_title = getIdeaTitle($_POST['ideathread_id']);
             //$author = getUserNameById($_SESSION['uid']);
             $url = SITE_URL . '/home.php?iid=' . $_POST['ideathread_id'];
             $sent_to = getIdeaAuthor($_POST['ideathread_id']);
-            $text = 'Your Project  "'.  $project_title.'" has been Published.';
+            $text = 'Your Project  "' . $project_title . '" has been Published.';
             addNotification($sent_to, $text, $_SESSION['uid'], $url);
-            $responce['result']='OK';
+            $responce['result'] = 'OK';
+        } else {
+            $project_title = getIdeaTitle($_POST['ideathread_id']);
+            //$author = getUserNameById($_SESSION['uid']);
+            $url = SITE_URL . '/home.php?iid=' . $_POST['ideathread_id'];
+            $sent_to = getIdeaAuthor($_POST['ideathread_id']);
+            $text = 'Your Project  "' . $project_title . '" has been Unpublished.';
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
+            $responce['result'] = 'reject';
         }
-        else {
-            $project_title = getIdeaTitle($_POST['ideathread_id']);
-            //$author = getUserNameById($_SESSION['uid']);
-            $url = SITE_URL . '/home.php?iid=' . $_POST['ideathread_id'];
-            $sent_to = getIdeaAuthor($_POST['ideathread_id']);
-            $text = 'Your Project  "'.  $project_title.'" has been Rejected.';
-            addNotification($sent_to, $text, $_SESSION['uid'], $url);
-            $responce['result']='reject';}
         echo json_encode($responce);
         break;
     case 'accept-blogpost':
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
         $post_id = $_POST['post_id'];
-        $res =updateStatusBlogPost($post_id);
-        if($res=='accepted') {
+        $res = updateStatusBlogPost($post_id);
+        if ($res == 'accepted') {
             $project_title = getBlogPostTitle($_POST['post_id']);
             //$author = getUserNameById($_SESSION['uid']);
             $url = SITE_URL . '/blog.php?id=' . $_POST['post_id'];
             $sent_to = getBlogPostAuthor($_POST['post_id']);
-            $text = 'Your Blog Post  "'.  $project_title.'" has been Published.';
+            $text = 'Your Blog Post  "' . $project_title . '" has been Published.';
             addNotification($sent_to, $text, $_SESSION['uid'], $url);
-            $responce['result']='OK';
+            $responce['result'] = 'OK';
+        } else {
+            $project_title = getBlogPostTitle($_POST['post_id']);
+            //$author = getUserNameById($_SESSION['uid']);
+            $url = SITE_URL . '/blog.php?id=' . $_POST['post_id'];
+            $sent_to = getBlogPostAuthor($_POST['post_id']);
+            $text = 'Your Blog Post  "' . $project_title . '" has been Unpublihed.';
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
+            $responce['result'] = 'reject';
         }
-        else {
-            $project_title = getBlogPostTitle($_POST['post_id']);
-            //$author = getUserNameById($_SESSION['uid']);
-            $url = SITE_URL . '/blog.php?id=' . $_POST['post_id'];
-            $sent_to = getBlogPostAuthor($_POST['post_id']);
-            $text = 'Your Blog Post  "'.  $project_title.'" has been Rejected.';
-            addNotification($sent_to, $text, $_SESSION['uid'], $url);
-            $responce['result']='reject';}
         echo json_encode($responce);
         break;
+    case 'reject-blogpost':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
+        $post_id = $_POST['post_id'];
+
+        $res =rejectBlogPost($post_id);
+        $project_title = getBlogPostTitle($post_id);
+            //$author = getUserNameById($_SESSION['uid']);
+        $url = SITE_URL . '/blog.php?id=' . $post_id;
+        $sent_to = getBlogPostAuthor($post_id);
+        $text = 'Your Blog Post  "'.  $project_title.'" has been Rejected.';
+        addNotification($sent_to, $text, $_SESSION['uid'], $url);
+        $responce['result'] = 'OK';
+        echo json_encode($responce);
+        break;
+    case 'reject-ideathread':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
+        $ideathread_id = $_POST['ideathread_id'];
+        $res = rejectIdeathread($ideathread_id);
+        $project_title = getIdeaTitle($ideathread_id);
+        //$author = getUserNameById($_SESSION['uid']);
+        $url = SITE_URL . '/home.php?iid=' . $ideathread_id;
+        $sent_to = getIdeaAuthor($ideathread_id);
+        $text = 'Your Ideathread  "' . $project_title . '" has been Rejected.';
+        addNotification($sent_to, $text, $_SESSION['uid'], $url);
+        $responce['result'] = 'OK';
+        echo json_encode($responce);
+        break;
+    case 'reject-project':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
+        $project_id = $_POST['project_id'];
+        $res = rejectProject($project_id);
+        $project_title = getProjectTitle($project_id);
+        //$author = getUserNameById($_SESSION['uid']);
+        $url = SITE_URL . '/home.php?iid=' . $project_id;
+        $sent_to = getProjectAuthor($project_id);
+        $text = 'Your Ideathread  "' . $project_title . '" has been Rejected.';
+        addNotification($sent_to, $text, $_SESSION['uid'], $url);
+        $responce['result'] = 'OK';
+        echo json_encode($responce);
+        break;
+
 
     case 'accept-user':
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
         $user_id = $_POST['user_id'];
-        $res =updateStatusUser($user_id);
-        if($res=='accepted') {
+        $res = updateStatusUser($user_id);
+        if ($res == 'accepted') {
             //$project_title = getIdeaTitle($_POST['ideathread_id']);
             //$author = getUserNameById($_SESSION['uid']);
             $url = SITE_URL . '/user.php?uid=' . $user_id;
-            $sent_to =$user_id;//getIdeaAuthor($_POST['ideathread_id']);
+            $sent_to = $user_id;//getIdeaAuthor($_POST['ideathread_id']);
             $text = 'Your Profile has been Verified.';
             addNotification($sent_to, $text, $_SESSION['uid'], $url);
-            $responce['result']='OK';
-        }
-        else {
+            $responce['result'] = 'OK';
+        } else {
             //$project_title = getIdeaTitle($_POST['ideathread_id']);
             //$author = getUserNameById($_SESSION['uid']);
             $url = SITE_URL . '/user.php?uid=' . $user_id;
             $sent_to = $user_id;
             $text = 'Your verification has been canceled!';
             addNotification($sent_to, $text, $_SESSION['uid'], $url);
-            $responce['result']='reject';}
+            $responce['result'] = 'reject';
+        }
         echo json_encode($responce);
         break;
     case 'publish-investor':
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
         $investor_id = $_POST['investor_id'];
-        $res =updateStatusInvestor($investor_id);
-        if($res=='accepted') {
+        $res = updateStatusInvestor($investor_id);
+        if ($res == 'accepted') {
             //$project_title = getIdeaTitle($_POST['ideathread_id']);
             //$author = getUserNameById($_SESSION['uid']);
             //$url = SITE_URL . '/user.php?iuid=' . $investor_id;
             //$sent_to =$user_id;//getIdeaAuthor($_POST['ideathread_id']);
             //$text = 'Your Profile has been Verified.';
             //addNotification($sent_to, $text, $_SESSION['uid'], $url);
-            $responce['result']='OK';
-        }
-        else {
+            $responce['result'] = 'OK';
+        } else {
             //$project_title = getIdeaTitle($_POST['ideathread_id']);
             //$author = getUserNameById($_SESSION['uid']);
             //$url = SITE_URL . '/user.php?uid=' . $user_id;
             //$sent_to = $user_id;
             //$text = 'Your verification has been canceled!';
             //addNotification($sent_to, $text, $_SESSION['uid'], $url);
-            $responce['result']='reject';}
+            $responce['result'] = 'reject';
+        }
         echo json_encode($responce);
         break;
-
-//    case 'post-blogpost':
-//        require_once(DIR_APP . 'users.php');
-//        require_once(DIR_APP . 'projects.php');
-//
-//        $title = $_POST['title'];
-//        $description = $_POST['description'];
-//        $user_id = $_SESSION['uid'];
-//        $image = $_POST['image'];
-//        $message = addBlogPost($_POST);
-//        $responce['result'] = 'OK';
-//
-//        echo json_encode($responce);
-//        break;
-    case upload-image:
-        if(isset($_FILES["file"]["type"]))
-        {
-            $validextensions = array("jpeg", "jpg", "png");
-            $temporary = explode(".", $_FILES["file"]["name"]);
-            $file_extension = end($temporary);
-            if ((($_FILES["file"]["type"] == "image/png") || ($_FILES["file"]["type"] == "image/jpg") || ($_FILES["file"]["type"] == "image/jpeg")
-                ) && ($_FILES["file"]["size"] < 1000000)//Approx. 100kb files can be uploaded.
-                && in_array($file_extension, $validextensions)) {
-                if ($_FILES["file"]["error"] > 0)
-                {
-                    echo "Return Code: " . $_FILES["file"]["error"] . "<br/><br/>";
-                }
-                else
-                {
-                    if (file_exists("upload/avatars/investors" . $_FILES["file"]["name"])) {
-                        echo $_FILES["file"]["name"] . " <span id='invalid'><b>already exists.</b></span> ";
-                    }
-                    else
-                    {
-                        $sourcePath = $_FILES['file']['tmp_name']; // Storing source path of the file in a variable
-                        $targetPath = "upload/avatars/investors".$_FILES['file']['name']; // Target path where file is to be stored
-                        move_uploaded_file($sourcePath,$targetPath) ; // Moving Uploaded file
-                        echo "<span id='success'>Image Uploaded Successfully...!!</span><br/>";
-                        echo "<br/><b>File Name:</b> " . $_FILES["file"]["name"] . "<br>";
-                        echo "<b>Type:</b> " . $_FILES["file"]["type"] . "<br>";
-                        echo "<b>Size:</b> " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
-                        echo "<b>Temp file:</b> " . $_FILES["file"]["tmp_name"] . "<br>";
-                    }
-                }
-            }
-            else
-            {
-                echo "<span id='invalid'>***Invalid file Size or Type***<span>";
-            }
-        }
-
 }
-
-
-
 ?>

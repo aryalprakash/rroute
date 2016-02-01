@@ -32,7 +32,7 @@ if ($investors) {?>
                             <img src="uploads/avatars/nophoto.jpg" alt="" title="Photo <?php echo $investor['company_name'] ?>">
                         <?php } else {
                             ?>
-                            <img class="fancybox" src="uploads/avatars/thumbs/<?php echo $investor['photo']; ?>" alt=""
+                            <img class="fancybox" src="<?php echo SITE_URL;?>/uploads/avatars/investors/<?php echo $investor['photo']; ?>" alt=""
                                  title="photo <?php echo $investor['company_name'] ?>">
                         <?php } ?>
                         <!--                        </a>-->

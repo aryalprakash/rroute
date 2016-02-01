@@ -5,6 +5,7 @@ include_once('../includes/app/projects.php');
 include_once('../includes/app/users.php');
 
 $projects = getAllProjects();
+
 if ($projects) {?>
 
     <table class="adminlist-table" id ="t02" cellpadding="0"cellspacing ="0">
@@ -15,13 +16,20 @@ if ($projects) {?>
                 <th>Rate</th>
                 <th>Project Title </th>
                 <th>Author</th>
+                <th>Published</th>
+                <th>Acc/Pub</th>
                 <th>Status</th>
-                <th>Accept/Reject</th>
+                <th>Reject</th>
                 <th>Delete</th>
-                <th>Acceptor</th>
+                <th>Admin</th>
             </tr>
             <?php
             foreach ($projects as $ix=>$project){
+                if ($project['status']=='0')
+                    $status= "Pending";
+                elseif($project['status']=='1')
+                    $status= "Accepted";
+                else $status ="Rejected";
             $user =getUserData($project['created_by']); ?>
             <tr id ="projectlist_<?php echo $project['project_id']; ?>">
                 <td><?php echo ($ix+1);?></td>
@@ -73,9 +81,21 @@ if ($projects) {?>
                 </td>
                 <td><a href="<?php echo SITE_URL."/user.php?uid=".$user['user_id']; ?>"><?php echo ucwords($user['display_name']); ?><?php if ($user['verified']=='1') { ?><img src="images/4.png" alt=""  title="Verified."class="ver-admin-page"><?php } ?></a></td>
 
-                <td id ="projectstatus_<?php echo $project['project_id']; ?>"><?php if ($project['status']=='0') echo "Unpublished."; else echo "Published.";  ?></td>
+                <td id ="projectstatus_<?php echo $project['project_id']; ?>"><?php if ($project['status']=='0') echo "No"; else echo "Yes";  ?></td>
+                <?php if ($project['status']=='2') {?>
+                    <td><a class=""><input type="button" style="opacity:0.4"data-user="<?php echo getUserFNameById($_SESSION['uid']); ?>" data-id="<?php echo $project['project_id']; ?>" class="admin-accept-project projectaccept_<?php echo $project['project_id']; ?>" value ="<?php if($project['status']=='1') echo "Unpublish"; else echo "Accept"; ?>" disabled></a></td>
 
-                <td><a class=""><input type="button"data-user="<?php echo getUserFNameById($_SESSION['uid']); ?>" data-id="<?php echo $project['project_id']; ?>"   class="admin-accept-project projectaccept_<?php echo $project['project_id']; ?>" value ="<?php if($project['status']=='1') echo "Reject"; else echo "Accept"; ?>"style="color:#5577A9"></a></td>
+                <?php }else {?>
+                    <td><a class=""><input type="button"data-user="<?php echo getUserFNameById($_SESSION['uid']); ?>" data-id="<?php echo $project['project_id']; ?>" class="admin-accept-project projectaccept_<?php echo $project['project_id']; ?>" value ="<?php if($project['status']=='1') echo "Unpublish"; else echo "Accept"; ?>"></a></td>
+
+                <?php }?>
+<!--                <td><a class=""><input type="button"data-user="--><?php //echo getUserFNameById($_SESSION['uid']); ?><!--" data-id="--><?php //echo $project['project_id']; ?><!--"   class="admin-accept-project projectaccept_--><?php //echo $project['project_id']; ?><!--" value ="--><?php //if($project['status']=='1') echo "Unpublish"; else echo "Accept"; ?><!--"style="color:#5577A9"></a></td>-->
+                <td id="projectstatusrej_<?php echo $project['project_id']; ?>"><?php echo $status;?></td>
+                <?php if($project['status']=='0'){?>
+                    <td><a class=""><input type="button" data-user="<?php echo getUserFNameById($_SESSION['uid']); ?>"data-id="<?php echo $project['project_id']; ?>"  class="admin-reject-project projectreject_<?php echo $project['project_id']; ?>" value ="<?php echo "Reject"; ?>"></a></td>
+                <?php }else {?>
+                    <td><a class=""><input type="button" value ="<?php echo "Reject"; ?>"style="opacity:0.4;" disabled></a></td>
+                <?php }?>
                 <td><a class ="admin-delete-project del-project-<?php echo $project['project_id'] ?>" data-id="<?php echo $project['project_id']; ?>" ><img src="images/icons/delete.png" title="delete"/>
 <!--                        <input type="button" class="delete-project-admin" style="color:red;" value="X">-->
                         <a></td>

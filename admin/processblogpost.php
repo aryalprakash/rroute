@@ -11,5 +11,15 @@ if (isset($_POST['title'])) {
         exit;
     }
 }
+//if (isset($_POST['name'])) {
+//    //	$_POST['filename'] = $filename;
+//    $message = addInvestor($_POST);
+//    echo $message;
+//    if(isset($message)){
+//        echo '<span style="color: rgb(255, 79, 3);font-size: 16px;">' . $message . '</span>';
+//       header("location:../admin.php");
+//        exit;
+//    }
+//}
 
 ?>

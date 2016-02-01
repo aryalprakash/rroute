@@ -24,6 +24,16 @@ require_once(DIR_APP . 'users.php');
                         for="add_project_radio">Project</label>
                     <input type="radio" style="margin-left:20%" name="type_project[]" id="add_ideaThread_radio"
                            value="ideaThread"> <label for="add_ideaThread_radio">IdeaThread</label>
+                    <?php
+                    $userdet=getUserData($_SESSION['uid']);
+                    $usertype=$userdet['user_type'];
+                    if($usertype=='3'){?>
+                        <input type="radio" style="margin-left: 10%;" name="type_project[]" id="add_blogPost_radio" value="blogPost"> <label
+                        for="add_blogPost_radio">Blog Post</label>
+                    <?php }
+                    ?>
+
+
                     <input type="submit" name="add_project" value="Upload">
                 </form>
             </div>
@@ -499,10 +509,21 @@ require_once(DIR_APP . 'users.php');
             choice = this.value;
             console.log(choice);
 
-            if (choice == 'project') {
-                form.attr('action', 'upload.php');
-            } else {
-                form.attr('action', 'uploadidea.php');
+//            if (choice == 'project') {
+//                form.attr('action', 'upload.php');
+//            } else {
+//                form.attr('action', 'uploadidea.php');
+//            }
+            switch(choice) {
+                case 'project':
+                    form.attr('action', 'upload.php');
+                    break;
+                case 'ideaThread':
+                    form.attr('action', 'uploadidea.php');
+                    break;
+                default:
+                    form.attr('action', 'uploadblogpost.php');
+
             }
         });
 
