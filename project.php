@@ -52,9 +52,10 @@ if (empty($_SESSION['logged_in']))
 
                         if ($projects) {
                             foreach ($projects as $pr) {
-
-                                $project = getProjectById($pr['project_id']);
-
+                                $id=($pr['project_id']);
+                                $project = getProjectById($id);
+                                if(!$project)
+                                    continue;
                                 $title = $project['project_title'];
                                 $u = getUserData($project['created_by']);
                                 ?>

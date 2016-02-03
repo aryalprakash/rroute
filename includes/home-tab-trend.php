@@ -5,8 +5,8 @@ include_once('app/users.php');
 
 //$trend = calculateTrendForProject(6);
 
-//$projects = getProjectsInTrend(); //print_r($projects); //original trend in project
-$projects = getProjectsInTop_search_term(); //print_r($projects);//created project
+$projects = getProjectsInTrend(); //print_r($projects); //original trend in project
+//$projects = getProjectsInTop_search_term(); //print_r($projects);//created project
 if ($projects) {
 
     foreach ($projects as $pr) {

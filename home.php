@@ -156,13 +156,13 @@ require_once(DIR_APP . 'users.php');
                 }
 
 
-                //                $rank = getRankForProject($project['project_id']);
+                              $rank = getRankForProject($project['project_id']);
                 ?>
                 <?php if (!isset($_GET['iid'])){ ?>
                     <div class="home-project-info">
                         <p>Rating: <span><?php echo calculateRating($project['project_id']); ?></span></p>
 
-                        <p>Ranking: <span><?php // echo $rank; ?></span></p>
+                        <p>Ranking: <span><?php  echo $rank; ?></span></p>
 
                         <p>Status: <span><?php echo $project['status']; ?></span></p>
 

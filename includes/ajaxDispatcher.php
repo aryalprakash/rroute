@@ -34,8 +34,6 @@ switch ($action) {
         require_once(DIR_APP . 'users.php');
         $id = rateProject($_POST['project_id'], $_POST['user_id'], $_POST['value']);
         if ($id) {
-            $responce['result'] = 'OK';
-
             $project_title = getProjectTitle($_POST['project_id']);
             $sent_to = getProjectAuthor($_POST['project_id']);
             $author = getUserNameById($_POST['user_id']);
@@ -43,6 +41,7 @@ switch ($action) {
             $text = $author . ' rated project ' . $project_title;
             addNotification($sent_to, $text, $_POST['user_id'], $url);
             addInteraction($_SESSION['uid'], 'rate', $sent_to, 'project', $_POST['project_id']);
+            $responce['result'] = 'OK';
 
         } else
             $responce['result'] = '';
@@ -330,13 +329,26 @@ switch ($action) {
         echo json_encode($responce);
         break;
 
-    case 'delete-idea'://for user
+    case 'delete-idea':
         require_once(DIR_APP . 'projects.php');
         deleteIdea($_POST['ideathread_id']);
         $response['result'] = 'OK';
         echo json_encode($response);
         break;
-    case 'delete-ideathread'://for admin
+    case 'delete-investor':
+        require_once(DIR_APP . 'projects.php');
+        require_once(DIR_APP . 'users.php');
+        $investor_id=$_POST['investor_id'];
+//        $company_name = getInvestorName($investor_id);
+//        $url = '';
+//        $text = 'You have deleted  "' . $company_name . '" investor profile.';
+//        addNotification($investor_id, $text, $_SESSION['uid'], $url);
+        deleteInvestor($investor_id);
+        $response['result'] = 'OK';
+        echo json_encode($response);
+        break;
+
+    case 'delete-ideathread':
         require_once(DIR_APP . 'projects.php');
         $project_title = getIdeaTitle($_POST['ideathread_id']);
         //$author = getUserNameById($_SESSION['uid']);

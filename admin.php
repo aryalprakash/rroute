@@ -27,7 +27,7 @@ if(userRole($_SESSION['uid'])=='User')
                         <li><a href="admin/userslists.php">Users</a></li>
                         <li><a href="admin/investorlists.php">Investors</a></li>
                         <li><a href="admin/add_investor.php">Add Investor</a></li>
-                        <li><a href="admin/add_post.php">Add Post</a></li>
+                        <li><a href="admin/add_post.php">NewsRoom</a></li>
 
                     </ul>
                 </div>

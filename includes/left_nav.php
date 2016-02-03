@@ -6,17 +6,16 @@
                 href="project.php">Project</a></li>
         <li class="router-item-nav <?php if (CURRENT_PAGE == 'connection') echo 'active'; ?>"><a href="connection.php">Router</a>
         </li>
+        <li class="investor-item <?php if (CURRENT_PAGE == 'investor') echo 'active'; ?>"><a href="investor.php">Investors</a></li>
         <li class="finance-item <?php if (CURRENT_PAGE == 'account_management') echo 'active'; ?>"><a
                 href="account_management.php">Finance</a></li>
         <li class="store-item <?php if (CURRENT_PAGE == 'store') echo 'active'; ?>"><a href="store.php">Store</a></li>
+        <li class="blog-item <?php if (CURRENT_PAGE == 'blog') echo 'active'; ?>"><a href="blog.php">MyRoute</a></li>
         <li class="settings-item <?php if (CURRENT_PAGE == 'account') echo 'active'; ?>"><a
                 href="account.php">Settings</a></li>
-        <li class="investor-item"><a href="investor.php">Investors</a></li>
-        <li class="blog-item"><a href="blog.php">Blog</a></li>
-
         <?php $usrtype=userRole($_SESSION['uid']);
         if($usrtype=='Admin'){
-            echo'<li class="settings-item"><a href="admin.php">'.'Admin'.'</a></li>';
+            echo'<li class="admin-item"><a href="admin.php">'.'Admin'.'</a></li>';
         }?>
     </ul>
 </div> <!-- left-navigation -->

@@ -4,22 +4,23 @@ require_once(DIR_APP . 'projects.php');
 require_once(DIR_APP . 'users.php');
 if (isset($_POST['title'])) {
     //	$_POST['filename'] = $filename;
-    $message = addBlogPost($_POST);
+    $message = addBlogPostAdmin($_POST);
     if(isset($message)){
         echo '<span style="color: rgb(255, 79, 3);font-size: 16px;">' . $message . '</span>';
-        header("location:../admin.php");
-        exit;
     }
+
+    header("Refresh:3;URL=../admin.php");
+    exit;
 }
-//if (isset($_POST['name'])) {
-//    //	$_POST['filename'] = $filename;
-//    $message = addInvestor($_POST);
-//    echo $message;
-//    if(isset($message)){
-//        echo '<span style="color: rgb(255, 79, 3);font-size: 16px;">' . $message . '</span>';
-//       header("location:../admin.php");
-//        exit;
-//    }
-//}
+elseif (isset($_POST['name'])) {
+    //	$_POST['filename'] = $filename;
+    $message = addInvestor($_POST);
+    if(isset($message)){
+        echo '<span style="color: rgb(255, 79, 3);font-size: 16px;">' . $message . '</span>';
+    }
+
+    header("Refresh:3;URL=../admin.php");
+    exit;
+}
 
 ?>

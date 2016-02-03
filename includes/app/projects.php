@@ -719,20 +719,21 @@ function rateProject($project_id, $user_id, $value)
 {
     global $db_con;
     $rate = getUserRateForProject($project_id, $user_id);
-    if (!isset($rate)) {
+    if (($rate==false)) {
         $query = 'INSERT INTO `rating` SET
 				  `project_id` = ' . $project_id . ',
 				  `user_id` = ' . $user_id . ',
 				  `value` = ' . $value . '
 				  ';
+
     } else {
         $query = 'UPDATE `rating` SET `value` = ' . $value . ' WHERE `project_id` = ' . $project_id . ' AND `user_id` = ' . $user_id;
+        //print_r($query);
     }
     $id = $db_con->query($query);
 
     $query = 'UPDATE `projects` SET `avr_rating` = (SELECT AVG(value) FROM `rating` WHERE `project_id` = ' . $project_id . ') WHERE `project_id` = ' . $project_id;
     $db_con->query($query);
-
     return $id;
 }
 
@@ -1200,7 +1201,7 @@ function getRankForProject($project_id)
     $ranker
         ->useStrategy('competition')// Use the dense ranking strategy
         ->orderBy('avr_rating')// Property to base ranking on, Default is 'score'
-        ->storeRankingIn('ranked')// Default is 'ranking'
+        ->storeRankingIn('ranking')// Default is 'ranking' //'ranked' shows erros
         ->rank($objectsToRank);
 
     // print_r($objectsToRank);
@@ -1208,10 +1209,10 @@ function getRankForProject($project_id)
     foreach ($objectsToRank as $obj) {
         $id = $obj->project_id;
         if ($id == $project_id) {
-            if (empty($obj->ranked))
+            if (empty($obj->ranking))// changed 'ranked' to ranking
                 return 'N/A';
             else
-                return $obj->ranked;
+                return $obj->ranking;//changed 'ranked' to ranking
         }
     }
 
@@ -1259,7 +1260,9 @@ function getCommentsCount($project_id)
     $query = 'SELECT COUNT(project_id) as c FROM `comments` WHERE `project_id` =' . $project_id;
     $res = $db_con->query($query);
     $project = $db_con->fetch_array($res);
-
+    if($project['c']<=0)
+        return 1;
+    else
     return $project['c'];
 }
 
@@ -1374,7 +1377,7 @@ function calculateRating($project_id)
 
     $query = 'SELECT `project_id` FROM `projects`';
     $projects = $db_con->sql2array($query);
-
+    //print_r($projects);
     $rates = array();
     foreach ($projects as $project) {
         $rates[] = getTotalRatingsForProject($project['project_id']);
@@ -1901,7 +1904,13 @@ function getIdeaById($ideathread_id)
 
     return $db_con->fetch_array($res);
 }
+function deleteInvestor($investor_id)
+{
+    global $db_con;
+    $query = 'DELETE FROM `investors` WHERE `investor_id` = ' . $investor_id;
+    return $db_con->query($query);
 
+}
 
 function deleteIdea($ideathread_id)
 {
@@ -2215,6 +2224,16 @@ function getUserType($user_id)
     return $db_con->fetch_array($res);
 }
 /***********investor list from table investors **********/
+function getInvestorName($investor_id)
+{
+    global $db_con;
+
+    $q = 'SELECT `company_name` FROM `investors` WHERE `investor_id` = ' . $investor_id."LIMIT 1";
+    $res = $db_con->query($q);
+    $name= $db_con->fetch_array($res);
+    return $name['company_name'];
+
+}
 function getAllInvestors()
 {
     global $db_con;
@@ -2276,37 +2295,46 @@ function addBlogPost($data)
     $uploadOk = 1;
     $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
     move_uploaded_file($_FILES["thumbnailImg"]["tmp_name"], $target_dir.basename($target_file));
-
-
     global $db_con;
-
     $query = "INSERT INTO `blog_posts`(`title`,`description`,`category`,`created_by`,`verified`,`thumbnail_img`)
                 VALUES('" . $db_con->escape($data['title']) . "','" . $db_con->escape($data['description']) . "',''," . $_SESSION['uid'] . ",'0','" . $target_file . "')";
-
+    $db_con->query($query);
+    $message = 'Status: Received, In-Review';
+    return $message;
+}
+function addBlogPostAdmin($data)//byadmin
+{
+    $target_dir = "../uploads/images/blogposts/";
+    //$target_file = $target_dir . basename($_FILES["thumbnailImg"]["name"]);
+    $target_file =$_FILES["thumbnailImg"]["name"];
+    $uploadOk = 1;
+    $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+    move_uploaded_file($_FILES["thumbnailImg"]["tmp_name"], $target_dir.basename($target_file));
+    global $db_con;
+    $query = "INSERT INTO `blog_posts`(`title`,`description`,`category`,`created_by`,`verified`,`thumbnail_img`)
+                VALUES('" . $db_con->escape($data['title']) . "','" . $db_con->escape($data['description']) . "',''," . $_SESSION['uid'] . ",'0','" . $target_file . "')";
     $db_con->query($query);
     $message = 'Status: Received, In-Review';
     return $message;
 }
 function addInvestor($data)
 {
-    $target_dir = "uploads/avatars/investors/";
+    $target_dir = "../uploads/avatars/Investors/";
     //$target_file = $target_dir . basename($_FILES["thumbnailImg"]["name"]);
 
     $target_file =$_FILES["thumbnailImg"]["name"];
     $uploadOk = 1;
     $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-    move_uploaded_file($_FILES["thumbnailImg"]["name"], $target_dir.basename($target_file));
-
-
+    move_uploaded_file($_FILES["thumbnailImg"]["tmp_name"], $target_dir.basename($target_file));
     global $db_con;
-
-    $query = "INSERT INTO `investors`(`name`,`email`,`phone`,`accepted_by`,`about`,`co_investors`,`location`,`photo`)
+    $query = "INSERT INTO `investors`(`company_name`,`email`,`phone`,`accepted_by`,`about`,`co_investors`,`location`,`photo`)
                 VALUES('" . $db_con->escape($data['name']) . "','" . $db_con->escape($data['email']) . "','" . $db_con->escape($data['phone']) . "'," . $_SESSION['uid'] . ",'" . $db_con->escape($data['about']) . "','" . $db_con->escape($data['partners']) . "','" . $db_con->escape($data['location']) . "','" . $target_file . "')";
-
+    print_r($query);
     $db_con->query($query);
     $message = 'Status: Received, In-Review';
     return $message;
 }
+
 
 /******************how to show single blog post ends **********************/
 ?>

@@ -600,11 +600,17 @@ h2.home-signup span {
     background: url('../images/icons/investor_active.png') no-repeat 3px center;
 }
 .left-navigation ul li.blog-item a {
-    background: url('../images/icons/blog.png') no-repeat 3px center;
+    background: url('../images/icons/blog.png') no-repeat 1px center;
+}
+.left-navigation ul li.blog-item a:hover {
+    background: url('../images/icons/blog_active.png') no-repeat 1px center;
+}
+.left-navigation ul li.admin-item a {
+    background: url('../images/icons/admin.png') no-repeat 1px center;
 }
 
-.left-navigation ul li.blog-item a:hover {
-    background: url('../images/icons/blog_active.png') no-repeat 3px center;
+.left-navigation ul li.admin-item a:hover {
+    background: url('../images/icons/admin_active.png') no-repeat 1px center;
 }
 
 .left-navigation.home {
