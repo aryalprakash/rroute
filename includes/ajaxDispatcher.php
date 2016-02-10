@@ -531,17 +531,25 @@ switch ($action) {
 //            $responce['router_id'] = $_POST['router_id'];
 //        }
 
-        // echo json_encode($responce);
+         //echo json_encode($responce);
         break;
 
-//    case 'apply-project':
-//        require_once(DIR_APP . 'users.php');
-//        require_once(DIR_APP . 'projects.php');
-//        $project_id = $_POST['project_id'];
-//        $user_id = $_SESSION['uid'];
-//        $investor_id=$_POST['investor_id'];
-//        $responce['result']='OK';
-//        break;
+    case 'apply-for-fund':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
+        $project_id = $_POST['project_id'];
+        $user_id = $_SESSION['uid'];
+        $investor_id=$_POST['investor_id'];
+        applyProject($project_id,$investor_id);
+        $project_title = getProjectTitle($project_id);
+        //$author = getUserNameById($_SESSION['uid']);
+        $url = SITE_URL . '/home.php?pid=' . $project_id;
+        $sent_to = getProjectAuthor($project_id);
+        $text = 'Your Project  "' . $project_title . '" has been Applied for funding.We Will notify you back when project is reviewed.';
+        addNotification($sent_to, $text, $_SESSION['uid'], $url);
+        $responce['result']='OK';
+        echo json_encode($responce);
+        break;
     case 'accept-project':
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');

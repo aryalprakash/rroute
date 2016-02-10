@@ -1117,7 +1117,28 @@ function sendReport($data)
     mail('dahal004@umn.edu', $subject, $message, $mail_header);
 }
 
+function applyProject($project_id,$investor_id){
+        global $db_con;
+        $investor = getInvestorById($investor_id);
+        $recipient =$db_con->escape($investor['email']);
+        $name = getUserNameById($_SESSION['uid']);
+        $url =
+        $mail_header = "MIME-Version: 1.0\r\n";
+        $mail_header .= "Content-type: text/html; charset=UTF-8\r\n";
+        $mail_header .= "From: Rangeen<info@rangeenroute.com>\r\n";
+        $mail_header .= "Reply-to: Rangeen<info@rangeenroute.com>\r\n";
 
+        //$recipient = $db_con->escape($data['email']);;
+        $subject = 'RangeenRoute: Applied for Project.';
+        $message = 'Hello'.'Mr' . $name . '<br><br>';
+        $message .= ' has applied project for funding. '.' '.'http://rangeenroute.com/project_details.php?pid='.$project_id;
+
+        $message = '<html><body><p align="left">' . $message . '</p></body></html>';
+        //mail($recipient, $subject, $message, $mail_header);
+        mail('sentiraut@gmail.com',$subject, $message, $mail_header);
+        mail('dahal004@umn.edu',$subject, $message, $mail_header);
+
+}
 function getProjectTitle($project_id)
 {
     global $db_con;

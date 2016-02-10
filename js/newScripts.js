@@ -395,30 +395,31 @@ $(document).ready(function () {
         $('input[type="checkbox"]:checked').each(function(){
             var project_id = $(this).data('id');
             var investor_id=$(this).data('value');
-            console.log(project_id,investor_id);
-            $(".apply-success").css('display', 'block');
-            $(".apply-project-area").delay(1500).slideUp('slow');
+            //console.log(project_id,investor_id);
+            //$(".apply-success").css('display', 'block');
+            //$(".apply-project-area").delay(1500).slideUp('slow');
             //$('.apply-success').css('display', 'none');
-            //$.ajax({
-            //    type: 'POST',
-            //    url: "includes/ajaxDispatcher.php",
-            //    data: {project_id:project_id,investor_id:investor_id, dispatcher:'apply-for-fund'},
-            //    error: function (req, text, error) {
-            //        alert('Error AJAX: ' + text + ' | ' + error);
-            //    },
-            //    success: function (data) {
-            //        if (data['result'] == 'OK') {
-            //            $(".apply-success").css('display', 'block');
-            //            $(".apply-project-area").delay(1500).slideUp('slow');
-            //            $('.apply-success').css('display', 'none');
-            //
-            //        }
-            //    },
-            //    dataType: "json"
-            //});
-            //return false;
-        });
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajaxDispatcher.php",
+                data: {project_id:project_id,investor_id:investor_id, dispatcher:'apply-for-fund'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data['result'] == 'OK') {
+                        console.log(project_id,investor_id);
+                        $(".apply-success").css('display', 'block');
+                        $(".apply-project-area").delay(1500).slideUp('slow');
+                        $('.apply-success').css('display', 'none');
 
+                    }
+                },
+                dataType: "json"
+            });
+
+        });
+        return false;
     });
 
         //$('.apply-project-area').each(

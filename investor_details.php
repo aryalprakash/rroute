@@ -16,13 +16,13 @@ exit();}?>
             </div>
         </div><div class="apply-project-area">
             <?php $user_id =$_SESSION['uid'];
-            $projects =getAllUserProjects($user_id);
+            $projects =getVerifiedUserProjects($user_id);
             if($projects){?>
             <div class="form-item"><h2>  Select Your Best Project/s.<h2></div>
 
               <?php  foreach ($projects as $ix => $project){
                     ?>
-                    <div class="form-item"><input type="checkbox" id="project_apply_id" data-value="<?php echo $investor['investor_id']; ?>" data-id="<?php echo $project['project_id']; ?>"> <label for=""><?php echo $project['project_title'];?></label></div>
+                    <div class="form-item gettingcheck"><input type="checkbox" id="project_apply_id" data-value="<?php echo $investor['investor_id']; ?>" data-id="<?php echo $project['project_id']; ?>"> <label for=""><?php echo $project['project_title'];?></label></div>
                 <?php }?>
                 <div class="form-item apply-success">Your Project has been submitted.</div>
                 <div class="form-item"><input type="submit" value="Submit" class="apply-project-bottom"
