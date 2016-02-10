@@ -374,54 +374,73 @@ table#t02 th	{
 }
 .adminlist-table td>a{text-decoration: none;color:#4a77a4;}
 
-.admin-rate-area {
-    overflow: hidden;
-    margin-top: 5px;
-    float: left;
+/*.admin-rate-area {*/
+    /*overflow: hidden;*/
+    /*margin-top: 5px;*/
+    /*float: left;*/
+    /*display: none;*/
+/*}*/
+.admin-rate-area{
     display: none;
+    position: absolute;
+    top: 33px;
+    /*left: 100px;*/
+    /*height: 100px;*/
+    width: 250px;
+    border: 1px solid #FF4E00;
+    background: #ffffff;
+    margin-top:5px;
+    float:left;
+    overflow:inherit;
+    padding: 5px;
 }
 
 .admin-rate-area input {
-    float: left;
-    width: 40px;
-    height: 30px;
-    /*line-height: 40px;*/
+    margin-right: 20px;
+    float: right;
+    width: 60px;
+    height: 25px;
+    line-height: 25px;
     text-align: center;
     border: 1px solid #d9dee4;
     padding: 0;
 }
-
-.admin-rate-area .admin-slider-area {
-    float: left;
-    width: 328px;
-    height: 30px;
-    line-height: 40px;
-    text-align: center;
-    border: 1px solid #d9dee4;
-    border-left: none;
+.listheight{
+    height:29px;
 }
 
-.admin-rate-area .admin-slider-area span.rate-range {
-    float: left;
-    display: block;
-    width: 25px;
-   line-height:30px;
-}
+/*.admin-rate-area .admin-slider-area {*/
+    /*float: left;*/
+    /*width: 200px;*/
+    /*!*height: 30px;*!*/
+    /*line-height: 30px;*/
+    /*text-align: left;*/
+    /*padding-left: 5px;*/
+    /*border: 1px solid #d9dee4;*/
+    /*border-left:1px solid #d9dee4;*/
+/*}*/
 
-.admin-rate-area .admin-slider-area #admin-slider-range {
-    float: left;
-    width: 233px;
-    margin: 8px 5px 0 5px;
-    border: #d9dee4 solid 1px;
-}
+/*.admin-rate-area .admin-slider-area span.rate-range {*/
+    /*float: left;*/
+    /*display: block;*/
+    /*width: 25px;*/
+   /*line-height:30px;*/
+/*}*/
 
-.admin-rate-area .admin-slider-area .project-action-btn {
-    padding: 0 0px;
-    height: 20px;
-    line-height: 21px;
-    margin-top: 5px;
-    width: 28px;
-}
+/*.admin-rate-area .admin-slider-area #admin-slider-range {*/
+    /*float: left;*/
+    /*width: 233px;*/
+    /*margin: 8px 5px 0 5px;*/
+    /*border: #d9dee4 solid 1px;*/
+/*}*/
+
+/*.admin-rate-area .admin-slider-area .project-action-btn {*/
+    /*padding: 0 0px;*/
+    /*height: 20px;*/
+    /*line-height: 21px;*/
+    /*margin-top: 5px;*/
+    /*width: 28px;*/
+/*}*/
 /*for photo userlist*/
 .userlists-photo {
     height: 50px;
@@ -450,4 +469,12 @@ table#t02 th	{
     width: 150px;
     height: 150px;
     padding-left: 106px;
+}
+
+.divline {
+    width: 100%;
+    height: 1px;
+    background-color: #dcdede;
+    margin: 10px auto;
+    /*margin-bottom: 10px;*/
 }

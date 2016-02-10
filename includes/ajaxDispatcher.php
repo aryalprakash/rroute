@@ -659,7 +659,6 @@ switch ($action) {
         echo json_encode($responce);
         break;
 
-
     case 'accept-user':
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
@@ -705,6 +704,52 @@ switch ($action) {
             //$text = 'Your verification has been canceled!';
             //addNotification($sent_to, $text, $_SESSION['uid'], $url);
             $responce['result'] = 'reject';
+        }
+        echo json_encode($responce);
+        break;
+    case 'admin-rate-project':
+        require_once(DIR_APP . 'projects.php');
+        require_once(DIR_APP . 'users.php');
+        $value= array(
+//            'project_id'=>$_POST['project_id'],
+//            //'user_id'=>$_POST['user_id'],
+//            'fes'=>$_POST['f_value'],
+//            'uni'=>$_POST['u_value'],
+//            'gro'=>$_POST['g_value'],
+//            'sta'=>$_POST['s_value'],
+//            'pro'=>$_POST['p_value'],
+//            'ris'=>$_POST['r_value'],
+//            'tim'=>$_POST['t_value'],
+//            'red'=>$_POST['rd_value'],
+//            'imp'=>$_POST['i_value'],
+//            'prf'=>$_POST['pr_value'],
+    );  $value['project_id']= $_POST['project_id'];
+        $value['fes']= $_POST['f_value'];
+        $value['uni']= $_POST['u_value'];
+        $value['gro']= $_POST['g_value'];
+        $value['sta']= $_POST['s_value'];
+        $value['pro']= $_POST['p_value'];
+        $value['ris']= $_POST['r_value'];
+        $value['tim']= $_POST['t_value'];
+        $value['red']= $_POST['rd_value'];
+        $value['imp']= $_POST['i_value'];
+        $value['prf']= $_POST['pr_value'];
+      //  print_r($value);
+        $data=json_encode($value,true);
+        $id = AdminRateProject($value);
+        //print_r($id);
+        if ($id) {
+            $project_title = getProjectTitle($_POST['project_id']);
+            $sent_to = getProjectAuthor($_POST['project_id']);
+            $author = getUserNameById($_SESSION['uid']);
+            $url = SITE_URL . '/home.php?pid=' . $_POST['project_id'];
+            $text = $author . ' rated project ' . $project_title;
+            addNotification($sent_to, $text, $_SESSION['uid'], $url);
+            addInteraction($_SESSION['uid'], 'rate', $sent_to, 'project', $_POST['project_id']);
+            $responce['result'] = 'OK';
+
+       } else {
+            $responce['result'] = '';
         }
         echo json_encode($responce);
         break;

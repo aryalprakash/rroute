@@ -395,7 +395,10 @@ $(document).ready(function () {
         $('input[type="checkbox"]:checked').each(function(){
             var project_id = $(this).data('id');
             var investor_id=$(this).data('value');
-            console.log(project_id,investor_id)
+            console.log(project_id,investor_id);
+            $(".apply-success").css('display', 'block');
+            $(".apply-project-area").delay(1500).slideUp('slow');
+            //$('.apply-success').css('display', 'none');
             //$.ajax({
             //    type: 'POST',
             //    url: "includes/ajaxDispatcher.php",
@@ -504,6 +507,35 @@ $(document).ready(function () {
 
 
                        // alert("done");
+                    }
+                },
+                dataType: "json"
+            });
+
+        }
+
+    });
+    $('body').on('click', '.admin-delete-investor', function () {
+
+        if (confirm('Are you sure you want to delete this?')) {
+            var investor_id=$(this).attr("data-id");
+            console.log(investor_id);
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajaxDispatcher.php",
+                data: {investor_id: investor_id, dispatcher: 'delete-investor'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data['result'] == 'OK') {
+                        //$('.del_idea-'+ideathread_id).slideUp('slow');
+                        //$('.idealist_' + ideathread_id).html('<div style="color: red; text-align: center; padding-top: 50px;">Your idea has been deleted.</div>');
+                        $('.del-investor-'+investor_id).closest('tr').slideUp('slow').delay(500);
+                        $('.del-investor-'+investor_id).closest('tr').remove().delay(1000);
+
+
+                        // alert("done");
                     }
                 },
                 dataType: "json"
@@ -744,33 +776,69 @@ $(document).ready(function () {
     //    return false;
     //});
 
-    /* rate project admin */
+     //rate project admin
     $('body').on('click','#admin_rate_project',function () {
         var pid = $(this).attr("data-id");
+        $(this).siblings().hide();
         $('.admin-rate-area-'+pid).slideToggle('slow');
         return false;
     });
+    //$('body').on('click','#admin_save_rate_project',function () {
+    //    var pid = $(this).attr("data-id");
+    //    $('.admin-rate-area-'+pid).css('display','block');
+    //    return false;
+    //});
     $('body').on('click','#admin_save_rate_project',function () {
         var project_id = $(this).attr('data-id');
-        var user_id = $(this).attr('data-user');
-        var value = $('#rating_value').val();
-
+       var user_id = $(this).attr('data-user');
+       var f_value = $('#fes_value_'+project_id).val();
+       var u_value = $('#uni_value_'+project_id).val();
+       var g_value = $('#gro_value_'+project_id).val();
+       var s_value = $('#sta_value_'+project_id).val();
+       var p_value = $('#pro_value_'+project_id).val();
+       var r_value = $('#ris_value_'+project_id).val();
+       var t_value = $('#tim_value_'+project_id).val();
+       var rd_value = $('#red_value_'+project_id).val();
+       var pr_value = $('#prf_value_'+project_id).val();
+       var i_value = $('#imp_value_'+project_id).val();
+        //var dataArray =new Array(12);
+        //dataArray[0]= project_id;
+        //dataArray[1]= user_id;
+        //dataArray[2]= f_value;
+        //dataArray[3]= u_value;
+        //dataArray[4]= g_value;
+        //dataArray[5]= s_value;
+        //dataArray[6]= p_value;
+        //dataArray[7]= r_value;
+        //dataArray[8]= t_value;
+        //dataArray[9]= rd_value;
+        //dataArray[10]= pr_value;
+        //dataArray[11]= i_value;
+        //var jsonString = JSON.stringify(dataArray);
+        //console.log(jsonString,dataArray);
         $.ajax({
-            type: 'POST',
-            url: "includes/ajaxDispatcher.php",
-            data: {project_id: project_id, user_id: user_id, value: value, dispatcher: 'rate-project'},
-            error: function (req, text, error) {
-                alert('Error AJAX: ' + text + ' | ' + error);
-            },
-            success: function (data) {
-                if (data['result'] == 'OK') {
-                    $('.admin_rate_project_'+project_id).attr('value','Rated');
-                    $('.admin_rate_project_'+project_id).css('opacity', '0.6');
-                    $('.admin-rate-area').slideUp('slow');
-                }
-            },
-            dataType: "json"
-        });
+           type: 'POST',
+           url: "includes/ajaxDispatcher.php",
+          data:{project_id: project_id,f_value: f_value, u_value: u_value, g_value: g_value, s_value: s_value, p_value: p_value,
+              r_value: r_value,
+              t_value: t_value,
+              rd_value: rd_value,
+              pr_value: pr_value,
+              i_value: i_value,
+              dispatcher:'admin-rate-project'
+          },
+           error: function (req, text, error) {
+               alert('Error AJAX: ' + text + ' | ' + error);
+          },
+          success: function (data) {
+               if (data['result'] == 'OK') {
+                   $('.admin_rate_project_'+project_id).attr('value','Rated');
+                   $('.admin_rate_project_'+project_id).css({'color':'#FF4F03','opacity':'0.6','disable':'disabled'});
+                   $('.admin-rate-area').slideUp('slow');
+              }
+          },
+          dataType: "json"
+       });
         return false;
     });
 //user verify-deny click event

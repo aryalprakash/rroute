@@ -471,6 +471,13 @@ function getAllUserProjects($created_by)
 
     return $db_con->sql2array($query);
 }
+function getVerifiedUserProjects($created_by)
+{
+    global $db_con;
+
+    $query = 'SELECT `project_id`, `project_title`, `created_on`,`created_by` FROM `projects` WHERE `created_by`=' . $created_by . ' AND `status`=1 ORDER BY `project_id` DESC';
+    return $db_con->sql2array($query);
+}
 
 function getFeaturingItem($project_id)
 {
@@ -714,6 +721,42 @@ function getUserRateForProject($project_id, $user_id)
         return false;
     return $rate['value'];
 }
+function getAdminRatedStatus($project_id, $user_id)
+{
+    global $db_con;
+
+    $query = 'SELECT `rated` FROM `admin_rating` WHERE `project_id` = ' . $project_id . ' AND `user_id` = ' . $user_id;
+    $res = $db_con->query($query);
+        $rate = $db_con->fetch_array($res);
+        if (!isset($rate) || empty($rate))
+            return false;
+        return $rate['rated'];
+}
+function getIdFromSeed($project_id)
+{
+    global $db_con;
+
+    $query = 'SELECT `project_id` FROM `seed_rating_score` WHERE `project_id` =' . $project_id ;
+        //print_r($query);
+        $res = $db_con->query($query);
+
+        $res = $db_con->fetch_array($res);
+        if (!isset($res)||is_null($res))
+            return false;
+        return $res['project_id'];
+}
+function getAdminRateForProject($project_id, $user_id)
+{
+    global $db_con;
+
+    $query = 'SELECT * FROM `admin_rating` WHERE `project_id` = ' . $project_id . ' AND `user_id` = ' . $user_id;
+        $res= $db_con->query($query);
+        $res =$db_con->fetch_array($res);
+    if (!isset($res) || empty($res))
+        return false;
+    return $res;
+
+}
 
 function rateProject($project_id, $user_id, $value)
 {
@@ -736,7 +779,82 @@ function rateProject($project_id, $user_id, $value)
     $db_con->query($query);
     return $id;
 }
+function adminRateProject($value)
+{
+    $project_id=$value['project_id'];
+    $user_id=$_SESSION['uid'];
+    global $db_con;
+    $rated = getAdminRatedStatus($project_id,$user_id);
+    if (($rated!='1')) {
+        $query = 'INSERT INTO `admin_rating` SET
+				  `project_id` = ' . $project_id . ',
+				  `user_id` = ' . $user_id . ',
+				  `feasibility` = ' . $value['fes'] . ',
+				  `uniqness` = ' . $value['uni'] . ',
+                  `growth_quality` = ' . $value['gro'] . ',
+                  `startup_easeness` = ' . $value['sta'] . ',
+                  `process_clarity` = ' . $value['pro'] . ',
+                  `risk_factor` = ' . $value['ris'] . ',
+                  `time_consumption` = ' . $value['tim'] . ',
+                  `redundancy_featured` = ' . $value['red'] . ',
+                  `impact` = ' . $value['imp'] . ',
+                  `profile` = ' . $value['prf'] . ',
+                  `rated`=1
+				  ';
+                 $check=getIdFromSeed($project_id);
+                    //print_r($check);
+                 if($check==false){
+                     $qu='INSERT INTO `seed_rating_score` SET
+				  `project_id` = ' . $project_id . ',
+				  `feasibility` = ' . $value['fes'] . ',
+				  `uniqueness` = ' . $value['uni'] . ',
+                  `growth_quality` = ' . $value['gro'] . ',
+                  `startup_easeness` = ' . $value['sta'] . ',
+                  `process_clarity` = ' . $value['pro'] . ',
+                  `risk_factor` = ' . $value['ris'] . ',
+                  `time_consumption` = ' . $value['tim'] . ',
+                  `redundancy_featured` = ' . $value['red'] . ',
+                  `impact` = ' . $value['imp'] . ',
+                  `profile` = ' . $value['prf'] . '
+				  ';
+                     $db_con->query($qu);
+                    // print_r($query);
+                 }else{
+                    $qu='UPDATE `seed_rating_score` SET
+                    `feasibility` = CONCAT(`feasibility`,",",'.$value['fes'].'),
+                    `uniqueness` = CONCAT(`uniqueness`,",",'.$value['uni'].'),
+                    `growth_quality` = CONCAT(`growth_quality`,",",'.$value['gro'].'),
+                    `startup_easeness` = CONCAT(`startup_easeness`,",",'.$value['sta'].'),
+                    `process_clarity` = CONCAT(`process_quality`,",",'.$value['pro'].'),
+                    `risk_factor` = CONCAT(`risk_factor`,",",'.$value['ris'].'),
+                    `time_consumption` = CONCAT(`time_consumption`,",",'.$value['tim'].'),
+                    `redundancy_featured` = CONCAT(`redundancy_featured`,",",'.$value['red'].'),
+                    `impact` = CONCAT(`impact`,",",'.$value['imp'].'),
+                    `profile` = CONCAT(`profile`,",",'.$value['pfr'].')
+                    WHERE `project_id`='.$project_id;
+                     $db_con->query($qu);
 
+                }
+
+    } else {
+        $query = 'UPDATE `admin_rating` SET `feasibility` = ' . $value['fes'] . ',
+				  `uniqness` = ' . $value['uni'] . ',
+                  `growth_quality` = ' . $value['gro'] . ',
+                  `startup_easeness` = ' . $value['sta'] . ',
+                  `process_clarity` = ' . $value['pro'] . ',
+                  `risk_factor` = ' . $value['ris'] . ',
+                  `time_consumption` = ' . $value['tim'] . ',
+                  `redundancy_featured` = ' . $value['red'] . ',
+                  `impact` = ' . $value['imp'] . ',
+                  `profile` = ' . $value['prf'] . ' WHERE `project_id` = ' . $project_id . ' AND `user_id` = ' . $user_id;
+        //print_r($query);
+    }
+    $id = $db_con->query($query);
+
+//    $query = 'UPDATE `projects` SET `avr_rating` = (SELECT AVG(value) FROM `rating` WHERE `project_id` = ' . $project_id . ') WHERE `project_id` = ' . $project_id;
+//    $db_con->query($query);
+    return $id;
+}
 
 function getRating($project_id)
 {
@@ -1323,16 +1441,21 @@ function calculate_mr($project_id)
     $redundancy_featured = explode(',', $score['redundancy_featured']);
     $impact = explode(',', $score['impact']);
     $profile = explode(',', $score['profile']);
-
-    $means = array();
-    for ($i = 0; $i < 5; $i++) {
-        $means[] = ($feasibility[$i] + $uniqueness[$i] + $growth_quality[$i] + $startup_easeness[$i] + $process_clarity[$i] + $risk_factor[$i] + $time_consumption[$i] + $redundancy_featured[$i] + $impact[$i] + $profile[$i]) / 10;
-    }
-
-    if ($means[0] < 0 || $means[1] < 0 || $means[2] < 0 || $means[3] < 0 || $means[4] < 0)
+    $len =count($feasibility);
+    if($len<5) {
         return 'N/A';
+    }
+    else {
+        $means = array();
+        for ($i = 0; $i < $len; $i++) {
+            $means[] = ($feasibility[$i] + $uniqueness[$i] + $growth_quality[$i] + $startup_easeness[$i] + $process_clarity[$i] + $risk_factor[$i] + $time_consumption[$i] + $redundancy_featured[$i] + $impact[$i] + $profile[$i]) / 10;
+        }
 
-    return round(array_sum($means) / 5, 2);
+        if ($means[0] < 0 || $means[1] < 0 || $means[2] < 0 || $means[3] < 0 || $means[4] < 0)
+            return 'N/A';
+
+        return round(array_sum($means) / 5, 2);
+    }
 }
 
 function getTotalRatingsForProject($project_id)
@@ -1513,57 +1636,64 @@ function calculateTrendForProject($project_id)
 
     $likes = getLikesCount($project_id);
     $ratings = getTotalRatingsForProject($project_id);
-
+    echo "ratins=";//print_r($ratings);
     /*Like + Rating*/
-    $j = ($likes + $ratings) - 2;
-
-
+    $j = ($likes + $ratings) - 2;//why is -2//to  cancel the user self event
+    echo "j=";
+    print_r($j);
     /*comments*/
-    $comments = getCommentsCount($project_id);
+    $comments = getCommentsCount($project_id);//could be zero
 
     $query = 'SELECT DISTINCT(created_by) FROM `comments` WHERE `project_id` = ' . $project_id;
     $unique_commenter = count($db_con->sql2array($query));
-
-    $k = $unique_commenter / $comments;
-
+    if ($unique_commenter<1)$unique_commenter =1;
+    $k = $comments/$unique_commenter; //could lead to infinity
+   echo "k="; print_r($k);
     /*Route*/
     $query = 'SELECT `routed_by` FROM `routed_projects` WHERE `project_id` = ' . $project_id;
     $users1 = count($db_con->sql2array($query));
-
+    print_r($users1);
     $query = 'SELECT `project_id` FROM `suggestions` WHERE `project_id` = ' . $project_id;
     $users2 = count($db_con->sql2array($query));
-
+    print_r($users2);
     $users = $users1 + $users2;
-
+    print_r($users);echo "22";
     $query = 'SELECT DISTINCT(`sent_to`) FROM `suggestions` WHERE `project_id` = ' . $project_id;
     $routers1 = count($db_con->sql2array($query));
-
+    echo "routers1";
+    print_r($routers1);
     $routers = $users1 + $routers1;
+    echo "routers";
+    print_r($routers);
 
+    if($routers<1) $routers =1;
     $l = $users / $routers;
-
+    echo "l=";
+    print_r($l);
 
     /*Time period*/
     /*Functional period */
     $contant = strtotime('2015-03-01');
     $m = strtotime($project['created_on']) - $contant;
-
+    echo "constan=";print_r($contant);
+    echo "m=";print_r($m);
     /*Event period*/
     $n = time() - strtotime($project['created_on']);
-
+    echo  "n=";print_r($n);
 
     /*Raw score*/
     $r = $j * $k * $l;
+    echo "r=";print_r($r);
     if (abs($r) >= 1) $r = abs($r);
     else $r = 1;
 
-
+    echo "final r=";print_r($r);
     /*Trending score*/
     $update_cycle = 11 * 60 * 60;
     $events = $likes + $ratings;
-
+    echo "events="; print_r($events);
     $t = ($m / $update_cycle) * ($events / $n) * log($r);
-
+    echo "t=";print_r($t);
     return $t;
 
 }
@@ -2234,12 +2364,19 @@ function getInvestorName($investor_id)
     return $name['company_name'];
 
 }
+//function getVerifiedInvestors()
+//{
+//    global $db_con;
+//
+//    $query = 'SELECT `investor_id`, `company_name`, `photo`, `location`,`email` FROM `investors` WHERE `verified`='.'1'.'ORDER BY `investor_id` DESC';
+//
+//    return $db_con->sql2array($query);
+//}
 function getAllInvestors()
 {
     global $db_con;
 
-    $query = "SELECT `investor_id`, `company_name`, `photo`, `location`,`email` FROM `investors` WHERE 1  ORDER BY `investor_id` DESC";
-
+    $query = "SELECT `investor_id`, `company_name`, `photo`, `location`,`email` FROM `investors` WHERE `verified`='1' ORDER BY `investor_id` DESC";
     return $db_con->sql2array($query);
 }
 function searchInvestor($search)
@@ -2329,7 +2466,7 @@ function addInvestor($data)
     global $db_con;
     $query = "INSERT INTO `investors`(`company_name`,`email`,`phone`,`accepted_by`,`about`,`co_investors`,`location`,`photo`)
                 VALUES('" . $db_con->escape($data['name']) . "','" . $db_con->escape($data['email']) . "','" . $db_con->escape($data['phone']) . "'," . $_SESSION['uid'] . ",'" . $db_con->escape($data['about']) . "','" . $db_con->escape($data['partners']) . "','" . $db_con->escape($data['location']) . "','" . $target_file . "')";
-    print_r($query);
+    //print_r($query);
     $db_con->query($query);
     $message = 'Status: Received, In-Review';
     return $message;

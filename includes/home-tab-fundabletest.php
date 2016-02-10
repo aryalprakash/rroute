@@ -18,10 +18,10 @@ include_once('app/users.php');
 //    }
 //
 //}
-$fundables=getFundingsProject();
+$fundables = getFundingsProject();
 //print_r($fundables);
-if($fundables){
-    foreach ($fundables as  $a){
+if ($fundables){
+foreach ($fundables as $a){
 
 $project = getProjectById($a['project_id']);
 
@@ -78,14 +78,18 @@ else
                      class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
                      style="height: 5px;">
                     <div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-max"
-                         style="width: <?php echo $color_mark; ?>%;"></div>
+                         style="width: <?php echo $color_mark; ?>%;">
+
+                    </div>
                             <span class="ui-slider-handle ui-state-default ui-corner-all"
                                   style="border: 0; background: #FF4F00;    border-radius: 50%;    left: <?php echo $mark; ?>%;    height: 11px;    width: 8px;    margin-left: 0;    top: -3px;"
                                   tabindex="0" style="left: <?php echo $mark; ?>%;"></span></div>
                 <div class="title-colored">Asked: $ <?php echo $startup_amount; ?></div>
             </div>
             <div class="half-right">
-                <div class="title-colored" style="text-align: right; margin-bottom: 20px;">Total Investors: <?php echo countInvestor($a['project_id']);//to be count number of investor //$a['count_investor']; ?>
+                <div class="title-colored" style="text-align: right; margin-bottom: 20px;">Total
+                    Investors: <?php echo countInvestor($a['project_id']);//to be count number of investor //$a['count_investor'];
+                    ?>
                 </div>
 
                 <div class="title-colored" style="text-align: left">Reward: <?php echo $reward; ?></div>
@@ -95,9 +99,9 @@ else
             <div style="width: 100%; height: 50px;">
                 <div class="highlight"><?php echo 32;//$a['days_rem'];
 
-//                    $datetime1 =strtotime($project['created_on']);//assuming created_time or trending time
-//                    $datetime2 = $datetime1+(32*24*60*60);
-//                    echo intval(ceil(($datetime2-time())/(60*60*24)));
+                    //                    $datetime1 =strtotime($project['created_on']);//assuming created_time or trending time
+                    //                    $datetime2 = $datetime1+(32*24*60*60);
+                    //                    echo intval(ceil(($datetime2-time())/(60*60*24)));
                     ?>
                     days remaining
                     <button id="<?php echo $project['project_id']; ?>" class="button-colored"
@@ -137,7 +141,7 @@ else
                         </form>
 
                     </div>
-                    <button class="button-colored finalize" style="float: right; margin-top: 10px;" >
+                    <button class="button-colored finalize" style="float: right; margin-top: 10px;">
                         Finalize
                     </button>
                 </div>
@@ -145,87 +149,84 @@ else
         </div>
 
     </div>
-</div>
-<hr/>
+    <hr/>
 
-<?php
-}
-}
+    <?php
+    }
+    }
 
-?>
+    ?>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    var divId;
-    var showBox = function (el, startup_amount, reward_type, per_product_cost, equity_pc) {
-
-
-        var divId = '#pid' + el.id;
-        $(divId).children('.funding').slideToggle('slow');
-
-        //var startup_amount = <?php echo $startup_amount; ?>;
-        //var per_product_cost = <?php echo $ppc ?>;
-        //var equity_pc = <?php echo $eq_pc ?>;
-        //var reward_type = <?php echo $reward ?>;
+        var divId;
+        var showBox = function (el, startup_amount, reward_type, per_product_cost, equity_pc) {
 
 
-        $(divId).children('.funding').children('.half-right').children('.thematic-box').children('form').children('.thematic-items').children('input[name=reward]').attr("disabled", true);
+            var divId = '#pid' + el.id;
+            $(divId).children('.funding').slideToggle('slow');
+
+            //var startup_amount = <?php echo $startup_amount; ?>;
+            //var per_product_cost = <?php echo $ppc ?>;
+            //var equity_pc = <?php echo $eq_pc ?>;
+            //var reward_type = <?php echo $reward ?>;
 
 
-        $(divId).children('.funding').children('.half-left').children('#investment_amount').keyup(function () {
-
-            var input_amount = $(divId).children('.funding').children('.half-left').children('#investment_amount').val();
+            $(divId).children('.funding').children('.half-right').children('.thematic-box').children('form').children('.thematic-items').children('input[name=reward]').attr("disabled", true);
 
 
-            $(divId).children('.funding').children('.half-right').children('.thematic-box').children('form').children('.thematic-items').children('input[name=reward]').removeAttr("checked");
+            $(divId).children('.funding').children('.half-left').children('#investment_amount').keyup(function () {
 
-            if (reward_type == "Product" && input_amount > 0) {
-
-
-                if (parseInt(input_amount) > per_product_cost) {
+                var input_amount = $(divId).children('.funding').children('.half-left').children('#investment_amount').val();
 
 
-                    $(divId).children('.funding').children('.half-right').children('.thematic-box').children('form').children('.thematic-items').children('input[name=reward]').attr("disabled", false);
+                $(divId).children('.funding').children('.half-right').children('.thematic-box').children('form').children('.thematic-items').children('input[name=reward]').removeAttr("checked");
+
+                if (reward_type == "Product" && input_amount > 0) {
+
+
+                    if (parseInt(input_amount) > per_product_cost) {
+
+
+                        $(divId).children('.funding').children('.half-right').children('.thematic-box').children('form').children('.thematic-items').children('input[name=reward]').attr("disabled", false);
+
+                    }
+
+                    else {
+
+                        $(divId).children('.funding').children('.half-right').children('.thematic-box').children('form').children('.thematic-items').children('input[name=reward]').attr("disabled", true);
+
+                        $(divId).children('.funding').children('.half-right').children('.thematic-box').children('form').children('.thematic-items').children('#product').attr("disabled", false);
+
+                    }
+
+                    //$(divId).children('.funding').children('.half-right').children('.finalize').attr("disabled", false);
+                    $(divId).children('.funding').children('.half-right').children('.finalize')
+
+                }
+
+
+                else if (reward_type == "Equity" && input_amount > 0) {
+
+                    var my_equity = input_amount * 100 / startup_amount;
+
+                    $('.my_equity').html(my_equity);
+
+                    $(divId).children('.funding').children('.half-right').children('.finalize').attr("disabled", false);
+
 
                 }
 
                 else {
 
                     $(divId).children('.funding').children('.half-right').children('.thematic-box').children('form').children('.thematic-items').children('input[name=reward]').attr("disabled", true);
-
-                    $(divId).children('.funding').children('.half-right').children('.thematic-box').children('form').children('.thematic-items').children('#product').attr("disabled", false);
+                    $('.my_equity').html('');
 
                 }
 
-                //$(divId).children('.funding').children('.half-right').children('.finalize').attr("disabled", false);
-                $(divId).children('.funding').children('.half-right').children('.finalize')
-
-            }
+            });
 
 
-            else if (reward_type == "Equity" && input_amount > 0) {
+        }
 
-                var my_equity = input_amount * 100 / startup_amount;
-
-                $('.my_equity').html(my_equity);
-
-                $(divId).children('.funding').children('.half-right').children('.finalize').attr("disabled", false);
-
-
-            }
-
-            else {
-
-                $(divId).children('.funding').children('.half-right').children('.thematic-box').children('form').children('.thematic-items').children('input[name=reward]').attr("disabled", true);
-                $('.my_equity').html('');
-
-            }
-
-        });
-
-
-    }
-
-
-
-</script>
+    </script>

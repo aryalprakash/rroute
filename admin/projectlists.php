@@ -35,11 +35,12 @@ if ($projects) {?>
                 <td><?php echo ($ix+1);?></td>
                 <td>
                     <?php
-                    $rate = getUserRateForProject($project['project_id'], $_SESSION['uid']);
-                    if ($rate) {
+                    $rate = getAdminRatedStatus($project['project_id'], $_SESSION['uid']);
+                    $value=getAdminRateForProject($project['project_id'], $_SESSION['uid']);
+                    if ($rate=='1') {
                         ?>
-                        <input type="button" class="admin_rate_project_<?php echo $project['project_id']  ?>" id="admin_rate_project"
-                           data-id="<?php echo $project['project_id'] ?>" value="Rated" style="color:#FF4F03"/>
+                        <input type="button" class="admin_rate_project_<?php echo $project['project_id']  ?>-rated" id="admin_rate_project"
+                           data-id="<?php echo $project['project_id'] ?>" value="Rated" style="color:#FF4F03;opacity: 0.6" disabled/>
                         <?php
                     } else {
                         $rate = 0;
@@ -51,30 +52,25 @@ if ($projects) {?>
                 <td><a href="<?php echo SITE_URL."/project_details.php?pid=".$project['project_id']; ?>"><?php echo substr($project['project_title'],0,40);//this page need to restrict ?> </a>
 
                     <div class="admin-rate-area admin-rate-area-<?php echo $project['project_id'] ?>">
-                        <script>
-                            $(function () {
-                                $("#admin-slider-range").slider({
-                                    range: "max",
-                                    min: 0,
-                                    max: 10,
-                                    value: <?php echo $rate; ?>,
-                                    step: 0.01,
-                                    slide: function (event, ui) {
-                                        $("#rating_value").val(ui.value);
-                                    }
-                                });
-                                $("#rating_value").val($("#admin-slider-range").slider("value"));
-                            });
-                        </script>
-                        <input type="text" name="rating_value" id="rating_value">
 
-                        <div class="admin-slider-area"><span class="rate-range">0</span>
+<!--                        <div class="admin-slider-area">-->
+                           <?php echo''.($ix+1).'.'.substr($project['project_title'],0,30);?></br></legend>
+                            <div class="divline"></div>
 
-                            <div id="admin-slider-range"></div>
-                            <span class="rate-range">10</span>
+                        <p class="listheight">Feasibility:      <input type="number"min="0" max="10" id="fes_value_<?php echo $project['project_id']; ?>" class="admin_rating_value"value="<?php if($value!=false) echo $value['feasibility']; else echo '';?>" placeholder="0-10"></p>
+                        <p class="listheight"> Uniqueness:       <input type="number"min="0"step="1"max="10"id="uni_value_<?php echo $project['project_id']; ?>" class="admin_rating_value"value="<?php //if($value!=false) echo $value['uniqness']; else echo '';?>" ></p>
+                        <p class="listheight"> Growth Quality:   <input type="number"min="0"step="1"max="10" id="gro_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php //if($value!=false) echo $value['growth_quality']; else echo '';?>"></p>
+                        <p class="listheight">  Startup Easeness: <input type="number"min="0"step="1"max="10" id="sta_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php// if($value!=false) echo $value['startup_easeness'];else echo '';?>"></p>
+                        <p class="listheight">  Process Clarity:  <input type="number"min="0"step="1"max="10" id="pro_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php //if($value!=false) echo $value['process_clarity'];else echo '';?>"></p>
+                        <p class="listheight">   Risk Factor:      <input type="number"min="0"step="1"max="10" id="ris_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php// if($value!=false) echo $value['risk_factor'];else echo '';?>"></p>
+                        <p class="listheight">   Time consumption: <input type="number"min="0"step="1"max="10" id="tim_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php //if($value!=false) echo $value['time_consumption'];else echo '';?>"></p>
+                        <p class="listheight">  Redundancy:       <input type="number"min="0"step="1"max="10" id="red_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php //if($value!=false) echo $value['redundancy_featured'];else echo '';?>"></p>
+                        <p class="listheight">  Impact:          <input type="number"min="0"step="1"max="10" id="imp_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php //if($value!=false) echo $value['impact'];else echo '';?>"></p>
+                        <p class="listheight">   Profile:           <input type="number"min="0"step="1"max="10" id="prf_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php //if($value!=false) echo $value['profile'];else echo '';?>"></p>
+
                             <a href="#" class="project-action-btn" id="admin_save_rate_project"
                                data-id="<?php echo $project['project_id'] ?>"
-                               data-user="<?php echo $_SESSION['uid']; ?> "style="color:#fff">Ok</a>
+                               data-user="<?php echo $_SESSION['uid']; ?> "style="color:#fff">Rate</a>
                         </div>
                     </div>   <!-- rate area -->
 

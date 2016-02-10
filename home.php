@@ -25,11 +25,13 @@ require_once(DIR_APP . 'users.php');
                     <input type="radio" style="margin-left:20%" name="type_project[]" id="add_ideaThread_radio"
                            value="ideaThread"> <label for="add_ideaThread_radio">IdeaThread</label>
                     <?php
-                    $userdet=getUserData($_SESSION['uid']);
-                    $usertype=$userdet['user_type'];
-                    if($usertype=='3'){?>
-                        <input type="radio" style="margin-left: 10%;" name="type_project[]" id="add_blogPost_radio" value="blogPost"> <label
-                        for="add_blogPost_radio">Blog Post</label>
+                    $userdet = getUserData($_SESSION['uid']);
+                    $usertype = $userdet['user_type'];
+                    if ($usertype == '3') {
+                        ?>
+                        <input type="radio" style="margin-left: 10%;" name="type_project[]" id="add_blogPost_radio"
+                               value="blogPost"> <label
+                            for="add_blogPost_radio">Blog Post</label>
                     <?php }
                     ?>
 
@@ -156,13 +158,13 @@ require_once(DIR_APP . 'users.php');
                 }
 
 
-                              $rank = getRankForProject($project['project_id']);
+                $rank = getRankForProject($project['project_id']);
                 ?>
                 <?php if (!isset($_GET['iid'])){ ?>
                     <div class="home-project-info">
                         <p>Rating: <span><?php echo calculateRating($project['project_id']); ?></span></p>
 
-                        <p>Ranking: <span><?php  echo $rank; ?></span></p>
+                        <p>Ranking: <span><?php echo $rank; ?></span></p>
 
                         <p>Status: <span><?php echo $project['status']; ?></span></p>
 
@@ -399,7 +401,7 @@ require_once(DIR_APP . 'users.php');
                                 <?php $routers = getRoutersForProject($project['project_id'], $_SESSION['uid']);
                                 if ($routers) {
                                     foreach ($routers as $router) {
-                                        echo '<div class="routed-users-list" data-id="' . $router['router_id'] . '" user-id="'. $router['routed_to'].'"><span class="unroute" data-id="' . $router['router_id'] . '" user-id="'. $router['routed_to'].'">X</span><a href="' . SITE_URL . '/user.php?uid=' . $router['routed_to'] . '"><li class="routed-name">' . getUserNameById($router['routed_to']) . '</li></a></div>';
+                                        echo '<div class="routed-users-list" data-id="' . $router['router_id'] . '" user-id="' . $router['routed_to'] . '"><span class="unroute" data-id="' . $router['router_id'] . '" user-id="' . $router['routed_to'] . '">X</span><a href="' . SITE_URL . '/user.php?uid=' . $router['routed_to'] . '"><li class="routed-name">' . getUserNameById($router['routed_to']) . '</li></a></div>';
                                     }
                                 }
                                 //                                    ?>
@@ -441,14 +443,14 @@ require_once(DIR_APP . 'users.php');
                 <div class="homeshare-area share-active">
                     <?php
                     $urls =
-                    $title=urlencode($project['project_title']);
-                    $url=urlencode(SITE_URL . '/home.php?pid=' . $project['project_id']);
-                    $summary=$title;
-                    $image=urlencode(SITE_URL.'/images/icons/4.png');
+                    $title = urlencode($project['project_title']);
+                    $url = urlencode(SITE_URL . '/home.php?pid=' . $project['project_id']);
+                    $summary = $title;
+                    $image = urlencode(SITE_URL . '/images/icons/4.png');
                     ?>
                     <a class="project-action-btns"
 
-                       href="http://www.facebook.com/sharer.php?s=100&amp;p[title]=<?php echo $title;?>&amp;p[summary]=<?php echo $summary;?>&amp;p[url]=<?php echo $url; ?>&amp;p[images][0]=<?php echo $image;?>','facebook','toolbar=0,status=0,width=548,height=325'"
+                       href="http://www.facebook.com/sharer.php?s=100&amp;p[title]=<?php echo $title; ?>&amp;p[summary]=<?php echo $summary; ?>&amp;p[url]=<?php echo $url; ?>&amp;p[images][0]=<?php echo $image; ?>','facebook','toolbar=0,status=0,width=548,height=325'"
                        target="_blank" title="Click to share"><img src="./images/icons/facebook.png" width="40"
                                                                    height="40"
                                                                    class="img-circle"></a>
@@ -514,7 +516,7 @@ require_once(DIR_APP . 'users.php');
 //            } else {
 //                form.attr('action', 'uploadidea.php');
 //            }
-            switch(choice) {
+            switch (choice) {
                 case 'project':
                     form.attr('action', 'upload.php');
                     break;

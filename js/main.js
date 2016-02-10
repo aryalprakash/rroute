@@ -153,7 +153,7 @@ $(document).ready(function () {
         var project_id = $(this).attr('data-id');
         var user_id = $(this).attr('data-user');
         var value = $('#rating_value').val();
-
+        console.log(project_id,user_id,value);
         $.ajax({
             type: 'POST',
             url: "includes/ajaxDispatcher.php",
