@@ -462,7 +462,14 @@ function getAllRecentProjects()
     return $db_con->sql2array($query);
 }
 
+function getRecentProjects()
+{
+    global $db_con;
+//    $uid = $id;
+    $query = 'SELECT `project_id`, `project_title`, `created_on`, `created_by` FROM `projects` WHERE (`status`!= 2) ORDER BY `project_id` DESC';
 
+    return $db_con->sql2array($query);
+}
 function getAllUserProjects($created_by)
 {
     global $db_con;
@@ -1399,9 +1406,9 @@ function getCommentsCount($project_id)
     $query = 'SELECT COUNT(project_id) as c FROM `comments` WHERE `project_id` =' . $project_id;
     $res = $db_con->query($query);
     $project = $db_con->fetch_array($res);
-    if($project['c']<=0)
-        return 1;
-    else
+//    if($project['c']<=0)
+//        return 1;
+//    else
     return $project['c'];
 }
 
@@ -1660,20 +1667,18 @@ function calculateTrendForProject($project_id)
     echo "ratins=";//print_r($ratings);
     /*Like + Rating*/
     $j = ($likes + $ratings) - 2;//why is -2//to  cancel the user self event
-    echo "j=";
-    print_r($j);
+
     /*comments*/
     $comments = getCommentsCount($project_id);//could be zero
 
     $query = 'SELECT DISTINCT(created_by) FROM `comments` WHERE `project_id` = ' . $project_id;
     $unique_commenter = count($db_con->sql2array($query));
-    if ($unique_commenter<1)$unique_commenter =1;
     $k = $comments/$unique_commenter; //could lead to infinity
-   echo "k="; print_r($k);
+
     /*Route*/
     $query = 'SELECT `routed_by` FROM `routed_projects` WHERE `project_id` = ' . $project_id;
     $users1 = count($db_con->sql2array($query));
-    print_r($users1);
+
     $query = 'SELECT `project_id` FROM `suggestions` WHERE `project_id` = ' . $project_id;
     $users2 = count($db_con->sql2array($query));
     print_r($users2);
@@ -1687,7 +1692,6 @@ function calculateTrendForProject($project_id)
     echo "routers";
     print_r($routers);
 
-    if($routers<1) $routers =1;
     $l = $users / $routers;
     echo "l=";
     print_r($l);
@@ -1869,8 +1873,17 @@ function getProjectsInTrend()
 {
     global $db_con;
 
-    /* $query = 'SELECT `project_id` FROM `trend` WHERE `h11` >= `r11` AND h11 <> 0 ORDER BY h11 DESC'; */
-    $query = 'SELECT `project_id` FROM `trend` WHERE `h1` >= `r1` ';
+     $query = 'SELECT `project_id` FROM `trend` WHERE `h11` >= `r11` AND h11 <> 0 ORDER BY h11 DESC';
+   // $query = 'SELECT `project_id` FROM `trend` WHERE `h1` >= `r1` ';
+
+    return $db_con->sql2array($query);
+}
+function getAllProjectsInTrend()
+{
+    global $db_con;
+
+    $query = 'SELECT `project_id` FROM `trend` WHERE 1';
+    // $query = 'SELECT `project_id` FROM `trend` WHERE `h1` >= `r1` ';
 
     return $db_con->sql2array($query);
 }
