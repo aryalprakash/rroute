@@ -4,18 +4,53 @@ include('includes/config.php');
 require_once(DIR_APP . 'projects.php');
 
 
+//$projs = getRecentProjects();
+//foreach ($projs as $project){
+//
+//    $seedrating =calculate_mr($project['project_id']);
+//    if($seedrating=='N/A')
+//        continue;
+//    if($project['status']=='1')
+//        continue;
+//    $user ='168';//automatically published need to define user
+//    $query = "UPDATE `projects` SET `status`='1',`accepted_by`=".$user." WHERE `project_id`=" . $project['project_id'];
+//    $db_con->query($query);
+//    $project_title = getProjectTitle($project['project_id']);
+//    $url = SITE_URL . '/home.php?pid=' . $project['project_id'];
+//    $sent_to = getProjectAuthor($project['project_id']);
+//    $text = 'Your Project  "' . $project_title . '" has been Published.';
+//    addNotification($sent_to, $text, 168, $url);//automatically published need to define user
+//
+//}
 $projects = getAllRecentProjects();
-
 foreach ($projects as $project) {
+//    $seedrating =calculate_mr($project['project_id']);
+//    if($seedrating=='N/A')
+//        continue;
+    $project_id=$project['project_id'];
+    $likes = getLikesCount($project_id);
+    $comments = getCommentsCount($project_id);
+    $query = 'SELECT `routed_by` FROM `routed_projects` WHERE `project_id` = ' . $project_id;
+    $users1 = count($db_con->sql2array($query));
+    $query = 'SELECT DISTINCT(`sent_to`) FROM `suggestions` WHERE `project_id` = ' . $project_id;
+    $routers1 = count($db_con->sql2array($query));
+    $routers = $users1 + $routers1;
+    if($likes <=1 && $comments <=1 && $routers <=1)
+        continue;
+
+//    $trend_value = calculateTrendForProject($project['project_id']);
+//    if($trend_value<=0)
+//        continue;
     if (!checkProjectInTrend($project['project_id'])) {
         global $db_con;
         $db_con->query('INSERT INTO `trend`(project_id) VALUES(' . $project['project_id'] . ')');
     }
 
 }
-
-
-foreach ($projects as $project) {
+$trended=getAllProjectsInTrend();
+if ($trended==null)
+    exit;
+foreach ($trended as $project) {
     $cycle = getTrendCycle($project['project_id']);
 
     $hr = '';
@@ -89,8 +124,23 @@ foreach ($projects as $project) {
     //$query = 'UPDATE `trend` SET ' . $hr . ', `cycle` = ' . $c . ' WHERE `project_id` = ' . $project['project_id'];
     print_r($query);echo '</br>';
 
-   // echo $query.'<br>';
+    // echo $query.'<br>';
 
     $db_con->query($query);
 }
+
+?>
+<?php
+/**
+ * add projects to fundable after updating trend cycle
+ *
+ */
+//    $fundables =getProjectsInTrend();
+//    foreach($fundables as $fund) {
+//        $project = checkFundableProject($project['project_id']);
+//        if ($project == false)
+//            contine;
+//        addProjectToFundable($project['project_id']);
+//
+//    }
 ?>

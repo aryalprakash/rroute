@@ -37,16 +37,19 @@ if ($projects) {?>
                     <?php
                     $rate = getAdminRatedStatus($project['project_id'], $_SESSION['uid']);
                     $value=getAdminRateForProject($project['project_id'], $_SESSION['uid']);
+                    if($project['seed_rating']==0)
+                        $seed='N/A';
+                    else $seed =$project['seed_rating'];
                     if ($rate=='1') {
                         ?>
                         <input type="button" class="admin_rate_project_<?php echo $project['project_id']  ?>-rated" id="admin_rate_project"
-                           data-id="<?php echo $project['project_id'] ?>" value="Rated" style="color:#FF4F03;opacity: 0.6" disabled/>
+                           data-id="<?php echo $project['project_id'] ?>" value="Rated" title="<?php echo 'Seed Rating: '.$seed; ?>"style="color:#FF4F03;opacity: 0.6" disabled/>
                         <?php
                     } else {
                         $rate = 0;
                         ?>
                         <input type="button" href="#" class="admin_rate_project_<?php echo $project['project_id']  ?>" id="admin_rate_project"
-                           data-id="<?php echo $project['project_id'] ?>" value="Rate" style="color:#5577A9"/>
+                           data-id="<?php echo $project['project_id'] ?>" value="Rate" title="<?php echo 'Seed Rating: '.$seed; ?>"style="color:#5577A9"/>
                     <?php } ?>
                 </td>
                 <td><a href="<?php echo SITE_URL."/project_details.php?pid=".$project['project_id']; ?>"><?php echo substr($project['project_title'],0,40);//this page need to restrict ?> </a>
@@ -82,7 +85,7 @@ if ($projects) {?>
                     <td><a class=""><input type="button" style="opacity:0.4"data-user="<?php echo getUserFNameById($_SESSION['uid']); ?>" data-id="<?php echo $project['project_id']; ?>" class="admin-accept-project projectaccept_<?php echo $project['project_id']; ?>" value ="<?php if($project['status']=='1') echo "Unpublish"; else echo "Accept"; ?>" disabled></a></td>
 
                 <?php }else {?>
-                    <td><a class=""><input type="button"data-user="<?php echo getUserFNameById($_SESSION['uid']); ?>" data-id="<?php echo $project['project_id']; ?>" class="admin-accept-project projectaccept_<?php echo $project['project_id']; ?>" value ="<?php if($project['status']=='1') echo "Unpublish"; else echo "Accept"; ?>"></a></td>
+                    <td><a class=""><input type="button"data-user="<?php echo getUserFNameById($_SESSION['uid']); ?>" data-id="<?php echo $project['project_id']; ?>" class="admin-accept-project projectaccept_<?php echo $project['project_id']; ?>" value ="<?php if($project['status']=='1') echo "Unpublish"; else echo "Accept"; ?>" <?php //if($project['seed_rating']<=0 &&$project['status']!='1') echo'style="opacity:0.6;disable:disabled;"'; ?>></a></td>
 
                 <?php }?>
 <!--                <td><a class=""><input type="button"data-user="--><?php //echo getUserFNameById($_SESSION['uid']); ?><!--" data-id="--><?php //echo $project['project_id']; ?><!--"   class="admin-accept-project projectaccept_--><?php //echo $project['project_id']; ?><!--" value ="--><?php //if($project['status']=='1') echo "Unpublish"; else echo "Accept"; ?><!--"style="color:#5577A9"></a></td>-->

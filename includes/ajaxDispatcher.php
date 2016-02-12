@@ -747,6 +747,8 @@ switch ($action) {
         $id = AdminRateProject($value);
         //print_r($id);
         if ($id) {
+            $score=calculate_mr($_POST['project_id']);
+            updateProjectSeed($_POST['project_id'],$score);
             $project_title = getProjectTitle($_POST['project_id']);
             $sent_to = getProjectAuthor($_POST['project_id']);
             $author = getUserNameById($_SESSION['uid']);
