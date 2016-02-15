@@ -135,12 +135,12 @@ foreach ($trended as $project) {
  * add projects to fundable after updating trend cycle
  *
  */
-//    $fundables =getProjectsInTrend();
-//    foreach($fundables as $fund) {
-//        $project = checkFundableProject($project['project_id']);
-//        if ($project == false)
-//            contine;
-//        addProjectToFundable($project['project_id']);
-//
-//    }
+    $fundables =getProjectsInTrend();
+    foreach($fundables as $fund) {
+        $project = checkFundableProject($project['project_id']);
+        if ($project == false)
+            continue;
+        addProjectToFundable($project['project_id']);
+
+    }
 ?>

@@ -478,3 +478,52 @@ table#t02 th	{
     margin: 10px auto;
     /*margin-bottom: 10px;*/
 }
+.seed-value {
+    display: inline-block;
+    height: 25px;
+    border: #ee4a00 solid 1px;
+    background: #ff4f00;
+    line-height: 27px;
+    padding: 0 5px 0 5px;
+    font-family: 'museo_sans500';
+    font-size: 15px;
+    color: #fff;
+    margin: 0px 0px 0px 10px;
+    position: relative;
+    /*top: -5px;*/
+}
+.admin-seed-area{
+    display: none;
+    position: absolute;
+    top: 33px;
+    left: 135px;
+    /*height: 100px;*/
+    width: 310px;
+    border: 1px solid #FF4E00;
+    background: #ffffff;
+    margin-top:5px;
+    float:left;
+    /*overflow:inherit;*/
+    padding: 5px;
+}
+.seeding-block {
+    overflow: hidden;
+    float: left;
+    margin-left: 2px;
+    text-align: right;
+    font-family: 'museo_sans300';
+    font-size: 14px;
+}
+.seeding-block ul li {
+    margin-bottom: 5px;
+}
+.seeding-block ul li .nums {
+    width: 27px;
+    height: 22px;
+    border: #d6dbe2 solid 1px;
+    display: inline-block;
+    text-align: center;
+    line-height: 24px;
+    background: #e0e5eb;
+    margin-left: 2px;
+}

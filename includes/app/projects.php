@@ -2239,13 +2239,13 @@ function getProjectsInTop_search_term()
 
 function addProjectToFundable($id){
     global $db_con;
-    $q = "INSERT INTO `fundables` (`project_id`)VALUES ('".$id."')";
+    $q = "INSERT INTO `fundings` (`project_id`)VALUES ('".$id."')";
     $db_con->query($q);
 }
 function checkFundableProject($id){
     //print_r($id);
     global $db_con;
-    $q="SELECT `project_id` FROM `fundables` WHERE `project_id` ='".$id."' LIMIT 1";
+    $q="SELECT `project_id` FROM `fundings` WHERE `project_id` ='".$id."' LIMIT 1";
     $res = $db_con->query($q);
     $reult= $db_con->fetch_array($res);
     if(empty($result)||$result==null)
@@ -2281,7 +2281,7 @@ function checkFundableProject($id){
 /*****************funding table new 7-01-2016************************/
 function getFundingsProject(){
     global $db_con;
-    $q = "SELECT DISTINCT `project_id`FROM `fundings` WHERE 1 ORDER BY  `funded_on` DESC ";
+    $q = "SELECT DISTINCT `fund_id`,`created_on`,`project_id`,`fund_status` FROM `fundings` WHERE 1 ORDER BY  `funded_on` DESC ";
     return $db_con->sql2array($q);
 
 

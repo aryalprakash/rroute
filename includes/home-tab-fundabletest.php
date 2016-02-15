@@ -22,9 +22,36 @@ $fundables = getFundingsProject();
 //print_r($fundables);
 if ($fundables){
 foreach ($fundables as $a){
+$time1 =strtotime($a['created_on']);//assuming created_time or trending time
+$time2 = time();
+$day =intval(ceil(($time2-$time1)/(60*60*24)));
+if($day<64) {
+    if ($day > 32 || $day < 64) {
+
+        $check=checkProjectInTrend($a['project_id']);
+        if($check==false){
+
+            if (empty($a['fund_status'])){
+                $quer = "DELETE `fund_id` FROM `fundings` WHERE `project_id`=" . $a['project_id'];
+                $db_con->query($quer);
+                continue;
+            }
+        }
+
+    }
+
+}
+else{
+    if (empty($a['fund_status'])){
+        $quer = "DELETE `fund_id` FROM `fundings` WHERE `project_id`=" . $a['project_id'];
+        $db_con->query($quer);
+        continue;
+    }
+}
+
+if(empty($a['fund_status'])){}
 
 $project = getProjectById($a['project_id']);
-
 $title = $project['project_title'];
 $startup_amount = $project['startup_amount'];
 $raised_amount = getTotalRaised($a['project_id']);//to be checked for the sum of all funded amount
@@ -97,11 +124,10 @@ else
         </div>
         <div class="bottom-part" id="pid<?php echo $project['project_id']; ?>" style="">
             <div style="width: 100%; height: 50px;">
-                <div class="highlight"><?php echo 32;//$a['days_rem'];
-
-                    //                    $datetime1 =strtotime($project['created_on']);//assuming created_time or trending time
-                    //                    $datetime2 = $datetime1+(32*24*60*60);
-                    //                    echo intval(ceil(($datetime2-time())/(60*60*24)));
+                <div class="highlight"><?php //echo $a['days_rem'];
+                                        $datetime1 =strtotime($a['created_on']);//assuming created_time or trending time
+                                        $datetime2 = $datetime1+(32*24*60*60);
+                                        echo intval(ceil(($datetime2-time())/(60*60*24)));
                     ?>
                     days remaining
                     <button id="<?php echo $project['project_id']; ?>" class="button-colored"

@@ -776,6 +776,15 @@ $(document).ready(function () {
     //    });
     //    return false;
     //});
+//view seed score
+    $('body').on('click','#admin_view_seed',function () {
+        var pid = $(this).attr("data-id");
+        console.log(pid);
+        //$(this).siblings().hide();
+        $('.admin-view-seed-'+pid).slideToggle('slow');
+        return false;
+    });
+
 
      //rate project admin
     $('body').on('click','#admin_rate_project',function () {
@@ -784,6 +793,7 @@ $(document).ready(function () {
         $('.admin-rate-area-'+pid).slideToggle('slow');
         return false;
     });
+
     //$('body').on('click','#admin_save_rate_project',function () {
     //    var pid = $(this).attr("data-id");
     //    $('.admin-rate-area-'+pid).css('display','block');
