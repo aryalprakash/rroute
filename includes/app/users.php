@@ -475,8 +475,7 @@ function addNotification($sent_to, $text, $created_by, $url = '')
                `text` = '" . $text . "',
                `url`='" . $url . "',
                `created_by` = " . $created_by;
-
-    $db_con->query($insert);
+             $db_con->query($insert);
 }
 
 function getBalance($user_id)
@@ -737,6 +736,12 @@ function getAllUsers()
 
     $query = 'SELECT `user_id`, `first_name`, `last_name` FROM `users` WHERE `confirmed` = 1';
 
+    return $db_con->sql2array($query);
+}
+function getAllAdmins()
+{
+    global $db_con;
+    $query = "SELECT `user_id`FROM `users` WHERE `role` = 'Admin' AND `confirmed`= '1'";
     return $db_con->sql2array($query);
 }
 function getAllUsersData()

@@ -1,5 +1,7 @@
 <div class="content-block">
-    <div class="content-title"><a class="project-title" href="home.php?pid=<?php echo $project['project_id']; ?>" ><?php echo $project['project_title']; ?></a></div>
+    <div class="content-title"><a class="project-title"
+                                  href="home.php?pid=<?php echo $project['project_id']; ?>"><?php echo $project['project_title']; ?></a>
+    </div>
 
     <div class="content-left-col project-details">
         <div class="user-photo">
@@ -16,14 +18,17 @@
 
     <div class="content-right-col project-details">
         <div class="project-stat-col">Initiated<span class="stat-col-title">Status</span></div>
-        <div class="project-stat-col"><?php echo calculateRating($project['project_id']); ?><span class="stat-col-title">Rating</span></div>
-        <div class="project-stat-col"><?php echo getRankForProject($project['project_id']); ?><span class="stat-col-title">Ranking</span></div>
+        <div class="project-stat-col"><?php echo calculateRating($project['project_id']); ?><span
+                class="stat-col-title">Rating</span></div>
+        <div class="project-stat-col"><?php echo getRankForProject($project['project_id']); ?><span
+                class="stat-col-title">Ranking</span></div>
     </div>
 
 </div>
 
 <div class="content-block">
-    <div class="content-title">Seed Rating Score:<span class="rating-value"><?php echo calculate_mr($project['project_id']); ?></span></div>
+    <div class="content-title">Seed Rating Score:<span
+            class="rating-value"><?php echo calculate_mr($project['project_id']); ?></span></div>
 
     <div class="rating-block">
         <?php
@@ -140,53 +145,89 @@
 </div>
 
 <div class="content-block">
-    <div class="content-title">General Rating Data:<span class="rating-value"><?php echo @generalRatingData($project['project_id']); ?></span><span class="rating-note"></span></div>
+    <div class="content-title">General Rating Data:<span
+            class="rating-value"><?php echo @generalRatingData($project['project_id']); ?></span><span
+            class="rating-note"></span></div>
 
     <table class="rating-table table1">
         <thead>
-            <tr>
-                <td>10-9</td><td>9-8</td><td>8-7</td><td>7-6</td><td>6-5</td><td>5-4</td><td>4-3</td><td>3-2</td><td>2-1</td><td>1-0</td>
-            </tr>
+        <tr>
+            <td>10-9</td>
+            <td>9-8</td>
+            <td>8-7</td>
+            <td>7-6</td>
+            <td>6-5</td>
+            <td>5-4</td>
+            <td>4-3</td>
+            <td>3-2</td>
+            <td>2-1</td>
+            <td>1-0</td>
+        </tr>
         </thead>
         <tbody>
-            <tr>
-                <td># of votes<span class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 9, 10); ?>%</span></td>
-                <td># of votes<span class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 8, 9); ?>%</span></td>
-                <td># of votes<span class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 7, 8); ?>%</span></td>
-                <td># of votes<span class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 6, 7); ?>%</span></td>
-                <td># of votes<span class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 5, 6); ?>%</span></td>
-                <td># of votes<span class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 4, 5); ?>%</span></td>
-                <td># of votes<span class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 3, 4); ?>%</span></td>
-                <td># of votes<span class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 2, 3); ?>%</span></td>
-                <td># of votes<span class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 1, 2); ?>%</span></td>
-                <td># of votes<span class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 0, 1); ?>%</span></td>
-            </tr>
+        <tr>
+            <td># of votes<span
+                    class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 9, 10); ?>%</span>
+            </td>
+            <td># of votes<span
+                    class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 8, 9); ?>%</span>
+            </td>
+            <td># of votes<span
+                    class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 7, 8); ?>%</span>
+            </td>
+            <td># of votes<span
+                    class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 6, 7); ?>%</span>
+            </td>
+            <td># of votes<span
+                    class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 5, 6); ?>%</span>
+            </td>
+            <td># of votes<span
+                    class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 4, 5); ?>%</span>
+            </td>
+            <td># of votes<span
+                    class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 3, 4); ?>%</span>
+            </td>
+            <td># of votes<span
+                    class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 2, 3); ?>%</span>
+            </td>
+            <td># of votes<span
+                    class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 1, 2); ?>%</span>
+            </td>
+            <td># of votes<span
+                    class="percentline"><?php echo @getPercentLineForRating($project['project_id'], 0, 1); ?>%</span>
+            </td>
+        </tr>
         </tbody>
     </table>
 
     <table class="rating-table table2">
         <thead>
-            <tr>
-                <td>User</td><td>Male</td><td>Female</td><td>Age 13-19</td><td>Age 19-40</td><td>Age 40+</td>
-            </tr>
+        <tr>
+            <td>User</td>
+            <td>Male</td>
+            <td>Female</td>
+            <td>Age 13-19</td>
+            <td>Age 19-40</td>
+            <td>Age 40+</td>
+        </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Votes</td>
-                <td><?php echo @getPercentLineGender($project['project_id'], 1); ?>%</td>
-                <td><?php echo @getPercentLineGender($project['project_id'], 2); ?>%</td>
-                <td><?php echo @getPercentLineAge($project['project_id'], 13, 19); ?>%</td>
-                <td><?php echo @getPercentLineAge($project['project_id'], 19, 40); ?>%</td>
-                <td><?php echo @getPercentLineAge($project['project_id'], 40, 150); ?>%</td>
-            </tr>
-            <tr>
-                <td>RATING</td>
-                <td><?php echo @getRatingGender($project['project_id'], 1); ?></td>
-                <td><?php echo @getRatingGender($project['project_id'], 2); ?></td>
-                <td><?php echo @getRatingAge($project['project_id'], 13, 19); ?></td>
-                <td><?php echo @getRatingAge($project['project_id'], 19, 40); ?></td>
-                <td><?php echo @getRatingAge($project['project_id'], 40, 150); ?></td>
-            </tr>
+        <tr>
+            <td>Votes</td>
+            <td><?php echo @getPercentLineGender($project['project_id'], 1); ?>%</td>
+            <td><?php echo @getPercentLineGender($project['project_id'], 2); ?>%</td>
+            <td><?php echo @getPercentLineAge($project['project_id'], 13, 19); ?>%</td>
+            <td><?php echo @getPercentLineAge($project['project_id'], 19, 40); ?>%</td>
+            <td><?php echo @getPercentLineAge($project['project_id'], 40, 150); ?>%</td>
+        </tr>
+        <tr>
+            <td>RATING</td>
+            <td><?php echo @getRatingGender($project['project_id'], 1); ?></td>
+            <td><?php echo @getRatingGender($project['project_id'], 2); ?></td>
+            <td><?php echo @getRatingAge($project['project_id'], 13, 19); ?></td>
+            <td><?php echo @getRatingAge($project['project_id'], 19, 40); ?></td>
+            <td><?php echo @getRatingAge($project['project_id'], 40, 150); ?></td>
+        </tr>
         </tbody>
     </table>
 

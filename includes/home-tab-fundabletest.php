@@ -32,6 +32,7 @@ if($day<64) {
         if($check==false){
 
             if (empty($a['fund_status'])){
+                updateFundStatusProject($a['project_id']);
                 $quer = "DELETE `fund_id` FROM `fundings` WHERE `project_id`=" . $a['project_id'];
                 $db_con->query($quer);
                 continue;
@@ -43,6 +44,7 @@ if($day<64) {
 }
 else{
     if (empty($a['fund_status'])){
+        updateFundStatusProject($a['project_id']);
         $quer = "DELETE `fund_id` FROM `fundings` WHERE `project_id`=" . $a['project_id'];
         $db_con->query($quer);
         continue;

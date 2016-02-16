@@ -15,6 +15,14 @@ function updateStatusProject($id)
         return 'accepted';
     }
 }
+function updateFundStatusProject($id)
+{
+    global $db_con;
+        $query = "UPDATE `projects` SET `fund_status`='funding' WHERE `project_id`=" . $id;
+        $db_con->query($query);
+        return true;
+
+}
 function updateProjectSeed($id,$seed)
 {
     global $db_con;
@@ -490,8 +498,9 @@ function getAllUserProjects($created_by)
 function getVerifiedUserProjects($created_by)
 {
     global $db_con;
-
-    $query = 'SELECT `project_id`, `project_title`, `created_on`,`created_by` FROM `projects` WHERE `created_by`=' . $created_by . ' AND `status`=1 ORDER BY `project_id` DESC';
+    $nulls='';
+   // $query = 'SELECT `project_id`,`fund_status`, `project_title`, `created_on`,`created_by` FROM `projects` WHERE `created_by`=' . $created_by . ' AND `fund_status`='.'\''.$nulls.'\''.' AND `status`=1 ORDER BY `project_id` DESC';
+    $query = 'SELECT `project_id`,`fund_status`, `project_title`, `created_on`,`created_by` FROM `projects` WHERE `created_by`=' . $created_by .' AND `status`=1 ORDER BY `project_id` DESC';
     return $db_con->sql2array($query);
 }
 

@@ -541,9 +541,19 @@ switch ($action) {
         $user_id = $_SESSION['uid'];
         $investor_id=$_POST['investor_id'];
         applyProject($project_id,$investor_id);
+        //updateFundStatusProject($project_id);
         $project_title = getProjectTitle($project_id);
         //$author = getUserNameById($_SESSION['uid']);
         $url = SITE_URL . '/home.php?pid=' . $project_id;
+
+       $admins=getAllAdmins();
+      foreach($admins as $admin){
+//
+           $sento = $admin['user_id'];
+           $user= getUserNameById($_SESSION['uid']);
+            $texts = $user.' Applied Project for funding "'.$project_title .'" thank you!';
+          addNotification($sento, $texts, $_SESSION['uid'], $url);
+        }
         $sent_to = getProjectAuthor($project_id);
         $text = 'Your Project  "' . $project_title . '" has been Applied for funding.We Will notify you back when project is reviewed.';
         addNotification($sent_to, $text, $_SESSION['uid'], $url);
