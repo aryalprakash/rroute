@@ -5,7 +5,7 @@ include_once('../includes/app/projects.php');
 include_once('../includes/app/users.php');
 
 $projects = getAllProjects();
-
+$project_id='';
 if ($projects) {?>
 
     <table class="adminlist-table" id ="t02" cellpadding="0"cellspacing ="0">
@@ -13,6 +13,7 @@ if ($projects) {?>
         <caption class="post-title"><b style="color:#4a77a4; height:10px;">Project Lists</b></caption>
             <tr>
                 <th>No.</th>
+                <th>Raters</th>
                 <th>Ratings</th>
                 <th>Project Title </th>
                 <th>Author</th>
@@ -30,9 +31,37 @@ if ($projects) {?>
                 elseif($project['status']=='1')
                     $status= "Accepted";
                 else $status ="Rejected";
-            $user =getUserData($project['created_by']); ?>
+            $user =getUserData($project['created_by']);
+                $project_id=$project['project_id'];
+                $raters = getRatersForProject($project_id);
+                ?>
             <tr id ="projectlist_<?php echo $project['project_id']; ?>">
                 <td><?php echo ($ix+1);?></td>
+                <td><input type ="button" id ="project_raters" value="Assign" data-id="<?php echo $project['project_id'] ?>">
+                    <div class="project-rater-area project-rater-area-<?php echo $project['project_id'] ?>">
+
+                        <div style="width:296px;float:left;">
+                            <input type="text" class="rater-search-<?php echo $project['project_id'] ?>"data-id="<?php echo $project['project_id'] ?>" placeholder="Type Your Router Name"
+                                   data-id="<?php echo $_SESSION['uid']; ?>"/>
+                            <input type="hidden" id="rater-button" value="Search"/>
+                            <ul id="rater-result-<?php echo $project['project_id']; ?>" data-id="<?php echo $project['project_id'] ?>"></ul>
+                        </div>
+
+                        <div style="width:296px;float:right;margin-left:-5px;">
+                            <ul class="rater-users raterusers-<?php echo $project['project_id']; ?>" data-id="<?php echo $project['project_id']; ?>">
+                                <!--                --><?php //$raters = getRatersForProject($project_id);
+                                if ($raters) {
+                                    foreach ($raters as $rater) {
+                                        echo '<div class="rater-users-list" data-id="' . $rater['rater_id'] . '" user-id="' . $rater['user_id'] . '"><span class="remove-rater" data-id="' . $rater['rater_id'] . '" user-id="' . $rater['user_id'] . '">X</span><a href="' . SITE_URL . '/user.php?uid=' . $rater['user_id'] . '"><li class="rater-name">' . getUserNameById($rater['user_id']) . '</li></a></div>';
+                                    }
+                                }
+                                ?>
+                            </ul>
+                            <div class="success-message"></div>
+                        </div>
+
+                    </div> <!-- project-rater-area -->
+                </td>
                 <td>
                     <?php
                    // $rate = getAdminRatedStatus($project['project_id'], $_SESSION['uid']);
@@ -77,6 +106,13 @@ if ($projects) {?>
                             }
                             ?>
                             <ul>
+                                <li>Assigned Rater: <?php
+
+                                    for ( $i=0;$i<5;$i++) {
+
+                                        echo '<span class="nums" title=" Name should be displayed later='.$project['project_id'].'">' . $i . '</span>';
+                                    }
+                                    ?></li>
                                 <li>Feasibility: <?php
                                     foreach ($feasibility as $val) {
                                         if (is_numeric($val))
@@ -212,7 +248,10 @@ if ($projects) {?>
        <div class=" index line"></div>
 
 
+
 <?php
 }
+
+
 ?>
 

@@ -379,11 +379,24 @@ $(document).ready(function () {
     //    return false;
     //});
 ///* After clicking on message ends */
-
+    $('body').on('click', '.finalize', function () {
     //$('.finalize').click(function () {
-    //   console.log('now you can start coding.');
-    //
-    //});
+        var amount = $('#investment_amount').val();
+        $.ajax({
+            type: 'POST',
+            url: "payment.php",
+            data: {amount: amount},
+            error: function (req, text, error) {
+                alert('Error AJAX: ' + text + ' | ' + error);
+            },
+            success: function (data) {
+                console.log(amount);
+                window.location.href = 'payment.php';
+            }
+        });
+        //redirect('payment.php', {amout: amount});
+
+    });
 /********for apllying project box*****/
     $("#apply_project_button").click(function () {
         $(".apply-project-area").slideToggle("slow");
@@ -779,8 +792,9 @@ $(document).ready(function () {
 //view seed score
     $('body').on('click','#admin_view_seed',function () {
         var pid = $(this).attr("data-id");
-        console.log(pid);
-        //$(this).siblings().hide();
+        //$('.admin-seed-area').hide();
+        $('admin-seed-area').siblings().hide();
+          //$('.admin-view-seed-'+pid).show();
         $('.admin-view-seed-'+pid).slideToggle('slow');
         return false;
     });
@@ -888,7 +902,9 @@ $(document).ready(function () {
     });
 
     //investor show hide
-
+$('body').on('click','.close-me',function(){
+    $('.admin-rate-area').css('display','none');
+});
     //user verify-deny click event
     $('body').on('click', '.admin-accept-investor', function () {
 
@@ -924,12 +940,165 @@ $(document).ready(function () {
 
     });
 
+   //admin assign raters /
+
+    $('body').on('click','#project_raters',function () {
+        var pid = $(this).attr("data-id");
+
+        //$(this).siblings().hide();
+        //$('.project-rater-area').attr('data-id',pid);
+        //$('.project-rater-area-'+pid).find('.rater-users').attr('data-id',pid);
+        $('.project-rater-area-'+pid).slideToggle('slow');
+        $('.project-rater-area').find('.rater-search').val('');
+        //$('.project-rater-area').find('#route-result').hide();
+
+    $('.rater-search-'+pid).keyup(function (e) {
+            // if(e.keyCode == 13) {
+            var title = $(this).val();
+            var user=  $(this).attr("data-id");
+            console.log(title,user);
+            searchRaterList(title,user,pid);
+            //}
+        });
+        return false;
+    });
+
+    function searchRaterList(title,user,pid) {
+               console.log('yaha aayo');
+        //var title =$('project-rater-area').find(".rater-search").val();
+        var title = title;
+        console.log(title);
+        var user_id = user;
+        if (title != "") {
+//                console.log(title);
+            //$("#route-result").html("<li>searching</li>");
+            $.ajax({
+                type: "post",
+                url: "includes/ajaxDispatcher.php",
+                data: {title: title, user_id: user_id, dispatcher: 'search-rater-user-lists'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+
+                    $("#rater-result-"+pid).html(data);
+                    //$("#route-result").html('<li class="click-user">'+data+'</li>');
+//                        $("#rater-search").val("");
+                }
+            });
+        }
+        else {//for empty result
+            $.ajax({
+                type: "post",
+                url: "searchuser.php",
+                data: "title=" + title,
+                success: function (data) {
+                    $("#rater-result-"+pid).html("");
+                }
+            });
+        }
+    }
+
+
+    //$("#rater-button").click(function () {
+    //    var pid = $(this).attr("data-id");
+    //    searchRaterList(pid);
+    //});
+    //
+    //$('.project-rater-area').find('.rater-search').keyup(function (e) {
+    //    // if(e.keyCode == 13) {
+    //    var title = $(this).val();
+    //    var user=  $(this).attr("data-id");
+    //    console.log(title,user);
+    //    searchRaterList(title,user);
+    //    //}
+    //});
+
+//click on admin user
+
+    $('body').on('click', '.click-rater-user', function () {
+        var pid=$(this).parent().attr("data-id");
+        $.ajax({
+            type: "post",
+            url: "includes/ajaxDispatcher.php",
+            data: {
+                sent_to: $(this).attr("data-id"),//user
+                project_id: $(this).parent().attr("data-id"),
+                dispatcher: 'assign-rater'
+            },
+            error: function (req, text, error) {
+                alert('Error AJAX: ' + text + ' | ' + error);
+            },
+            success: function (data) {
+                console.log(data.result);
+                if (data.result == 'OK') {
+                    $(".success-message").html('<p style="color:forestgreen;" class="suc"> Assigned to '+data.user+'.</p>');
+                    $(".suc").fadeOut(4000);
+                    $(".raterusers-"+pid).prepend('<div class="rater-users-list" data-id="' + data.id + '"><span class="remove-rater" data-id="' + data.id + '" user-id="'+data.user_id+'">X</span><a href="user.php?uid=' + data.user_id + '"><li class="routed-name">' + data.user + '</li></a></div>')
+                }
+                if(data.result == 'LIMIT') {
+                    alert("You've already Added 5  users.");
+                }
+                if(data.result == 'FALSE'){ alert("You've already Added this user.");}
+            },
+            dataType: "json"
+        });
+    });
+
+    $('body').on('click', '.remove-rater', function () {
+        var pid=$(this).parent().parent().attr("data-id");
+        var r = confirm("Are You Sure Want to Remove this user?");
+        if (r == true) {
+            $.ajax({
+                type: "post",
+                url: "includes/ajaxDispatcher.php",
+                data: {project_id:pid,rater_id: $(this).attr("data-id"), user_id: $(this).attr("user-id"), dispatcher: 'remove-rater-user'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data.result == 'OK') {
+                        console.log(data);
+                        $(".raterusers-"+pid).find("[data-id=" + data.rater_id + "]").remove();
+                        $(".success-message").html('<p style="color: orangered;" class="suc">Unrouted to '+data.user+'.</p>');
+                        $(".suc").fadeOut(4000);
+                    }
+                },
+                dataType: "json"
+            });
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //admin assign raters ends
+
     //fancy box to view clicked verified documents
     $(".fancybox").fancybox({});
 
     //uploading investor image
 
-
-
-
+    (function(){ var s=document.createElement('script');s.src="http://www.tickcounter.com/loader.js";s.async='async';s.onload=function() { tc_widget_loader('tc_div_12235', 'Countdown', 650, ["1456808400000","us-eastern","dhms","FFFFFF3B5998000000FF0000","900","FFFFFF0",""]);};s.onreadystatechange=s.onload;var head=document.getElementsByTagName('head')[0];head.appendChild(s);}());
 });

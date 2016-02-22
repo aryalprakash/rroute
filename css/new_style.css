@@ -257,11 +257,11 @@ h2.home-welcome {
     margin-bottom: 10px;
 }
 
-.route-area {
-    height: 200px;
-    overflow: hidden;
-    /*overflow: overlay;*/
-}
+/*.route-area {*/
+    /*height: 200px;*/
+    /*overflow: hidden;*/
+    /*!*overflow: overlay;*!*/
+/*}*/
 
 .suc{
     color:orangered; background: white; width: 295px; position: absolute; margin-top: -20px;
@@ -326,7 +326,8 @@ h2.home-welcome {
     text-decoration: none;
 }
 .footnote a {text-decoration: none;
-text-orientation: none;}
+/*text-orientation:none;*/
+}
 .footnote a.visited{color: #1700EE;  }
 .my-projects-list a{text-decoration: none;/*font-size: 18px;*/}
 .my-projects-list>li a.visited{color: #1700EE;}
@@ -382,17 +383,18 @@ table#t02 th	{
 /*}*/
 .admin-rate-area{
     display: none;
-    position: absolute;
-    top: 33px;
-    /*left: 100px;*/
+    /*position: absolute;*/
+    position: fixed;
+    top: 15%;
+    left: 30%;
     /*height: 100px;*/
-    width: 250px;
-    border: 1px solid #FF4E00;
+    width: 280px;
+    border: 3px solid #FF4E00;
     background: #ffffff;
     margin-top:5px;
     float:left;
     overflow:inherit;
-    padding: 5px;
+    padding: 10px;
 }
 
 .admin-rate-area input {
@@ -407,8 +409,35 @@ table#t02 th	{
 }
 .listheight{
     height:29px;
+    line-height: 27px;
+}
+.close-me{
+    border: 2px solid #F10505;
+    color: white;
+    background: #F10505;
+    /* border-radius: 50%; */
+    width: 15px;
+    height: 13px;
+    font-size: 15px;
+    padding: 1px;
+    font-weight: 600;
+    text-align: center;
+    float: right;
+    /* margin-right: 5px; */
+    cursor: pointer;
 }
 
+.buttonclick{
+    position: absolute;
+    border: 2px solid #F10505;
+    color: white;
+    background: #F10505;
+    border-radius: 8%;
+    font-size: 32px;
+    padding: 1px;
+    text-align: center;
+    cursor: pointer;
+}
 /*.admin-rate-area .admin-slider-area {*/
     /*float: left;*/
     /*width: 200px;*/
@@ -496,7 +525,7 @@ table#t02 th	{
     display: none;
     position: absolute;
     top: 33px;
-    left: 135px;
+    left: 190px;
     /*height: 100px;*/
     width: 310px;
     border: 1px solid #FF4E00;
@@ -526,4 +555,136 @@ table#t02 th	{
     line-height: 24px;
     background: #e0e5eb;
     margin-left: 2px;
+}
+.content-left-col .user-photo .name-block a{text-decoration:none;color:white;}
+
+/*for timer */
+
+.countdown-timer{
+    /*display: none;*/
+    position: absolute;
+    top: 15px;
+    left: 160px;
+    width: 75%;
+    border: 2px solid #FF4E00;
+    background: none repeat-x scroll 4px 3px #FFFFFF;
+    float:left;
+    padding: 5px;
+    position: fixed;
+    filter:alpha(opacity=40);
+    z-index: 1000;
+    opacity: 0.98;
+    bottom:5%;
+    /*overflow: scroll;*/
+}
+.top-text-index{
+    padding-top: 70px;
+    text-align: center;
+    font-size: 35px;
+    color: #FF4E00;
+    /*background: white;*/
+}
+.bottom-text-index{
+    padding-top: 34px;
+    padding-bottom: 30px;
+    text-align: center;
+    font-size: 40px;
+    color: red;
+    /*background: white;*/
+}
+
+
+
+.project-rater-area div ul {
+    margin-left: 5px;
+    /*margin-top: 40px;*/
+}
+
+.project-rater-area div ul > li {
+    margin-top: 5px;
+    list-style-type: none;
+    border-bottom: dotted 1px black;
+    height: 20px;
+    width: 270px;
+}
+
+#rater-result li:hover {
+    background: #E2E7ED;
+    height: 20px;
+
+}
+
+.project-rater-area > a {
+    text-decoration: none;
+    font-size: 18px;
+}
+.project-rater-area {
+    display: none;
+    float: left;
+    margin-top: 10px;
+    height: 200px;
+    /*width: 598px;*/
+    overflow: hidden;
+    padding: 10px;
+    /*border: 1px solid #d9dee4;*/
+    position: absolute;
+    top: 132px;
+    left: 124px;
+    border: 1px solid #FF4E00;
+    background: #ffffff;
+    float:left;
+
+}
+
+.project-rater-area input {
+    /*float: left;*/
+    line-height: 35px;
+    text-align: center;
+    /*border: 1px solid #d9dee4;*/
+    padding: 0;
+    height: 33px;
+    padding: 0 15px 0 15px;
+    border: #d6dbe2 solid 1px;
+    background: #e0e5eb;
+    border-radius: 3px;
+}
+.project-rater-area input[type="text"] {
+    width: 250px;
+    height: 33px;
+    padding: 0 15px 0 15px;
+    border: #d6dbe2 solid 1px;
+    background: #e0e5eb;
+    border-radius: 3px;
+}
+.rater-users{
+    height: 200px;
+    overflow-y: auto;
+}
+.rater-users li {
+    margin-bottom: 8px;
+}
+.rater-users a{
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 10px;
+}
+.rater-name {
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+
+.remove-rater{
+    border: 2px solid #FF4F00;
+    color: red;
+    border-radius: 50%;
+    width: 11px;
+    height: 10px;
+    font-size: 11px;
+    padding: 1px;
+    font-weight: 600;
+    text-align: center;
+    float: left;
+    margin-right: 5px;
+    cursor: pointer;
 }

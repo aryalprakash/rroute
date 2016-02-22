@@ -2473,7 +2473,8 @@ hr.delimiter.standrt {
     float: left;
     margin-top: 10px;
     display: none;
-
+    height: 200px;
+    overflow: hidden;
     }
 
 .route-area .project-action-btn {

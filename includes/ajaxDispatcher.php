@@ -531,7 +531,36 @@ switch ($action) {
 //            $responce['router_id'] = $_POST['router_id'];
 //        }
 
-         //echo json_encode($responce);
+//         echo json_encode($responce);
+        break;
+    case 'search-rater-user-lists':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
+        $title = $_POST['title'];
+        $user_id = $_SESSION['uid'];
+        if (getUserNameBySearch($title, $user_id)) {
+            $responce['result'] = 'OK';
+        }
+
+//        if(RemoveRouterId($_POST['router_id'])){
+//            $responce['result'] = 'OK';
+//            $responce['router_id'] = $_POST['router_id'];
+//        }
+
+//        echo json_encode($responce);
+        break;
+    case 'remove-rater-user':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
+        $user = getUserNameById($_POST['user_id']);
+        if (RemoveRaterForProject($_POST['rater_id'])) {
+            $responce['result'] = 'OK';
+            $responce['rater_id'] = $_POST['rater_id'];
+            $responce['user'] = $user;
+        } else {
+            $responce['result'] = 'FALSE';
+        }
+        echo json_encode($responce);
         break;
 
     case 'apply-for-fund':
@@ -771,6 +800,33 @@ switch ($action) {
        } else {
             $responce['result'] = '';
         }
+        echo json_encode($responce);
+        break;
+
+
+    case 'assign-rater':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
+        $id = AddRaterToProject($_POST['project_id'], $_SESSION['uid'], $_POST['sent_to']);
+        if (!empty($id)) {
+            if($id=='limit'){
+                $responce['result'] = 'LIMIT';
+            } else{
+
+                $responce['result'] = 'OK';
+                $responce['id'] = $id;
+                $responce['user_id'] = $_POST['sent_to'];
+                $responce['user'] = getUserNameById($_POST['sent_to']);
+//            addSuggestion($_POST['project_id'], $_POST['sent_to'], $_SESSION['uid']);
+                $project_title = getProjectTitle($_POST['project_id']);
+                $author = getUserNameById($_SESSION['uid']);
+                $url = SITE_URL . '/project_details.php?pid=' . $_POST['project_id'];
+                $text = $author . ' assigned to rate project ' . $project_title;
+                addNotification($_POST['sent_to'], $text, $_SESSION['uid'], $url);
+             }
+        }
+        else{$responce['result'] = 'FALSE';}
+
         echo json_encode($responce);
         break;
 }

@@ -196,7 +196,7 @@ function updateAccount($data)
     if (!$keep_preferred_only && !$keep_preferred_nickname)
         $display_name = $db_con->escape($data['first_name']) . ' ' . $db_con->escape($data['last_name']);
 
-    print_r($display_name);
+//    print_r($display_name);
     $q = "UPDATE `users` SET
 		`first_name` = '" . $db_con->escape($data['first_name']) . "',
 		`last_name` = '" . $db_con->escape($data['last_name']) . "',
@@ -791,7 +791,7 @@ function getUserNameBySearch($title, $user_id)
 
         if ($found > 0) {
             while ($row = $db_con->fetch_array($result)) {
-                echo "<li class='click-user' data-id='" . $row['user_id'] . "'>" . $row['display_name'] . "</br></li>";
+                echo "<li class='click-rater-user' data-id='" . $row['user_id'] . "'>" . $row['display_name'] . "</br></li>";
                 //echo $row['display_name'];
 
                 // <a href=>($row[user_id];</a></li>";

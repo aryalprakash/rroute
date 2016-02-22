@@ -215,3 +215,53 @@ if ($developers) {
     <div class="form-item no-height">
     </div>
 </div>
+<?php
+$rater = getRatertoProject($project['project_id']);
+print_r($rater);
+if($rater==true){//make true for actual result
+    ?>
+<div class="content-block">
+    <div class="content-title">
+        <?php
+        $rate = getAdminRatedStatus($project['project_id'], $_SESSION['uid']);
+        $value=getAdminRateForProject($project['project_id'], $_SESSION['uid']);
+        if($project['seed_rating']==0)
+            $seed='N/A';
+        else $seed =$project['seed_rating'];
+        if ($rate=='1') {
+            ?>
+            <input type="button" class="buttonclick admin_rate_project_<?php echo $project['project_id']  ?>-rated" id="admin_rate_project"
+                   data-id="<?php echo $project['project_id'] ?>" value="Rated" title="<?php echo 'Seed Rating: '.$seed; ?>"style="opacity: 0.6;" disabled />
+            <?php
+        } else {
+            $rate = 0;
+            ?>
+            <input type="button" href="#" class=" buttonclick admin_rate_project_<?php echo $project['project_id']  ?>" id="admin_rate_project"
+                   data-id="<?php echo $project['project_id'] ?>" value="Rate" title="<?php echo 'Seed Rating: '.$seed; ?>"/>
+        <?php } ?>
+
+    </div>
+
+</div>
+
+    <div class="admin-rate-area admin-rate-area-<?php echo $project['project_id'] ?>">
+
+        <?php echo substr($project['project_title'],0,30);?> <div class="close-me"> X</div></br>
+        <div class="divline"></div>
+
+        <p class="listheight">Feasibility:      <input type="number"min="0" max="10" id="fes_value_<?php echo $project['project_id']; ?>" class="admin_rating_value"value="<?php if($value!=false) echo $value['feasibility']; else echo '';?>" placeholder="0-10"></p>
+        <p class="listheight"> Uniqueness:       <input type="number"min="0"step="1"max="10"id="uni_value_<?php echo $project['project_id']; ?>" class="admin_rating_value"value="<?php //if($value!=false) echo $value['uniqness']; else echo '';?>" ></p>
+        <p class="listheight"> Growth Quality:   <input type="number"min="0"step="1"max="10" id="gro_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php //if($value!=false) echo $value['growth_quality']; else echo '';?>"></p>
+        <p class="listheight">  Startup Easeness: <input type="number"min="0"step="1"max="10" id="sta_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php// if($value!=false) echo $value['startup_easeness'];else echo '';?>"></p>
+        <p class="listheight">  Process Clarity:  <input type="number"min="0"step="1"max="10" id="pro_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php //if($value!=false) echo $value['process_clarity'];else echo '';?>"></p>
+        <p class="listheight">   Risk Factor:      <input type="number"min="0"step="1"max="10" id="ris_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php// if($value!=false) echo $value['risk_factor'];else echo '';?>"></p>
+        <p class="listheight">   Time consumption: <input type="number"min="0"step="1"max="10" id="tim_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php //if($value!=false) echo $value['time_consumption'];else echo '';?>"></p>
+        <p class="listheight">  Redundancy:       <input type="number"min="0"step="1"max="10" id="red_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php //if($value!=false) echo $value['redundancy_featured'];else echo '';?>"></p>
+        <p class="listheight">  Impact:          <input type="number"min="0"step="1"max="10" id="imp_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php //if($value!=false) echo $value['impact'];else echo '';?>"></p>
+        <p class="listheight">   Profile:           <input type="number"min="0"step="1"max="10" id="prf_value_<?php echo $project['project_id']; ?>" class="admin_rating_value" value="<?php //if($value!=false) echo $value['profile'];else echo '';?>"></p>
+
+        <a href="#" class="project-action-btn" id="admin_save_rate_project"
+           data-id="<?php echo $project['project_id'] ?>"
+           data-user="<?php echo $_SESSION['uid']; ?> "style="color:#fff">Rate</a>
+    </div>
+<?php } ?>

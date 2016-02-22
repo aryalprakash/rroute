@@ -18,40 +18,38 @@ include_once('app/users.php');
 //    }
 //
 //}
-$fundables = getFundingsProject();
+$fundables = getFundableProjects();
 //print_r($fundables);
 if ($fundables){
 foreach ($fundables as $a){
-$time1 =strtotime($a['created_on']);//assuming created_time or trending time
-$time2 = time();
-$day =intval(ceil(($time2-$time1)/(60*60*24)));
-if($day<64) {
-    if ($day > 32 || $day < 64) {
-
-        $check=checkProjectInTrend($a['project_id']);
-        if($check==false){
-
-            if (empty($a['fund_status'])){
-                updateFundStatusProject($a['project_id']);
-                $quer = "DELETE `fund_id` FROM `fundings` WHERE `project_id`=" . $a['project_id'];
-                $db_con->query($quer);
-                continue;
-            }
-        }
-
-    }
-
-}
-else{
-    if (empty($a['fund_status'])){
-        updateFundStatusProject($a['project_id']);
-        $quer = "DELETE `fund_id` FROM `fundings` WHERE `project_id`=" . $a['project_id'];
-        $db_con->query($quer);
-        continue;
-    }
-}
-
-if(empty($a['fund_status'])){}
+//$time1 =strtotime($a['created_on']);//assuming created_time or trending time
+//$time2 = time();
+//$day =intval(ceil(($time2-$time1)/(60*60*24)));
+//if($day<64) {
+//    if ($day > 32 || $day < 64) {
+//
+//        $check=checkProjectInTrend($a['project_id']);
+//        if($check==false){
+//
+//            if (empty($a['fund_status'])){
+//                updateFundStatusProject($a['project_id']);
+//                $quer = "DELETE `fund_id` FROM `fundings` WHERE `project_id`=" . $a['project_id'];
+//                $db_con->query($quer);
+//                continue;
+//            }
+//        }
+//
+//    }
+//
+//}
+//else{
+//    if (empty($a['fund_status'])){
+//        updateFundStatusProject($a['project_id']);
+//        $quer = "DELETE `fund_id` FROM `fundings` WHERE `project_id`=" . $a['project_id'];
+//        $db_con->query($quer);
+//        continue;
+//    }
+//}
 
 $project = getProjectById($a['project_id']);
 $title = $project['project_title'];
@@ -126,23 +124,27 @@ else
         </div>
         <div class="bottom-part" id="pid<?php echo $project['project_id']; ?>" style="">
             <div style="width: 100%; height: 50px;">
-                <div class="highlight"><?php //echo $a['days_rem'];
-                                        $datetime1 =strtotime($a['created_on']);//assuming created_time or trending time
-                                        $datetime2 = $datetime1+(32*24*60*60);
-                                        echo intval(ceil(($datetime2-time())/(60*60*24)));
+                <div class="highlight"><?php
+
+                    if($a['fund_status']==0) echo $a['days_rem'].' days remaining.';
+                    else echo "funding";
+//                                        $datetime1 =strtotime($a['created_on']);//assuming created_time or trending time
+//                                        $datetime2 = $datetime1+(32*24*60*60);
+//                                        echo intval(ceil(($datetime2-time())/(60*60*24)));
                     ?>
-                    days remaining
-                    <button id="<?php echo $project['project_id']; ?>" class="button-colored"
-                            style="text-align: right; margin-left: 15px;"
+<!--                    days remaining-->
+                    <button  method = "post" id="<?php echo $project['project_id']; ?>" class="button-colored"
+                            style="text-align: right; margin-left: 15px;" name="submitfund"
                             onclick="showBox(this, '<?php echo $startup_amount ?>', '<?php echo $reward ?>', '<?php echo $ppc ?>', '<?php echo $eq_pc ?>');">
                         Fund it
                     </button>
                 </div>
             </div>
             <div class="funding" style="display: none; width: 100%;">
+                </form method="post" action ="payment.php">
                 <div class="half-left center">
                     Enter the investment amount<br/><br/>
-                    $ &nbsp; <input type="number" id="investment_amount" style="padding: 5px;">
+                    $ &nbsp; <input name ="fundAmount" type="number" id="investment_amount" style="padding: 5px;">
                 </div>
                 <div class="half-right center" style="padding-right: 15px;">
                     Select the reward<br/><br/>
@@ -169,10 +171,11 @@ else
                         </form>
 
                     </div>
-                    <button class="button-colored finalize" style="float: right; margin-top: 10px;">
+                    <button method="post" action="payment.php"class="button-colored finalize" style="float: right; margin-top: 10px;">
                         Finalize
                     </button>
                 </div>
+                </form>
             </div>
         </div>
 
@@ -194,10 +197,10 @@ else
             var divId = '#pid' + el.id;
             $(divId).children('.funding').slideToggle('slow');
 
-            //var startup_amount = <?php echo $startup_amount; ?>;
-            //var per_product_cost = <?php echo $ppc ?>;
-            //var equity_pc = <?php echo $eq_pc ?>;
-            //var reward_type = <?php echo $reward ?>;
+//            var startup_amount = <?php //echo $startup_amount; ?>//;
+//            var per_product_cost = <?php //echo $ppc ?>//;
+//            var equity_pc = <?php //echo $eq_pc ?>//;
+//            var reward_type = <?php //echo $reward ?>//;
 
 
             $(divId).children('.funding').children('.half-right').children('.thematic-box').children('form').children('.thematic-items').children('input[name=reward]').attr("disabled", true);

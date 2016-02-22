@@ -23,6 +23,14 @@ function updateFundStatusProject($id)
         return true;
 
 }
+function updateNotFundStatusProject($id)
+{
+    global $db_con;
+    $query = "UPDATE `projects` SET `fund_status`='notfunded' WHERE `project_id`=" . $id;
+    $db_con->query($query);
+    return true;
+
+}
 function updateProjectSeed($id,$seed)
 {
     global $db_con;
@@ -927,7 +935,9 @@ function countComments($project_id)
     $comments = $db_con->fetch_array($res);
 
     $comments_count = $comments['c'];
-    return $comments_count;
+    if ($comments_count > 0)
+        return $comments_count;
+    else return '';
 
 }
 
@@ -2248,15 +2258,14 @@ function getProjectsInTop_search_term()
 
 function addProjectToFundable($id){
     global $db_con;
-    $q = "INSERT INTO `fundings` (`project_id`)VALUES ('".$id."')";
+    $q = "INSERT INTO `fundables` (`project_id`)VALUES ('".$id."')";
     $db_con->query($q);
 }
 function checkFundableProject($id){
-    //print_r($id);
     global $db_con;
-    $q="SELECT `project_id` FROM `fundings` WHERE `project_id` ='".$id."' LIMIT 1";
+    $q="SELECT `project_id` FROM `fundables` WHERE `project_id` ='".$id."' LIMIT 1";
     $res = $db_con->query($q);
-    $reult= $db_con->fetch_array($res);
+    $result= $db_con->fetch_array($res);
     if(empty($result)||$result==null)
         return false;
     return $result;
@@ -2316,47 +2325,53 @@ function getTotalRaised($project_id){
 }
 /*******************************************/
 
+ function updateFundablesTable(){
+    global $db_con;
+     $q = "SELECT * FROM `fundables` WHERE 1 ORDER BY `created_on` DESC";
+     $res =$db_con->query($q);
+//     print_r($res);
+     while($row=$db_con->fetch_array($res)){
+         $date1=strtotime($row['created_on']);
+         $id =$row['fundable_id'];
+         $project_id=$row['project_id'];
+         $date2 = $date1+(31*24*60*60);
+         $remdays = intval(ceil(($date2-time())/(60*60*24)));
+         $fund_status = $row['fund_status'];
+         $cycle=$row['cycle'];
+         if($fund_status==1){continue;}
+         else {echo "status";
+             if ($remdays < 1) {
+                 $checktrend = checkProjectInTrend($project_id);
+                 if ($checktrend==true) {
+//                    $cycle="SELECT `cycle` FROM `fundables` WHERE `fundable_id`=".$id."LIMIT 1";
+//                    $res=$db_con->fetch_array($db_con->query($cycle));
+                     if($cycle==0)
+                     {  $cyle=1;
+                         $x=$remdays+(31*24*60*60);
+                         print_r($x);
+                         $qu = "UPDATE `fundables` SET `days_rem`='" . $x . "',`cycle`='".$cycle."'WHERE `fundable_id`=" . $id;//does not work
+                         //print_r($qu);
+                         $db_con->query($qu);
+                     }else
+                     {    updateNotFundStatusProject($project_id);
+                         $quer="DELETE `fundable_id` FROM `fundables` WHERE `fundable_id`=".$id;
+                         $db_con->query($quer);}
+                            echo "yasma";
+                 }else{
+                     updateNotFundStatusProject($project_id);
+                     $quer="DELETE `fundable_id` FROM `fundables` WHERE `fundable_id`=".$id;
+                     $db_con->query($quer);
+                 }
+             }else{$qu = "UPDATE `fundables` SET `days_rem`='" . $remdays . "',`cycle`='".$cycle."'WHERE `fundable_id`=" . $id;//does not work
+                 //print_r($qu);
+                 $db_con->query($qu);}
 
+         }
+     }
+ }
 function getFundableProjects(){
     //this function is need to check the update value for each project
     global $db_con;
-
-    $q = "SELECT * FROM `fundables` WHERE 1 ORDER BY `created_on` DESC";
-    $res =$db_con->query($q);
-    //print_r($res);
-    while($row=$db_con->fetch_array($res)){
-        $date1=strtotime($row['created_on']);
-        $id =$row['fundable_id'];
-        $project_id=$row['project_id'];
-        $date2 = $date1+(31*24*60*60);
-        $remdays = intval(ceil(($date2-time())/(60*60*24)));
-        $fund_status = $row['fund_status'];
-        $cycle=$row['cycle'];
-        if($fund_status==1){continue;}
-        else {
-            if ($remdays < 1) {
-                $checktrend = checkProjectInTrend($project_id);
-                if ($checktrend) {
-//                    $cycle="SELECT `cycle` FROM `fundables` WHERE `fundable_id`=".$id."LIMIT 1";
-//                    $res=$db_con->fetch_array($db_con->query($cycle));
-                    if($cycle==0)
-                    {$x=$remdays+(31*24*60*60);
-                        $qu = "UPDATE `fundables` SET `days_rem`='" . $x . "',`cycle`='".$cycle."'WHERE `fundable_id`=" . $id;//does not work
-                        //print_r($qu);
-                        $db_con->query($qu);
-                    }else
-                    {$quer="DELETE `fundable_id` FROM `fundables` WHERE `fundable_id`=".$id;
-                        $db_con->query($quer);}
-
-                }else{
-                    $quer="DELETE `fundable_id` FROM `fundables` WHERE `fundable_id`=".$id;
-                    $db_con->query($quer);
-                }
-            }
-
-        }
-    }
-
     $qes = "SELECT * FROM `fundables` WHERE `days_rem`>'0' ORDER BY `created_on` DESC";
     //$res =$db_con->query($q);
     return $db_con->sql2array($qes);
@@ -2529,5 +2544,63 @@ function addInvestor($data)
 }
 
 
+
 /******************how to show single blog post ends **********************/
+
+
+
+
+function AddRaterToProject($project_id, $added_by, $user_id)
+{
+    global $db_con;
+    $check ='SELECT COUNT(`project_id`) as c FROM `project_raters` WHERE `project_id`='. $db_con->escape($project_id) ;
+    $res = $db_con->query($check);
+    $count = $db_con->fetch_array($res);
+    if($count['c']>=5) {
+        return 'limit';
+    }else {
+          $qry = 'SELECT `project_id`, `added_by`, `user_id` FROM `project_raters` WHERE `project_id` =' . $db_con->escape($project_id) . ' AND `user_id` = ' . $db_con->escape($user_id) . '';
+          $res = $db_con->query($qry);
+         if ($db_con->num_rows($res) == 0) {
+            $insert = 'INSERT INTO `project_raters`(`project_id`, `added_by`, `user_id`) VALUES (' . $project_id . ',' . $added_by . ',' . $user_id . ')';
+            $db_con->query($insert);
+            return $db_con->insert_id();
+            } else {
+             return '';
+              }
+    }
+}
+
+
+function getRatersForProject($project_id)
+{
+    global $db_con;
+
+    $res = "SELECT `user_id`,`rater_id`, `added_by` FROM `project_raters` WHERE `project_id` = " . $project_id;
+
+//    $q = 'SELECT * FROM `comments` WHERE `project_id` = ' . $project_id;
+//    print_r($db_con->sql2array($res));
+    return $db_con->sql2array($res);
+}
+
+
+function RemoveRaterForProject($rater_id)
+{
+    global $db_con;
+    $q = "DELETE FROM `project_raters` WHERE `rater_id` = " . $rater_id;
+    $res = $db_con->query($q);
+
+    return $res;
+}
+function getRatertoProject($pid){
+    global $db_con;
+    $q = "SELECT `user_id` FROM `project_raters` WHERE `project_id` = " . $pid." AND `user_id`=".$_SESSION['uid'];
+    $res=$db_con->query($q);
+    $value=$db_con->fetch_array($res);
+    if(empty($value))
+        return false;
+    else  return true;
+
+
+}
 ?>
