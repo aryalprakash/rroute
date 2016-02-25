@@ -22,14 +22,14 @@ require_once(DIR_APP . 'users.php');
                 <form name="project-action" method="post">
                     <input type="radio" name="type_project[]" id="add_project_radio" value="project"> <label
                         for="add_project_radio">Project</label>
-                    <input type="radio" style="margin-left:20%" name="type_project[]" id="add_ideaThread_radio"
+                    <input type="radio" style="margin-left:16%" name="type_project[]" id="add_ideaThread_radio"
                            value="ideaThread"> <label for="add_ideaThread_radio">IdeaThread</label>
                     <?php
                     $userdet = getUserData($_SESSION['uid']);
                     $usertype = $userdet['user_type'];
                     if ($usertype == '3') {
                         ?>
-                        <input type="radio" style="margin-left: 10%;" name="type_project[]" id="add_blogPost_radio"
+                        <input type="radio" style="margin-left: 16%;" name="type_project[]" id="add_blogPost_radio"
                                value="blogPost"> <label
                             for="add_blogPost_radio">Blog Post</label>
                     <?php }
@@ -272,7 +272,8 @@ require_once(DIR_APP . 'users.php');
 
                         <a href="#" class="project-action-btn" id="comment_project"
                            data-id="<?php echo $project['project_id'] ?>">Comment
-                            &nbsp;<span><?php echo countComments($project['project_id']); ?></span></a>
+                            &nbsp;<span><?php $cmt =countComments($project['project_id']);
+                                ?></span></a>
 
                         <?php if (checkLikedProject($project['project_id'], $_SESSION['uid'])) { ?>
                             <a href="#" class="project-action-btn" id="liked_project"
@@ -396,7 +397,7 @@ require_once(DIR_APP . 'users.php');
                             <ul id="route-result"></ul>
                         </div>
 
-                        <div style="width:296px;float:right;margin-left:-20px;">
+                        <div style="width:296px;float:right;margin-left:-20px;cursor: pointer;">
                             <ul class="routed-users">
                                 <?php $routers = getRoutersForProject($project['project_id'], $_SESSION['uid']);
                                 if ($routers) {
@@ -487,7 +488,6 @@ require_once(DIR_APP . 'users.php');
                     <li><a href="includes/home-tab-routed.php">Routed</a></li>
                     <li><a href="includes/home-tab-suggestions.php">Suggestions</a></li>
                     <li><a href="includes/home-tab-fundables.php">Fundables</a></li>
-                    <li><a href="includes/home-tab-fundabletest.php">Fundablestest</a></li>
 
                 </ul>
             </div>  <!-- home-tabs -->

@@ -46,12 +46,14 @@ function updateFundableStatus($id)
     return true;
 
 }
-function updateFundingsStatus($id,$amount)
+function updateFundingsStatus($id,$amount,$type,$reward_type)
 {//not checked for re-fund by same user
 
     global $db_con;
 //    $q = "SELECT `project_id`  FROM `fundings` WHERE `project_id`=" . $id." LIMIT 1";
-    $date =time();
+    $dt =time();
+    $times = new DateTime("@$dt");
+    $date=$times->format('Y-m-d H:i:s');
 //    echo $date;
 //    $res = $db_con->fetch_array($db_con->query($q));
 //    if($res){
@@ -62,7 +64,8 @@ function updateFundingsStatus($id,$amount)
 //
 //    }else{
 
-    $query ="INSERT INTO `fundings` ( `funded_on`,`project_id`,`funded_by`,`fund_amount`,`fund_status`)VALUES ('".$date."','".$id."','".$_SESSION['uid']."','".$amount."','funding')";
+    $query ="INSERT INTO `fundings` ( `funded_on`,`project_id`,`funded_by`,`fund_amount`,`fund_status`,`type`,`reward_type`)VALUES ('".$date."','".$id."','".$_SESSION['uid']."','".$amount."','funding','".$type."','".$db_con->escape($reward_type)."')";
+    print_r($query);
     $db_con->query($query);
 //    }
     return true;
