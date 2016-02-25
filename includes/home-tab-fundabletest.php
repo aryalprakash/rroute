@@ -125,26 +125,31 @@ else
         <div class="bottom-part" id="pid<?php echo $project['project_id']; ?>" style="">
             <div style="width: 100%; height: 50px;">
                 <div class="highlight"><?php
+                    if($raised_amount<$startup_amount) {
+                        if ($a['fund_status'] == 0) echo $a['days_rem'] . ' days remaining.';
+                        else echo "funding.";
 
-                    if($a['fund_status']==0) echo $a['days_rem'].' days remaining.';
-                    else echo "funding";
+//
+                    }else{
+                        echo "";
+                    }
 //                                        $datetime1 =strtotime($a['created_on']);//assuming created_time or trending time
 //                                        $datetime2 = $datetime1+(32*24*60*60);
-//                                        echo intval(ceil(($datetime2-time())/(60*60*24)));
+//                                       echo intval(ceil(($datetime2-time())/(60*60*24)));
                     ?>
 <!--                    days remaining-->
-                    <button  method = "post" id="<?php echo $project['project_id']; ?>" class="button-colored"
-                            style="text-align: right; margin-left: 15px;" name="submitfund"
-                            onclick="showBox(this, '<?php echo $startup_amount ?>', '<?php echo $reward ?>', '<?php echo $ppc ?>', '<?php echo $eq_pc ?>');">
-                        Fund it
+
+
+                    <button id="<?php echo $project['project_id']; ?>" class="button-colored"
+                            style="text-align: right; margin-left: 15px;" onclick="showBox(this, '<?php echo $startup_amount ?>', '<?php echo $reward ?>', '<?php echo $ppc ?>', '<?php echo $eq_pc ?>');"<?php if($raised_amount>=$startup_amount) {echo "disabled";}; ?>>
+                    <?php if($raised_amount>=$startup_amount) {echo "Funded";}else{echo "Fund it";}?>
                     </button>
                 </div>
             </div>
             <div class="funding" style="display: none; width: 100%;">
-                </form method="post" action ="payment.php">
                 <div class="half-left center">
                     Enter the investment amount<br/><br/>
-                    $ &nbsp; <input name ="fundAmount" type="number" id="investment_amount" style="padding: 5px;">
+                    $ &nbsp; <input type="number" id="investment_amount" style="padding: 5px;">
                 </div>
                 <div class="half-right center" style="padding-right: 15px;">
                     Select the reward<br/><br/>
@@ -153,7 +158,7 @@ else
                         <form>
                             <?php if ($reward == 'Equity') { ?>
                                 <div class="thematic-items" style="width: 97%;">
-                                    <span class="my_equity"></span>% of <?php echo $eq_pc; ?>% reward<br/>
+                                    <span class="my_equity" name="reward"></span>% of <?php echo $eq_pc; ?>% reward<br/>
                                     <!--<input type="radio" name="reward">-->
                                 </div>
                             <?php }
@@ -171,14 +176,12 @@ else
                         </form>
 
                     </div>
-                    <button method="post" action="payment.php"class="button-colored finalize" style="float: right; margin-top: 10px;">
+                    <button class="button-colored finalize" style="float: right; margin-top: 10px;" data-value="<?php echo $reward; ?>" data-id="<?php echo $project['project_id']; ?>">
                         Finalize
                     </button>
                 </div>
-                </form>
             </div>
         </div>
-
     </div>
     <hr/>
 

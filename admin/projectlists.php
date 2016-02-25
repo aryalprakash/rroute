@@ -40,7 +40,7 @@ if ($projects) {?>
                 <td><input type ="button" id ="project_raters" value="Assign" data-id="<?php echo $project['project_id'] ?>">
                     <div class="project-rater-area project-rater-area-<?php echo $project['project_id'] ?>">
 
-                        <div style="width:296px;float:left;">
+                        <div style="width:296px;float:left;cursor: pointer;">
                             <input type="text" class="rater-search-<?php echo $project['project_id'] ?>"data-id="<?php echo $project['project_id'] ?>" placeholder="Type Your Router Name"
                                    data-id="<?php echo $_SESSION['uid']; ?>"/>
                             <input type="hidden" id="rater-button" value="Search"/>

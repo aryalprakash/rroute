@@ -136,11 +136,14 @@ foreach ($trended as $project) {
  *
  */
     $fundables =getProjectsInTrend();
+
     foreach($fundables as $fund) {
-        $project = checkFundableProject($project['project_id']);
-        if ($project == false)
+        $project = checkFundableProject($fund['project_id']);
+        if ($project == true)
             continue;
-        addProjectToFundable($project['project_id']);
+        addProjectToFundable($fund['project_id']);
 
     }
+    updateFundablesTable();
+
 ?>

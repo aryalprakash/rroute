@@ -15,14 +15,61 @@ function updateStatusProject($id)
         return 'accepted';
     }
 }
+
 function updateFundStatusProject($id)
 {
+
     global $db_con;
-        $query = "UPDATE `projects` SET `fund_status`='funding' WHERE `project_id`=" . $id;
-        $db_con->query($query);
-        return true;
+    $q = "SELECT `investor_count` as c FROM `projects` WHERE `project_id`=" . $id;
+    $res = $db_con->fetch_array($db_con->query($q));
+    $count =intval($res['c']);
+    echo "first ";print_r($count);
+    $count++;
+    global $db_con;
+    $query = "UPDATE `projects` SET `fund_status`='funding',`investor_count`='".$count."' WHERE `project_id`=" . $id;
+    $db_con->query($query);
+    return true;
 
 }
+
+function updateFundableStatus($id)
+{////not checked for re-fund by same user
+
+    global $db_con;
+    $q = "SELECT `count_investor` as c FROM `fundables` WHERE `project_id`=" . $id;
+    $res = $db_con->fetch_array($db_con->query($q));
+    $count =intval($res['c']);
+    $count++;
+    global $db_con;
+    $query = "UPDATE `fundables` SET `fund_status`='1',`count_investor`='".$count."' WHERE `project_id`=" . $id;
+    $db_con->query($query);
+    return true;
+
+}
+function updateFundingsStatus($id,$amount)
+{//not checked for re-fund by same user
+
+    global $db_con;
+//    $q = "SELECT `project_id`  FROM `fundings` WHERE `project_id`=" . $id." LIMIT 1";
+    $date =time();
+//    echo $date;
+//    $res = $db_con->fetch_array($db_con->query($q));
+//    if($res){
+//
+//        $query = "UPDATE `fundings` SET `funded_on`='".$date."',`fund_status`='1',`funded_by`='".$_SESSION['uid']."',`fund_amount`='".$amount."' WHERE `project_id`=" . $id;
+//        print_r($query);
+//        $db_con->query($query);
+//
+//    }else{
+
+    $query ="INSERT INTO `fundings` ( `funded_on`,`project_id`,`funded_by`,`fund_amount`,`fund_status`)VALUES ('".$date."','".$id."','".$_SESSION['uid']."','".$amount."','funding')";
+    $db_con->query($query);
+//    }
+    return true;
+
+}
+
+
 function updateNotFundStatusProject($id)
 {
     global $db_con;
@@ -2268,7 +2315,7 @@ function checkFundableProject($id){
     $result= $db_con->fetch_array($res);
     if(empty($result)||$result==null)
         return false;
-    return $result;
+    return true;
 }
 
 //function getFundableProjects(){
@@ -2346,7 +2393,7 @@ function getTotalRaised($project_id){
 //                    $cycle="SELECT `cycle` FROM `fundables` WHERE `fundable_id`=".$id."LIMIT 1";
 //                    $res=$db_con->fetch_array($db_con->query($cycle));
                      if($cycle==0)
-                     {  $cyle=1;
+                     {  $cycle=1;
                          $x=$remdays+(31*24*60*60);
                          print_r($x);
                          $qu = "UPDATE `fundables` SET `days_rem`='" . $x . "',`cycle`='".$cycle."'WHERE `fundable_id`=" . $id;//does not work

@@ -538,7 +538,7 @@ switch ($action) {
         require_once(DIR_APP . 'projects.php');
         $title = $_POST['title'];
         $user_id = $_SESSION['uid'];
-        if (getUserNameBySearch($title, $user_id)) {
+        if (getRaterBySearch($title, $user_id)) {
             $responce['result'] = 'OK';
         }
 

@@ -791,6 +791,30 @@ function getUserNameBySearch($title, $user_id)
 
         if ($found > 0) {
             while ($row = $db_con->fetch_array($result)) {
+                echo "<li class='click-user' data-id='" . $row['user_id'] . "'>" . $row['display_name'] . "</br></li>";
+                //echo $row['display_name'];
+
+                // <a href=>($row[user_id];</a></li>";
+            }
+            return true;
+        } else {
+            echo "<li>No User found.<li>";
+            return false;//added to remove warning in ajaxdispathcer
+        }
+    }
+}
+function getRaterBySearch($title, $user_id)
+{
+    if (!empty($title)) {
+        global $db_con;
+        $query = "SELECT `first_name`,`last_name`,`user_id`,`display_name` FROM `users` WHERE user_id !=$user_id AND (`display_name` LIKE '%" . $title . "%' OR `first_name` LIKE '%" . $title . "%' OR `last_name` LIKE '%" . $title . "%') ORDER BY `display_name` ASC";
+        $result = $db_con->query($query);
+        $row = $db_con->fetch_array($result);
+        $found = $db_con->num_rows($result);
+
+
+        if ($found > 0) {
+            while ($row = $db_con->fetch_array($result)) {
                 echo "<li class='click-rater-user' data-id='" . $row['user_id'] . "'>" . $row['display_name'] . "</br></li>";
                 //echo $row['display_name'];
 
@@ -803,7 +827,6 @@ function getUserNameBySearch($title, $user_id)
         }
     }
 }
-
 function getMessageDetails($conv_id)
 {
     global $db_con;

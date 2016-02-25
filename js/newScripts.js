@@ -382,18 +382,51 @@ $(document).ready(function () {
     $('body').on('click', '.finalize', function () {
     //$('.finalize').click(function () {
         var amount = $('#investment_amount').val();
-        $.ajax({
-            type: 'POST',
-            url: "payment.php",
-            data: {amount: amount},
-            error: function (req, text, error) {
-                alert('Error AJAX: ' + text + ' | ' + error);
-            },
-            success: function (data) {
-                console.log(amount);
-                window.location.href = 'payment.php';
+        var type =$('.finalize').attr('data-value');
+        console.log(type);
+        var pid =$(this).attr('data-id');
+        post_to_url("../rangeenroute/payment.php", { amount: amount,pid:pid ,type:type});
+        function post_to_url(path, params, method) {
+            method = method || "post";
+
+            var form = document.createElement("form");
+
+            //Move the submit function to another variable
+            //so that it doesn't get overwritten.
+            form._submit_function_ = form.submit;
+
+            form.setAttribute("method", method);
+            form.setAttribute("action", path);
+
+            for(var key in params) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
             }
-        });
+
+            document.body.appendChild(form);
+            form._submit_function_(); //Call the renamed function.
+        }
+
+
+
+
+
+        //$.ajax({
+        //    type: 'POST',
+        //    url: "payment.php",
+        //    data: {amount: amount},
+        //    error: function (req, text, error) {
+        //        alert('Error AJAX: ' + text + ' | ' + error);
+        //    },
+        //    success: function (data) {
+        //        console.log(amount);
+        //       // window.location.href = 'payment.php';
+        //    }
+        //});
         //redirect('payment.php', {amout: amount});
 
     });
@@ -421,7 +454,7 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     if (data['result'] == 'OK') {
-                        console.log(project_id,investor_id);
+                        //console.log(project_id,investor_id);
                         $(".apply-success").css('display', 'block');
                         $(".apply-project-area").delay(1500).slideUp('slow');
                         $('.apply-success').css('display', 'none');
@@ -533,7 +566,7 @@ $(document).ready(function () {
 
         if (confirm('Are you sure you want to delete this?')) {
             var investor_id=$(this).attr("data-id");
-            console.log(investor_id);
+            //console.log(investor_id);
             $.ajax({
                 type: 'POST',
                 url: "includes/ajaxDispatcher.php",
@@ -600,7 +633,7 @@ $(document).ready(function () {
         if (confirm('Are you sure you want to Reject IdeaThread?')) {
             var ideathread_id=$(this).attr("data-id");
             var session_user=$(this).attr("data-user");
-            console.log(ideathread_id,session_user);
+            //console.log(ideathread_id,session_user);
             $.ajax({
                 type: 'POST',
                 url: "includes/ajaxDispatcher.php",
@@ -702,7 +735,7 @@ $(document).ready(function () {
         if (confirm('Are you sure you want to update status?')) {
             var post_id=$(this).attr("data-id");
             var session_user=$(this).attr("data-user");
-            console.log(session_user);
+            //console.log(session_user);
             $.ajax({
                 type: 'POST',
                 url: "includes/ajaxDispatcher.php",
@@ -747,7 +780,7 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     if (data['result'] == 'OK') {
-                        console.log(session_user,post_id);
+                        //console.log(session_user,post_id);
                         //$('#blogpoststatus_'+post_id).text('No');
                         // $('.blogpostaccept_'+post_id).attr('value','Accept');
                         $('.blogpostaccept_'+post_id).css({"opacity":"0.4"});
@@ -873,7 +906,7 @@ $(document).ready(function () {
             var user_id=$(this).attr("data-id");
             var session_user=$(this).attr("data-user");
 
-            console.log(user_id);
+            //console.log(user_id);
             $.ajax({
                 type: 'POST',
                 url: "includes/ajaxDispatcher.php",
@@ -912,7 +945,7 @@ $('body').on('click','.close-me',function(){
             var investor_id=$(this).attr("data-id");
             var session_user=$(this).attr("data-user");
 
-            console.log(investor_id);
+            //console.log(investor_id);
             $.ajax({
                 type: 'POST',
                 url: "includes/ajaxDispatcher.php",
@@ -956,7 +989,7 @@ $('body').on('click','.close-me',function(){
             // if(e.keyCode == 13) {
             var title = $(this).val();
             var user=  $(this).attr("data-id");
-            console.log(title,user);
+            //console.log(title,user);
             searchRaterList(title,user,pid);
             //}
         });
@@ -964,10 +997,9 @@ $('body').on('click','.close-me',function(){
     });
 
     function searchRaterList(title,user,pid) {
-               console.log('yaha aayo');
+               //console.log('yaha aayo');
         //var title =$('project-rater-area').find(".rater-search").val();
         var title = title;
-        console.log(title);
         var user_id = user;
         if (title != "") {
 //                console.log(title);
@@ -1030,7 +1062,7 @@ $('body').on('click','.close-me',function(){
                 alert('Error AJAX: ' + text + ' | ' + error);
             },
             success: function (data) {
-                console.log(data.result);
+                //console.log(data.result);
                 if (data.result == 'OK') {
                     $(".success-message").html('<p style="color:forestgreen;" class="suc"> Assigned to '+data.user+'.</p>');
                     $(".suc").fadeOut(4000);
@@ -1058,7 +1090,7 @@ $('body').on('click','.close-me',function(){
                 },
                 success: function (data) {
                     if (data.result == 'OK') {
-                        console.log(data);
+                        //console.log(data);
                         $(".raterusers-"+pid).find("[data-id=" + data.rater_id + "]").remove();
                         $(".success-message").html('<p style="color: orangered;" class="suc">Unrouted to '+data.user+'.</p>');
                         $(".suc").fadeOut(4000);
