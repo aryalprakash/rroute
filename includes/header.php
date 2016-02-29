@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="<?php echo SITE_URL ?>/css/style.css" type="text/css" media="all"/>
     <link rel="stylesheet" href="<?php echo SITE_URL ?>/css/new_style.css" type="text/css" media="all"/>
     <link rel="stylesheet" href="<?php echo SITE_URL ?>/css/fonts/stylesheet.css" type="text/css" media="all"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
-          type="text/css"/>
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"-->
+<!--          type="text/css"/>-->
     <script type="text/javascript" src="<?php echo SITE_URL ?>/js/jquery-1.11.1.js"></script>
     <script src="<?php echo SITE_URL ?>/js/validate/jquery.validate.js"></script>
     <script src="<?php echo SITE_URL ?>/js/jquery-ui-git.js"></script>
@@ -115,6 +115,7 @@
                         <div class="keep-me"><input type="checkbox" id="keep_me_logged"><label for="keep_me_logged">Keep
                                 me logged in</label></div>
                         <div class="forgot-pass"><a href="forgot.php">Forgot password?</a></div>
+                        <div class="forgot-pass"><a href="index.php#signup">Sign Up</a></div>
                     </div>
 
                 </form>

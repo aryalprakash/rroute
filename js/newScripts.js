@@ -142,7 +142,7 @@ $(document).ready(function () {
         $('.likes-area').css('display', 'none');
         $('.comment-area').css('display', 'none');
         $('.report-area').css('display', 'none');
-       // $('.share-area').css('display', 'none');
+        $('.share-area').css('display', 'none');
         $('.homeshare-area').css('display', 'none');
 
         $(".route-area").slideToggle('slow');
@@ -162,6 +162,7 @@ $(document).ready(function () {
 
         return false;
     });
+
 
     //share project
     $("#homeshare_project").click(function () {

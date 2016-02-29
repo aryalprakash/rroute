@@ -76,7 +76,6 @@ else
         <a href="<?php echo $source ?>" target="_blank"><img src="<?php echo $thumbnail ?>"
                                                              style="max-width: 600px; max-height: 100%;"></a>
 
-
     </div>
     <div class="idea-preview" style="padding-left: 0px;">
         <div style="">
@@ -118,7 +117,7 @@ else
 </div>
 
 
-<div class="project-action">
+<div class="project-action ideathread">
     <?php if ($project_exists) {
         echo '<a href="' . $source . '" class="project-action-btn inactive showRate"' . '"id="route_project"  >Rate</a>';
         echo '<a href="' . $source . '" class="project-action-btn inactive showRoute"' . '"id="route_project" "data-id="' . $ideathread_id . '" >Route</a>';
@@ -267,9 +266,6 @@ else
        ?>"
        title="Click to share"><img src="./images/icons/email.png" width="40"
                                    height="40"></a>
-</div>
-
-</div>
 </div>
 
 
