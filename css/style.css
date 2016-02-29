@@ -11,7 +11,9 @@ body {
 }
 
 .main-wrapper {
+
     min-width: 1030px;
+    width: 100%;
 }
 
 .header-wrapper {
@@ -284,7 +286,8 @@ body {
 }
 
 .content {
-    width: 1020px;
+    width: 85%;
+    float: left;
     overflow: hidden;
     padding: 30px 0 30px 0;
     margin: 0 auto;
@@ -499,9 +502,10 @@ h2.home-signup span {
 }
 
 .left-navigation {
+    float:left;
     position: absolute;
-    left: 0;
-    top: 0;
+    /*left: 0;*/
+    /*top: 0;*/
     width: auto;
     background: url('../images/left_nav_bg.jpg') repeat-y;
     padding: 35px 0 35px 0;
@@ -522,10 +526,14 @@ h2.home-signup span {
     height: 40px;
     line-height: 40px;
     padding-left: 10px;
+    width: 161px;
+}
+.left-navigation ul li:hover {
+
 }
 
 .left-navigation ul li.active {
-    background: #edf2f7;
+    background:#edf2f7;
 }
 
 .left-navigation ul li:hover {
@@ -614,29 +622,37 @@ h2.home-signup span {
 }
 
 .left-navigation.home {
-    height: 100%;
+    width: 13%;
+    float: left;
+    /*height: 100%;*/
 }
 
 .left-navigation.home ul {
-    width: 161px;
+    width: 13%;
     height: 100%;
 }
 
 .right-side-ads {
-    width: 180px;
-    position: absolute;
-    top: 0;
-    right: -192px;
+    margin-top: 20px;
+    width: 15%;
+    float: left;
 }
 
+.right-banner{
+    margin: 10px;
+
+}
+.right-banner img{width:100%;}
+
 .inner-page-wrapper {
-    width: 1020px;
+    width: 85%;
     margin: 0 auto;
     position: relative;
 }
 
 .inner-page {
     position: relative;
+
     min-height: 550px;
     margin-top: 30px;
     margin-bottom: 30px;
@@ -644,16 +660,26 @@ h2.home-signup span {
     padding-top: 0;
     padding-bottom: 0;
 }
-
+/*.connection{width: 100%}*/
 .main-content {
     overflow: hidden;
-    padding: 15px;
-    padding-left: 56px;
+    margin: 1%;
+    /*float: right;*/
+    margin-left:50px;
 }
 
+.admin-content {
+    overflow: hidden;
+    margin: 1%;
+    float: left;
+    padding-left:50px;
+}
+
+.connection-content{width: 92%}
+
 .main-content.home {
-    padding-left: 175px;
-    position: relative;
+    width: 83%;
+    float: right;
 }
 
 .profile-home-add {
@@ -685,6 +711,13 @@ h2.home-signup span {
     margin-bottom: 10px;
     padding: 30px;
     overflow: hidden;
+}
+.com-content {
+    background: #fff;
+    margin-bottom: 10px;
+    padding-top: 30px!important;
+    overflow: hidden;
+    padding-left: 10px;
 }
 
 .content-titles {
@@ -1840,7 +1873,7 @@ li.logout a {
 .store-search div {
     display: inline-block;
     float: left;
-    margin-right: 15px;
+    margin-right: 10px;
 }
 
 .store-search div select {
@@ -2790,6 +2823,8 @@ img.fancybox {
     }
 
     .site-footer {
+        width: 100%;
+        float:left;
         min-width: 1400px;
     }
 }

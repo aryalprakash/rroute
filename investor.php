@@ -18,7 +18,7 @@ if (isset($_POST['add_foonote']))
 
         <?php include(DIR_INCLUDE . 'left_nav.php'); ?>
 
-        <div class="main-content">
+        <div class="admin-content">
             <div class="upload-project-progress">
                 <span class="pagetitle">Investors</span>
             </div>

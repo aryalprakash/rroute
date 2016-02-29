@@ -14,7 +14,7 @@ if(userRole($_SESSION['uid'])=='User')
         <div class="account inner-page content">
 
             <?php include(DIR_INCLUDE . 'left_nav.php');?>
-            <div class="main-content">
+            <div class=" admin-content">
                 <div class="upload-project-progress">
                     <span class="pagetitle">Actions</span>
                 </div>

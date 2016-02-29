@@ -5,8 +5,8 @@ include_once('app/users.php');
 
 //$trend = calculateTrendForProject(6);
 
-//$projects = getProjectsInTrend(); //print_r($projects);
-$projects = getProjectsInTop_search_term();
+$projects = getProjectsInTrend(); //print_r($projects);
+//$projects = getProjectsInTop_search_term();
 
 if ($projects) {
 
@@ -53,7 +53,7 @@ if ($projects) {
 
             <a href="#" class="view-more" style="text-decoration: none; color: #615651;">View More</a>
         </div>
-    </div>;
+    </div>
 <?php } else {
     echo '<div class="project-title" style="font-size: 20px; margin-left: 10px;">No projects available right now</div>';
 }

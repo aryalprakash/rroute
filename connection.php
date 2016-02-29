@@ -24,7 +24,7 @@ if (empty($_SESSION['logged_in']))
             ?>
 
 
-            <div class="main-content">
+            <div class="main-content connection-content">
 
                 <ul class="router-top-nav">
                     <li class="active"><a href="connection.php">Connection <?php $connections; ?></a></li>

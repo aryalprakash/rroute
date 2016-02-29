@@ -22,20 +22,18 @@ require_once(DIR_APP . 'users.php');
                 <form name="project-action" method="post">
                     <input type="radio" name="type_project[]" id="add_project_radio" value="project"> <label
                         for="add_project_radio">Project</label>
-                    <input type="radio" style="margin-left:16%" name="type_project[]" id="add_ideaThread_radio"
+                    <input type="radio" style="margin-left:15%" name="type_project[]" id="add_ideaThread_radio"
                            value="ideaThread"> <label for="add_ideaThread_radio">IdeaThread</label>
                     <?php
                     $userdet = getUserData($_SESSION['uid']);
                     $usertype = $userdet['user_type'];
                     if ($usertype == '3') {
                         ?>
-                        <input type="radio" style="margin-left: 16%;" name="type_project[]" id="add_blogPost_radio"
+                        <input type="radio" style="margin-left: 15%;" name="type_project[]" id="add_blogPost_radio"
                                value="blogPost"> <label
                             for="add_blogPost_radio">Blog Post</label>
                     <?php }
                     ?>
-
-
                     <input type="submit" name="add_project" value="Upload">
                 </form>
             </div>

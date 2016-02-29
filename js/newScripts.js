@@ -381,11 +381,17 @@ $(document).ready(function () {
 ///* After clicking on message ends */
     $('body').on('click', '.finalize', function () {
     //$('.finalize').click(function () {
-        var amount = $('#investment_amount').val();
-        var type =$('.finalize').attr('data-value');
-        console.log(type);
         var pid =$(this).attr('data-id');
-        post_to_url("../rangeenroute/payment.php", { amount: amount,pid:pid ,type:type});
+        var amount = $('.investment-amount-'+pid).val();
+        var type =$('.finalize').attr('data-value');
+        var eq_pc = $('.eq-pc-'+pid).text();
+        var fin_pro=$('.final-product-'+pid).text();
+        var user_choice =$(this).find('users-choice-'+pid).text();
+        console.log(eq_pc,fin_pro,user_choice);
+
+
+
+        post_to_url("../rangeenroute/payment.php", { amount: amount,pid:pid ,type:type,eq_pc:eq_pc,fin_pro:fin_pro,user_choice:user_choice});
         function post_to_url(path, params, method) {
             method = method || "post";
 

@@ -45,7 +45,7 @@ else
             <li class="active"><a href="communication.php">Communication</a></li>
         </ul>
 
-        <div class="content-block">
+        <div class=" com-content">
             <div class="search-connection">
                 <form action="" method="post">
                     <input type="button" value="Inbox" class="inbox-btn <?php if ($mode == 'show') echo 'active'; ?>"

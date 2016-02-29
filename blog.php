@@ -13,7 +13,7 @@ require_once(DIR_APP . 'projects.php');
                  include(DIR_INCLUDE . 'left_nav.php');
             ?>
 
-            <div class="main-content">
+            <div class="admin-content">
                 <div class="upload-project-progress">
                     <span class="pagetitle">Blog</span>
                 </div>

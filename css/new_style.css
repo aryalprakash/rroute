@@ -101,7 +101,8 @@ h2.home-welcome {
 /*for pagination */
 .pagination {
     height: 40px;
-    margin: 20px 0
+    margin: 20px 0;
+    float:left;
 }
 
 .pagination ul {
@@ -688,3 +689,43 @@ table#t02 th	{
     margin-right: 5px;
     cursor: pointer;
 }
+
+/* for blogpost in right side ad*/
+.banner-post{max-height:295px;
+    overflow-y:hidden ;
+   border: 1px solid #FF4F00
+}
+.right-recent-post{
+    padding: 5px;
+    /*border: 1px solid #FF4F00;*/
+    /*max-height: 260px;*/
+    /*overflow-y: scroll;*/
+}
+.recent-post-title{
+    background: #FF4F00;
+    color: #ffffff;
+    font-size: 21px;
+    padding: 2px;
+    cursor:pointer;
+    text-align: center;
+}
+.postp{font-size: 11px;}
+.recent-post-title a{text-decoration: none;color:#FFFFFF;}
+
+.recent-blog-li a{text-decoration:none}
+.recent-blog-li a:visited{color:#4a77a4;}
+.recent-post:hover{color:#FF4F00;}
+
+.recent-post{font-size: 18px;
+    color: #4a77a4;
+    padding-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;}
+/* for blogpost in right side ad*/
+/*index page centerme*/
+.centerme{
+float: left;
+overflow: hidden;
+padding: 30px 0 30px 0;
+margin: 0 auto;}

@@ -65,7 +65,6 @@ function updateFundingsStatus($id,$amount,$type,$reward_type)
 //    }else{
 
     $query ="INSERT INTO `fundings` ( `funded_on`,`project_id`,`funded_by`,`fund_amount`,`fund_status`,`type`,`reward_type`)VALUES ('".$date."','".$id."','".$_SESSION['uid']."','".$amount."','funding','".$type."','".$db_con->escape($reward_type)."')";
-    print_r($query);
     $db_con->query($query);
 //    }
     return true;
