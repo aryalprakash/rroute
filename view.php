@@ -2,8 +2,17 @@
 include('includes/header.php');
 include('includes/ChromePhp.php');
 
-//if (empty($_SESSION['logged_in']))
-//    redirect('index.php');
+if (!empty($_SESSION['logged_in']))
+    {
+        if($_GET['pid']){
+            redirect('home.php/?pid='.$_GET['pid']);
+        }else if ($_GET['iid']) {
+            redirect('home.php/?iid='.$_GET['iid']);
+        }
+        else{
+            redirect('home.php');
+        }
+    }
 
 require_once(DIR_APP . 'projects.php');
 require_once(DIR_APP . 'users.php');
