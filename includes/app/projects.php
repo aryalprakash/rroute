@@ -2105,7 +2105,7 @@ function getIdeas($user)
 
     if ($user == 'all') {
        // $query = "SELECT * FROM `ideathreads` WHERE `status` = 'approved' ORDER BY `interactions` DESC LIMIT 0 ,5";
-        $query = "SELECT * FROM `ideathreads` WHERE `status` = 'approved' ORDER BY `ideathread_id` DESC LIMIT 2";
+        $query = "SELECT * FROM `ideathreads` WHERE `status` = 'approved' ORDER BY `ideathread_id` DESC LIMIT 5";
         $a = $db_con->sql2array($query);
     }
 //    else if($user='count') {
@@ -2133,7 +2133,7 @@ function getIdeas($user)
 function getLoadMoreIdea($id){
     global $db_con;
 
-        $query = "SELECT * FROM `ideathreads` WHERE `status` = 'approved' AND `ideathread_id`<$id ORDER BY `ideathread_id` DESC LIMIT 2";
+        $query = "SELECT * FROM `ideathreads` WHERE `status` = 'approved' AND `ideathread_id`<$id ORDER BY `ideathread_id` DESC LIMIT 5";
 //        print_r($query);
     $a = $db_con->sql2array($query);
     return $a;

@@ -98,11 +98,11 @@ $(document).ready(function () {
         return false;
     });
 
-    $(".view-more").click(function () {
-        $('html, body').animate({
-            scrollTop: $(".signup-line").offset().top
-        }, 'slow');
-    });
+    //$(".view-more").click(function () {
+    //    $('html, body').animate({
+    //        scrollTop: $(".signup-line").offset().top
+    //    }, 'slow');
+    //});
 
     $('.allNotifications').click(function () {
         var user_id = $(this).attr('user-id');
@@ -1155,7 +1155,7 @@ $('body').on('click','.close-me',function(){
 
     });
 
-//for load more
+//for load more trending
     $('body').on('click','.load-more',function(){
         var last_id = $(this).attr('data-id');
         var current =$(this);
@@ -1186,6 +1186,36 @@ $('body').on('click','.close-me',function(){
 
     });
 
+//for load more
+    $('body').on('click','.view-more',function(){
+        var last_id = $(this).attr('data-id');
+        var current =$(this);
+
+        current.text("Loading Please Wait.. ")
+        //$.ajax({
+        //    type: "post",
+        //    url: "includes/ajaxDispatcher.php",
+        //    data: {last_id:last_id, dispatcher: 'load-more'},
+        //    error: function (req, text, error) {
+        //        alert('Error AJAX: ' + text + ' | ' + error);
+        //    },
+        //    success: function (data) {
+        //        if (data.result == 'OK') {
+        //            $('body').find('.load-more').val('End Of Data');
+        //            //$('.homepage-showcase').append(data);
+        //
+        //        }else {
+        //            if (data.result == 'OK') {
+        //                $('body').find('.load-more').val('End Of Data');
+        //            }else{
+        //                current.remove();
+        //                $('.showmore').append(data);}
+        //        }
+        //    },
+        //    //dataType: "json"
+        //});
+
+    });
 
 
     //fancy box to view clicked verified documents

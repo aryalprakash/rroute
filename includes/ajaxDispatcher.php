@@ -2,7 +2,7 @@
 
 require_once('config.php');
 //if(isset($_POST['dispatcher']))
-$action =$_POST['dispatcher'];
+$action = $_POST['dispatcher'];
 
 switch ($action) {
     case 'login':
@@ -338,7 +338,7 @@ switch ($action) {
     case 'delete-investor':
         require_once(DIR_APP . 'projects.php');
         require_once(DIR_APP . 'users.php');
-        $investor_id=$_POST['investor_id'];
+        $investor_id = $_POST['investor_id'];
 //        $company_name = getInvestorName($investor_id);
 //        $url = '';
 //        $text = 'You have deleted  "' . $company_name . '" investor profile.';
@@ -568,25 +568,25 @@ switch ($action) {
         require_once(DIR_APP . 'projects.php');
         $project_id = $_POST['project_id'];
         $user_id = $_SESSION['uid'];
-        $investor_id=$_POST['investor_id'];
-        applyProject($project_id,$investor_id);
+        $investor_id = $_POST['investor_id'];
+        applyProject($project_id, $investor_id);
         //updateFundStatusProject($project_id);
         $project_title = getProjectTitle($project_id);
         //$author = getUserNameById($_SESSION['uid']);
         $url = SITE_URL . '/home.php?pid=' . $project_id;
 
-       $admins=getAllAdmins();
-      foreach($admins as $admin){
+        $admins = getAllAdmins();
+        foreach ($admins as $admin) {
 //
-           $sento = $admin['user_id'];
-           $user= getUserNameById($_SESSION['uid']);
-            $texts = $user.' Applied Project for funding "'.$project_title .'" thank you!';
-          addNotification($sento, $texts, $_SESSION['uid'], $url);
+            $sento = $admin['user_id'];
+            $user = getUserNameById($_SESSION['uid']);
+            $texts = $user . ' Applied Project for funding "' . $project_title . '" thank you!';
+            addNotification($sento, $texts, $_SESSION['uid'], $url);
         }
         $sent_to = getProjectAuthor($project_id);
         $text = 'Your Project  "' . $project_title . '" has been Applied for funding.We Will notify you back when project is reviewed.';
         addNotification($sent_to, $text, $_SESSION['uid'], $url);
-        $responce['result']='OK';
+        $responce['result'] = 'OK';
         echo json_encode($responce);
         break;
     case 'accept-project':
@@ -667,12 +667,12 @@ switch ($action) {
         require_once(DIR_APP . 'projects.php');
         $post_id = $_POST['post_id'];
 
-        $res =rejectBlogPost($post_id);
+        $res = rejectBlogPost($post_id);
         $project_title = getBlogPostTitle($post_id);
-            //$author = getUserNameById($_SESSION['uid']);
+        //$author = getUserNameById($_SESSION['uid']);
         $url = SITE_URL . '/blog.php?id=' . $post_id;
         $sent_to = getBlogPostAuthor($post_id);
-        $text = 'Your Blog Post  "'.  $project_title.'" has been Rejected.';
+        $text = 'Your Blog Post  "' . $project_title . '" has been Rejected.';
         addNotification($sent_to, $text, $_SESSION['uid'], $url);
         $responce['result'] = 'OK';
         echo json_encode($responce);
@@ -757,7 +757,7 @@ switch ($action) {
     case 'admin-rate-project':
         require_once(DIR_APP . 'projects.php');
         require_once(DIR_APP . 'users.php');
-        $value= array(
+        $value = array(
 //            'project_id'=>$_POST['project_id'],
 //            //'user_id'=>$_POST['user_id'],
 //            'fes'=>$_POST['f_value'],
@@ -770,24 +770,25 @@ switch ($action) {
 //            'red'=>$_POST['rd_value'],
 //            'imp'=>$_POST['i_value'],
 //            'prf'=>$_POST['pr_value'],
-    );  $value['project_id']= $_POST['project_id'];
-        $value['fes']= $_POST['f_value'];
-        $value['uni']= $_POST['u_value'];
-        $value['gro']= $_POST['g_value'];
-        $value['sta']= $_POST['s_value'];
-        $value['pro']= $_POST['p_value'];
-        $value['ris']= $_POST['r_value'];
-        $value['tim']= $_POST['t_value'];
-        $value['red']= $_POST['rd_value'];
-        $value['imp']= $_POST['i_value'];
-        $value['prf']= $_POST['pr_value'];
-      //  print_r($value);
-        $data=json_encode($value,true);
+        );
+        $value['project_id'] = $_POST['project_id'];
+        $value['fes'] = $_POST['f_value'];
+        $value['uni'] = $_POST['u_value'];
+        $value['gro'] = $_POST['g_value'];
+        $value['sta'] = $_POST['s_value'];
+        $value['pro'] = $_POST['p_value'];
+        $value['ris'] = $_POST['r_value'];
+        $value['tim'] = $_POST['t_value'];
+        $value['red'] = $_POST['rd_value'];
+        $value['imp'] = $_POST['i_value'];
+        $value['prf'] = $_POST['pr_value'];
+        //  print_r($value);
+        $data = json_encode($value, true);
         $id = AdminRateProject($value);
         //print_r($id);
         if ($id) {
-            $score=calculate_mr($_POST['project_id']);
-            updateProjectSeed($_POST['project_id'],$score);
+            $score = calculate_mr($_POST['project_id']);
+            updateProjectSeed($_POST['project_id'], $score);
             $project_title = getProjectTitle($_POST['project_id']);
             $sent_to = getProjectAuthor($_POST['project_id']);
             $author = getUserNameById($_SESSION['uid']);
@@ -797,7 +798,7 @@ switch ($action) {
             addInteraction($_SESSION['uid'], 'rate', $sent_to, 'project', $_POST['project_id']);
             $responce['result'] = 'OK';
 
-       } else {
+        } else {
             $responce['result'] = '';
         }
         echo json_encode($responce);
@@ -809,9 +810,9 @@ switch ($action) {
         require_once(DIR_APP . 'projects.php');
         $id = AddRaterToProject($_POST['project_id'], $_SESSION['uid'], $_POST['sent_to']);
         if (!empty($id)) {
-            if($id=='limit'){
+            if ($id == 'limit') {
                 $responce['result'] = 'LIMIT';
-            } else{
+            } else {
 
                 $responce['result'] = 'OK';
                 $responce['id'] = $id;
@@ -823,9 +824,10 @@ switch ($action) {
                 $url = SITE_URL . '/project_details.php?pid=' . $_POST['project_id'];
                 $text = $author . ' assigned to rate project ' . $project_title;
                 addNotification($_POST['sent_to'], $text, $_SESSION['uid'], $url);
-             }
+            }
+        } else {
+            $responce['result'] = 'FALSE';
         }
-        else{$responce['result'] = 'FALSE';}
 
         echo json_encode($responce);
         break;
@@ -833,11 +835,10 @@ switch ($action) {
     case 'register-profiled':
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
-        $id =registerProfile($_POST);
-        if($id==true){
+        $id = registerProfile($_POST);
+        if ($id == true) {
             $responce['result'] = 'OK';
-        }
-        else{
+        } else {
             $responce['result'] = 'FALSE';
         }
         echo json_encode($responce);
@@ -846,111 +847,133 @@ switch ($action) {
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
         global $project_exists;
-        $id=$_POST['last_id'];
-        $ideas=getLoadMoreIdea($id);
+        $id = $_POST['last_id'];
+        $ideas = getLoadMoreIdea($id);
+        global $project_exists;//aded to remove error random line code
         if ($ideas) {
 
-     foreach ($ideas as $idea) {
-	$title = $idea['ideathread_title'];
-	$description = $idea['description'];
-	$time = TimeAgo(date('Y-m-d', strtotime($idea['created_on'])));
-	$ideathread_id = $idea['ideathread_id'];
-	$status = $idea['status'];
-	$source= $idea['source_url'];
+            foreach ($ideas as $idea) {
+                $title = $idea['ideathread_title'];
+                $description = $idea['description'];
+                $time = TimeAgo(date('Y-m-d', strtotime($idea['created_on'])));
+                $ideathread_id = $idea['ideathread_id'];
+                $status = $idea['status'];
+                $source = $idea['source_url'];
 
-	$source_details = parse_url($source);
-			if($source_details['host'] == '127.0.0.1' || $source_details['host'] == 'www.rangeenroute.com'){
-				if($source_details['path'] == '/home.php' ){
-					parse_str($source_details['query'], $output);
+                $source_details = parse_url($source);
+                if ($source_details['host'] == 'rangeenroute.com' || $source_details['host'] == 'www.rangeenroute.com') {
+                    if ($source_details['path'] == '/home.php') {
+                        parse_str($source_details['query'], $output);
 
-					if($output['pid']){
-						$project_exists = true;
-						list($url, $project_id) = explode("=", $source);
+                        if ($output['pid']) {
+                            $project_exists = true;
+                            list($url, $project_id) = explode("=", $source);
 
-					}
-				}
-			}
+                        }
+                    }
+                }
 
-	if($idea['thumbnail_img']){
-	$thumbnail=$idea['thumbnail_img'];
-	}else{
-	$thumbnail = 'uploads/avatars/nophoto.jpg';
-	}
+                if ($idea['thumbnail_img']) {
+                    $thumbnail = $idea['thumbnail_img'];
+                } else {
+                    $thumbnail = '/uploads/avatars/nophoto.jpg';
+                }
 
-	$author = $idea['original_creator'];
-	$user = getUserData($idea['created_by']);
-	$name = $user['display_name'];
+                $author = $idea['original_creator'];
+                $user = getUserData($idea['created_by']);
+                $name = $user['display_name'];
 
-	if($user['photo']){
-	$userphoto = $user['photo'];
-	}else{
-	$userphoto = 'nophoto.jpg';
-	}
+                if ($user['photo']) {
+                    $userphoto = $user['photo'];
+                } else {
+                    $userphoto = 'nophoto.jpg';
+                }
 
-	$likes = getIdeaLikes($ideathread_id);
-	$comments = countIdeaComments($ideathread_id);
-
-
-        if (strlen($title) < 20)
-            $short_title = $title;
-        else
-            $short_title = substr($title, 0, 19) . '...';
-
-        ?>
-
-        <div class="user-list-idea" style="margin-left: 10px;">
+                $likes = getIdeaLikes($ideathread_id);
+                $comments = countIdeaComments($ideathread_id);
 
 
+                if (strlen($title) < 20)
+                    $short_title = $title;
+                else
+                    $short_title = substr($title, 0, 19) . '...';
 
-        	<div class="thumb-img view-more" style="float: left">
+                ?>
 
-        		<a href="#" ><img src="<?php echo $thumbnail ?>" height="100%" width="100%"></a>
+                <div class="user-list-idea" style="margin-left: 10px;">
 
 
-        	</div>
-        	<div class="idea-preview" >
-        		<div class="seventy left" style="margin-bottom: -15px;">
-        			<a class="view-more" href="#" style="text-decoration: none;"><h1 class="idea-title"><?php echo $title; ?></h1></a>
-        			<span class="hueued"><?php echo $time ?></span> &nbsp; &nbsp;<span class="hueued"></span>
-        			<p class="idea-description"><?php echo $description; ?></p>
-        		</div>
-        		<div class="thirty right" style="">
-	        		<div style="width: 50%; float: left" class=""view-more">
-	        			<div class="idea-stats"><a href="#">
-	        			<img src="./images/icons/star.jpg" /></a><div class="stat-no"><?php if($project_exists){echo calculateRating($project_id);}?></div></div>
-	        			<div class="idea-stats"><a href="#">
-	        			<img src="./images/icons/ranking.png" /></a><div class="stat-no"><?php if($project_exists){echo getRankForProject($project_id);}?></div></div>
-	        			<div class="idea-stats"><a href="#">
-	        			<img src="./images/icons/like.png" /></a><div class="stat-no"><?php echo $likes ?></div></div>
-	        			<div class="idea-stats"><a href="#">
-	        			<img src="./images/icons/comment.jpg"/></a><div class="stat-no"><?php echo $comments ?></div></div>
-        			</div>
-        			<div style=" float: right">
+                    <div class="thumb-img" style="float: left">
 
-        				<div class="thumb view-more"><a href="#">
-        				<img src="uploads/avatars/thumbs/<?php echo $userphoto ?>" title="Posted by <?php echo $name ?>">
-        				</a></div>
-        				<div class="thumb view-more"><img src="./uploads/avatars/nophoto.jpg" title="Created by <?php echo $author ?>"></div>
-        			</div>
-        		</div>
+                        <a href="<?php echo $source ?>" target="_blank"><img src="<?php echo $thumbnail; ?>"
+                                                                             height="100%" width="100%"></a>
 
-        	</div>
-        </div>
 
-        <div class="line index"></div>
+                    </div>
+                    <div class="idea-preview">
+                        <div class="seventy left" style="margin-bottom: -15px;">
+                            <a class="" href="<?php echo SITE_URL . '/view.php?iid=' . $ideathread_id ?>"
+                               style="text-decoration: none;"><h1 class="idea-title"><?php echo $title; ?></h1></a>
+                            <span class="hueued"><?php echo $time ?></span> &nbsp; &nbsp;<span class="hueued"></span>
 
-<?php
-$last_id =$idea['ideathread_id'];
-}
-?>
-<input type="button" class="load-more" value="Load More" data-id="<?php echo $last_id; ?>"/>
-<?php
-}else{
-$responce['result']='OK';
-}
-$responce['result']='FALSE';
- json_encode($responce);
- break;
+                            <p class="idea-description"><?php echo $description; ?></p>
+                        </div>
+                        <div class="thirty right" style="">
+                            <div style="width: 50%; float: left" class="">
+                                <div class="idea-stats"><a href="#">
+                                        <img src="./images/icons/star.jpg"/></a>
+
+                                    <div class="stat-no"><?php if ($project_exists) {
+                                            echo calculateRating($project_id);
+                                        } ?></div>
+                                </div>
+                                <div class="idea-stats"><a href="#">
+                                        <img src="./images/icons/ranking.png"/></a>
+
+                                    <div class="stat-no"><?php if ($project_exists) {
+                                            echo getRankForProject($project_id);
+                                        } ?></div>
+                                </div>
+                                <div class="idea-stats"><a href="#">
+                                        <img src="./images/icons/like.png"/></a>
+
+                                    <div class="stat-no"><?php echo $likes ?></div>
+                                </div>
+                                <div class="idea-stats"><a href="#">
+                                        <img src="./images/icons/comment.jpg"/></a>
+
+                                    <div class="stat-no"><?php echo $comments ?></div>
+                                </div>
+                            </div>
+                            <div style=" float: right">
+
+                                <div class="thumb"><a href="#">
+                                        <img src="uploads/avatars/thumbs/<?php echo $userphoto ?>"
+                                             title="Posted by <?php echo $name ?>">
+                                    </a></div>
+                                <div class="thumb"><img src="./uploads/avatars/nophoto.jpg"
+                                                        title="Created by <?php echo $author ?>"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="line index"></div>
+
+                <?php
+                $last_id = $idea['ideathread_id'];
+            }
+            ?>
+            <input type="button" class="load-more" value="Load More" data-id="<?php echo $last_id; ?>"/>
+            <?php
+
+        } else {
+            $responce['result'] = 'OK';
+        }
+        $responce['result'] = 'FALSE';
+        json_encode($responce);
+        break;
 
 }
 ?>
