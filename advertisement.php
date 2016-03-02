@@ -70,6 +70,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'pause') {
 
                     <?php if (!isset($_POST['start']) && $mode == 'create' && !isset($_GET['action'])) { ?>
                         <div class="search-connection">
+                            <?php $message='';if(isset($message)) echo $message ?>
                             <form action="" method="post">
                                 <input type="text" name="search_project" placeholder="Type to find your project" id="search_project">
                                 <input type="submit" name="search">
@@ -82,7 +83,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'pause') {
 
                     <?php
                 } else if (isset($_POST['start'])) {
-
+                    if(empty( $_POST['project_id'])) {echo "Project Not Selected"; redirect('advertisement.php');sleep(3);}
                     $id = $_POST['project_id'];
 
 
@@ -104,7 +105,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'pause') {
                                     </div>
                                     <?php
                                 }
-                            }
+                            }else echo "No Video or Images found!"
                             ?>
 
                             <?php

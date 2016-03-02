@@ -1,11 +1,29 @@
 <?php
 require_once ('includes/header.php');
 require_once(DIR_APP.'users.php');
-require_once 'Paginator.class.php';
 if (!empty($_SESSION['logged_in']))
 	redirect('home.php');
 
 $msg = '';
+//$promsg='';
+//if(isset($_POST['profiled-email'])&&isset($_POST['profiled-loc'])&&isset($_POST['profiled-name']))
+//{
+//	if ( registerProfile($_POST)) {
+//		//redirect('home.php');
+//		$promsg = 'Your Information has been submitted.';
+//		echo '<script>
+//             $(function() {
+//				$( "#profiled-message" ).dialog({
+//				modal: true,
+//				buttons: {
+//				Ok: function() {
+//				$( this ).dialog( "close" );
+//				}
+//				}
+//				});
+//			});</script>';
+//	}
+//}
 
 //if (isset($_POST["signup"]) && !empty($_POST["signup"]))
 if($_SERVER['REQUEST_METHOD']=='POST'){
@@ -23,15 +41,58 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 				}
 				});
 			});</script>';
-        }      
+        }
 	}
 ?>
 
-<div class="home-page content">
+<div class="inner-page-wrapper">
+<div class="home-page centerme">
 	<div id="dialog-message" title="Confirm Your Email">
-	<h3><?php echo $msg; ?></h3>
+	<h3><?php echo $msg;?></h3>
 	</div>
-	
+	<div id="profiled-message" title="Thank You!">
+		<h3></h3>
+	</div>
+
+	<!-- profiled-input starts-->
+	<style> .profile-input{height:25px;margin-right:5px;width:70%;margin:0px auto;}
+		.profile-input input[type='text'],.profile-input input[type='email']{
+			height: 30px;
+			width: 24%;
+			border-radius: 3px;
+			padding: 0;
+			border: #e4e4e4 solid 1px;
+			/*background: #dedad8;*/
+			color: #515151;
+			margin-left: 8px;
+			margin-bottom: 2px;
+			padding-left: 15px;
+			float: left;
+		}
+		.profile-input input[type='button']{
+			font-family: 'museo_sans500';
+			height: 32px;
+			width: 15%;
+			border-radius: 3px;
+			padding: 0;
+			border: none;
+			background: #FF4F03;
+			color: #fff;
+			margin-left: 8px;
+			cursor: pointer;
+			float: left
+		}
+		</style>
+	<div class="profile-input" >
+		<form >
+		<input type="text" id="profiled_name"placeholder="Company Name" required/>
+		<input type="email" id="profiled_email"placeholder="Email" required/>
+		<input type="text" id="profiled_loc" placeholder="Location" required/>
+		<input type="button" id="profiled_id" value="[Get Profiled]"/>
+		<form>
+	</div>
+	<!-- profiled-input ends-->
+
 	<div class="tagline-home" style=" height: 460px; width: 100%;">
 	<h1 class="home-welcome" style="margin-bottom: 20px;">Welcome to Rangeenroute.</h1>
 	<div class="tagline-box">
@@ -53,19 +114,19 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 	<?php include 'includes/index-page-trend.php'; ?> 
 	</div>
 	
-	<div class="homepage-showcase" style="width: 100%; margin-top: 20px; float: left;">
+	<div class="homepage-showcase showmore" style="width: 100%; margin-top: 20px; float: left;">
 	<h2 class="home-welcome">Trending Ideathreads </h2>
 
 	<?php include 'includes/index-page-ideathread.php'; ?>
 
 	</div>
 		<?php
-		$reload = $_SERVER['PHP_SELF'] . "?tpages=" . $tpages;
-		echo '<div class="pagination"><ul>';
-		if ($total_pages > 1) {
-			echo paginate($reload, $show_page, $total_pages);
-		}
-		echo "</ul></div>";?>
+//		$reload = $_SERVER['PHP_SELF'] . "?tpages=" . $tpages;
+//		echo '<div class="pagination"><ul>';
+//		if ($total_pages > 1) {
+//			echo paginate($reload, $show_page, $total_pages);
+//		}
+//		echo "</ul></div>";?>
 	<div class="signup-line" style="width: 100%; float: left; margin-top: -30px;"></div>
 	<h2 class="home-signup" style="width: 100%; float: left;"><span>Sign up.</span> Together we bring the stuffs - dreams are made of.</h2>
 	
@@ -130,4 +191,5 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 	<div class="fb_login" style="width: 100%; float: left;"><a href="login-facebook.php"></a></div>
 
 </div> <!-- home-page content -->
+</div>
 <?php include ('includes/footer.php'); ?>

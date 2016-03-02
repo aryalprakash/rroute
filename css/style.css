@@ -679,6 +679,7 @@ h2.home-signup span {
     margin: 1%;
     float: left;
     padding-left:50px;
+    width: 93%;
 }
 
 .connection-content{width: 92%}
@@ -789,6 +790,11 @@ h2.home-signup span {
     width: 410px;
     overfow: hidden;
     float: right;
+}
+.content-right-colmn{
+    /*width: 410px;*/
+    overfow: hidden;
+    float: left;
 }
 
 .content-block .form-item {
@@ -1213,7 +1219,7 @@ a.upload-picture {
 }
 
 .user-info-left, .user-info-right {
-    width: 48%;
+    /*width: 48%;*/
     line-height: 2;
     font-family: 'museo_sans700';
     font-size: 16px;
@@ -1226,10 +1232,12 @@ a.upload-picture {
 
 .user-info-left {
     float: left;
+    /*position: absolute;*/
 }
 
 .user-info-right {
-    float: right;
+    float: left;
+
 }
 
 .analitics-info-left, .analitics-info-right {
@@ -3169,7 +3177,7 @@ img.fancybox {
 .stat-no {
 
     color: black;
-    padding-left: 60px;
+    padding-left: 45px;
     margin-top: -20px;
 }
 

@@ -212,9 +212,9 @@ if (!empty($_POST['stripeToken'])) {
 
                         <input type="hidden" name="pid" value="<?php echo $_POST['pid']; ?>"/>
                         <input type="hidden" name="type" value="<?php echo $_POST['type']; ?>"/>
-                        <input type="hidden" name="eq_pc" value="<?php echo $_POST['eq_pc']; ?>"/>
-                        <input type="hidden" name="fin_pro" value="<?php echo $_POST['fin_pro']; ?>"/>
-                        <input type="hidden" name="user_choice" value="<?php echo $_POST['user_choice']; ?>"/>
+                        <input type="hidden" name="eq_pc" value="<?php echo rtrim(trim($_POST['eq_pc'])); ?>"/>
+                        <input type="hidden" name="fin_pro" value="<?php echo rtrim(trim($_POST['fin_pro'])); ?>"/>
+                        <input type="hidden" name="user_choice" value="<?php echo rtrim(trim($_POST['user_choice'])); ?>"/>
                         <input type="hidden" name="user_id" value="<?php $user_id=getProjectAuthor( $_POST['pid']); echo $user_id ;?>" />
 <!--                        <div class="content-title">Account Settings</div>-->
 <!--                        <div class="report-content-title">Rangeenroute Finance Account</div>-->

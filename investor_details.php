@@ -46,7 +46,7 @@ exit();}?>
             </div>
         </div>
 
-        <div class="content-right-col project-details">
+        <div class="content-right-colmn">
             <div class="form-item no-height">
                 <ul class="user-info-left">
                     <li><label>Name:</label><?php echo ucwords($investor['company_name']); ?></li>

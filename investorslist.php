@@ -18,7 +18,7 @@ foreach ($users as $user) { ?>
                 ?>
             </div>
         </div>
-        <div class="right" style="width:639px; float:right;">
+        <div class="right" style=" float:left;">
             <div class="form-item no-height">
                 <ul class="user-info-left">
                     <li>
@@ -33,7 +33,9 @@ foreach ($users as $user) { ?>
 
             </div>
         </div>
+
     </div>
+<div class="divline"></div>
 
     <?php }
     }

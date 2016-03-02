@@ -216,12 +216,12 @@ require_once(DIR_APP . 'users.php');
 
             <div class="content-block">
                 <div class="project-action">
-                    <a href="#" class="project-action-btn disabled" id="rate_project" data-id="<?php echo $project['project_id'] ?>">Rate</a>
-                    <a href="#" class="project-action-btn disabled" id="route_project" data-id="<?php echo $project['project_id'] ?>">Route</a>
-                    <a href="#" class="project-action-btn disabled" id="like_project" data-id="<?php echo $project['project_id'] ?>">Like</a>
-                    <a href="#" class="project-action-btn disabled" id="comment_project" data-id="<?php echo $project['project_id'] ?>">Comment</a>
-                    <a href="#" class="project-action-btn disabled" id="report_project" data-id="<?php echo $project['project_id'] ?>">Report</a>
-                    <a href="#" class="project-action-btn" id="homeshare_project" data-id="<?php echo $project['project_id'] ?>">Share</a>
+                    <a href="#" class="project-action-btn disabled" id="rate_project" >Rate</a>
+                    <a href="#" class="project-action-btn disabled" id="route_project" >Route</a>
+                    <a href="#" class="project-action-btn disabled" id="like_project" >Like</a>
+                    <a href="#" class="project-action-btn disabled" id="comment_project" >Comment</a>
+                    <a href="#" class="project-action-btn disabled" id="report_project" >Report</a>
+                    <a href="#" class="project-action-btn" id="homeshare_project">Share</a>
                 </div>
 
                 <div class="homeshare-area share-active">
@@ -237,6 +237,12 @@ require_once(DIR_APP . 'users.php');
                         $title = urlencode($idea['ideathread_title']);
                         $url = urlencode(SITE_URL . '/view.php?pid=' . $idea['ideathread_id']);
                         $summary = $idea['description'];
+//                        $imageUrl = '/uploads/images/<?php echo $image;
+                        if($idea['thumbnail_img']){
+                        $imageUrl=$idea['thumbnail_img'];
+                        }else{
+                        $imageUrl = '/uploads/avatars/nophoto.jpg';
+                        }
                     }
                     ?>
                     <a class="project-action-btns"
@@ -262,7 +268,7 @@ require_once(DIR_APP . 'users.php');
                        target="_blank" title="Click to share"><img src="./images/icons/reddit.png" width="40"
                                                                    height="40"></a>
                     <a class="project-action-btns"
-                       href="mailto:?Subject=<?php echo $title; ?>&Body=<?php echo substr($text, 0, 50) . ' for more visit. ' . $url;
+                       href="mailto:?Subject=<?php echo $title; ?>&Body=<?php echo substr($summary, 0, 50) . ' for more visit. ' . $url;
                        ?>"
                        title="Click to share"><img src="./images/icons/email.png" width="40"
                                                    height="40"></a>

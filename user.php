@@ -148,7 +148,7 @@ if (isset($_POST['add_foonote']))
                                 <li><label>Current City:</label><?php echo $user['location'] ?></li>
                             </ul>
 
-                            <ul class="user-info-right">
+                            <ul class="user-info-right" style="width:48%;">
                                 <li><label>Hometown:</label><?php echo $user['hometown'] ?></li>
                                 <li><label>Education:</label><?php echo $user['high_school'] ?></li>
                             </ul>

@@ -1066,6 +1066,7 @@ $(function () {
     // Change this to the location of your server-side upload handler:
 
     // var url = 'https://www.rangeenroute.com/js/file-uploading/server/php/';
+   // var url = '/github/rangeenroute/js/file-uploading/server/php/';//this should be '/js/file-uploading/server/php/'
     var url = '/github/rangeenroute/js/file-uploading/server/php/';//this should be '/js/file-uploading/server/php/'
     //var url =  'https://rangeen/js/file-uploading/server/php/';
 

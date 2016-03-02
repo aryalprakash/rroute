@@ -392,7 +392,8 @@ $(document).ready(function () {
 
 
 
-        post_to_url("../rangeenroute/payment.php", { amount: amount,pid:pid ,type:type,eq_pc:eq_pc,fin_pro:fin_pro,user_choice:user_choice});
+       // post_to_url("../rangeenroute/payment.php", { amount: amount,pid:pid ,type:type,eq_pc:eq_pc,fin_pro:fin_pro,user_choice:user_choice});
+        post_to_url("../payment.php", { amount: amount,pid:pid ,type:type,eq_pc:eq_pc,fin_pro:fin_pro,user_choice:user_choice});
         function post_to_url(path, params, method) {
             method = method || "post";
 
@@ -1109,35 +1110,87 @@ $('body').on('click','.close-me',function(){
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //admin assign raters ends
+
+    //get profiled
+    $('#profiled_id').on('click',function(){
+       var name =$('#profiled_name').val();
+       var  email =$('#profiled_email').val();
+       var location =$("#profiled_loc").val();
+        console.log(name,email,location);
+        if (!name || !email || !location) {
+            alert("fill all columns");
+        }
+        else{
+
+            $.ajax({
+                type: "post",
+                url: "includes/ajaxDispatcher.php",
+                data: {name:name,email:email,location:location, dispatcher: 'register-profiled'},
+                error: function (req, text, error) {
+                    alert('Error AJAX: ' + text + ' | ' + error);
+                },
+                success: function (data) {
+                    if (data.result == 'OK') {
+                        $('#profiled_name').val('');
+                        $('#profiled_email').val('');
+                        $("#profiled_loc").val('');
+                        $("#profiled-message ").find('h3').text('Your information has been submitted!');
+
+                        $(function() {
+                            $( "#profiled-message" ).dialog({
+                                modal: true,
+                                buttons: {
+                                    Ok: function() {
+                                        $( this ).dialog( "close" );
+                                    }
+                                }
+                            });
+                        });
+                    }
+                },
+                dataType: "json"
+            });
+        }
+
+    });
+
+//for load more
+    $('body').on('click','.load-more',function(){
+        var last_id = $(this).attr('data-id');
+        var current =$(this);
+
+        current.val("Loading Please Wait.. ")
+        $.ajax({
+            type: "post",
+            url: "includes/ajaxDispatcher.php",
+            data: {last_id:last_id, dispatcher: 'load-more'},
+            error: function (req, text, error) {
+                alert('Error AJAX: ' + text + ' | ' + error);
+            },
+            success: function (data) {
+                if (data.result == 'OK') {
+                   $('body').find('.load-more').val('End Of Data');
+                    //$('.homepage-showcase').append(data);
+
+                }else {
+                    if (data.result == 'OK') {
+                        $('body').find('.load-more').val('End Of Data');
+                    }else{
+                    current.remove();
+                    $('.showmore').append(data);}
+                }
+            },
+            //dataType: "json"
+        });
+
+    });
+
+
 
     //fancy box to view clicked verified documents
     $(".fancybox").fancybox({});
 
     //uploading investor image
 
-    (function(){ var s=document.createElement('script');s.src="http://www.tickcounter.com/loader.js";s.async='async';s.onload=function() { tc_widget_loader('tc_div_12235', 'Countdown', 650, ["1456808400000","us-eastern","dhms","FFFFFF3B5998000000FF0000","900","FFFFFF0",""]);};s.onreadystatechange=s.onload;var head=document.getElementsByTagName('head')[0];head.appendChild(s);}());
 });

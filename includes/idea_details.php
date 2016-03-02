@@ -76,6 +76,7 @@ else
         <a href="<?php echo $source ?>" target="_blank"><img src="<?php echo $thumbnail ?>"
                                                              style="max-width: 600px; max-height: 100%;"></a>
 
+
     </div>
     <div class="idea-preview" style="padding-left: 0px;">
         <div style="">
@@ -267,5 +268,4 @@ else
        title="Click to share"><img src="./images/icons/email.png" width="40"
                                    height="40"></a>
 </div>
-
 

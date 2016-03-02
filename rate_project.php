@@ -64,7 +64,8 @@ if ($projects) {?>
                            data-id="<?php echo $project['project_id'] ?>" value="Rate" title="<?php echo 'Seed Rating: '.$seed; ?>"style="color:#5577A9"/>
                     <?php } ?>
                 </td>
-                <td><a href="<?php echo SITE_URL."/project_details.php?pid=".$project['project_id']; ?>"><?php echo substr($project['project_title'],0,40);//this page need to restrict ?> </a>
+                <td>
+                    <a href="<?php echo SITE_URL."/project_details.php?pid=".$project['project_id']; ?>"><?php echo substr($project['project_title'],0,40);//this page need to restrict ?> </a>
 
                     <div class="admin-rate-area admin-rate-area-<?php echo $project['project_id'] ?>">
 

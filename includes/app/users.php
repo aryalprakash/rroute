@@ -1,4 +1,12 @@
 <?php
+function registerProfile($data){
+    global $db_con;
+    $query ="INSERT INTO `profiled`(`company_name`,`email`,`location`)VALUES ('".$db_con->escape($data['name'])."','".$db_con->escape($data['email'])."','".$db_con->escape($data['location'])."')";
+    $res =$db_con->query($query);
+    if($res)
+    return true;
+    else return false;
+}
 
 function checkUser($email)
 {
