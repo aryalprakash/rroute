@@ -62,13 +62,16 @@ h2.home-welcome {
 }
 
 .feature-list {
-    width: 45%;
+    width: 450px;
     float: left;
     margin-bottom: 10px;
     height: 100px;
 }
 
 .feat-box {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
     margin-top: 20px;
     margin-bottom: 50px;
 }
@@ -738,4 +741,39 @@ margin: 0 auto;}
     color: #FFFFFF;
     cursor: pointer;
     border-radius: 3px;
+}
+
+
+
+.profile-input{
+    height:25px;
+    width:70%;
+    margin:30px auto;
+}
+
+.profile-input input[type='text'],.profile-input input[type='email']{
+    height: 30px;
+    width: 24%;
+    border-radius: 3px;
+    padding: 0;
+    border: #e4e4e4 solid 1px;
+    /*background: #dedad8;*/
+    color: #515151;
+    margin-left: 8px;
+    margin-bottom: 2px;
+    padding-left: 15px;
+    float: left;
+}
+.profile-input input[type='button']{
+    font-family: 'museo_sans500';
+    height: 32px;
+    width: 15%;
+    border-radius: 3px;
+    padding: 0;
+    border: none;
+    background: #FF4F03;
+    color: #fff;
+    margin-left: 8px;
+    cursor: pointer;
+    float: left
 }

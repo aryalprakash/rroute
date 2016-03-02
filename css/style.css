@@ -310,14 +310,18 @@ h1.home-welcome {
 h2.home-signup {
     font-family: 'museo_sans500';
     font-size: 22px;
-    background: url('../images/signup_line.png') no-repeat 185px bottom;
+    /*background: url('../images/signup_line.png') no-repeat 185px bottom;*/
     text-align: center;
     margin-top: 10px;
     padding-bottom: 20px;
 }
 
 h2.home-signup span {
+    display: inline-block;
+    height: 40px;
     font-family: 'museo_sans900';
+    background: url('../images/signup_line.png') no-repeat;
+    background-position: 0px 25px;
 }
 
 .sign-up-container {
@@ -503,7 +507,7 @@ h2.home-signup span {
     height: 35px;
     background: #fff url('../images/fb_login.png') no-repeat center;
     position: absolute;
-    left: 385px;
+    left: 44%;
     top: -17px;
 }
 
