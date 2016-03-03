@@ -99,10 +99,13 @@ if ($ideas) {
         <div class="line index"></div>
 
         <?php
-        $last_id =$idea['ideathread_id'];
+//        $last_id =$idea['ideathread_id'];//for ordering by id
     }
     ?>
-    <input type="button" class="load-more" value="Load More" data-id="<?php echo $last_id; ?>"/>
+    <div  class="more-idea" style="">
+        <input type="button" class="load-more" value="View More" data-id="0"/>
+    </div>
+
     <?php
 
 }else{

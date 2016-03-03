@@ -5,7 +5,7 @@ include_once('app/users.php');
 
 //$trend = calculateTrendForProject(6);
 
-$projects = getProjectsInTrend(); //print_r($projects);
+$projects = getProjectsInTrendIndex(); //print_r($projects);
 //$projects = getProjectsInTop_search_term();
 
 if ($projects) {
@@ -47,14 +47,16 @@ if ($projects) {
         <?php
     } ?>
 
-    <div class="recent-project-item index" style="background-color: #ECECEC;">
+    <div class="recent-project-item index viewmoreblock" style="background-color: #ECECEC;">
 
         <div class="see-more index" style="font-size: x-large;    margin: 115px auto;    text-align: center;">
 
-            <a href="#" class="view-more" style="text-decoration: none; color: #615651;">View More</a>
+            <a href="avascript:void(0)" class="view-more" data-id="0" class = "view-more" style="text-decoration: none; color: #615651;">View More</a>
         </div>
     </div>
-<?php } else {
+<?php
+
+} else {
     echo '<div class="project-title" style="font-size: 20px; margin-left: 10px;">No projects available right now</div>';
 }
 ?>

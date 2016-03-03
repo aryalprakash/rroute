@@ -80,7 +80,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 					<form>
 			</div>
 
-			<div class="homepage-showcase" style="width: 100%; margin-top: 50px;">
+			<div class="homepage-showcase viewmore" style="width: 100%; margin-top: 50px;">
 				<h2 class="home-welcome">Trending Projects</h2>
 				<?php include 'includes/index-page-trend.php'; ?>
 			</div>

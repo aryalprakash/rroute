@@ -1149,7 +1149,7 @@ $('body').on('click','.close-me',function(){
                         });
                     }
                 },
-                dataType: "json"
+                //dataType: "json"
             });
         }
 
@@ -1157,28 +1157,28 @@ $('body').on('click','.close-me',function(){
 
 //for load more trending
     $('body').on('click','.load-more',function(){
-        var last_id = $(this).attr('data-id');
+        //var last_id = $(this).attr('data-id');
         var current =$(this);
-
-        current.val("Loading Please Wait.. ")
+        var AjaxHit = parseInt($(this).attr('data-id'),10);
+        current.val("Getting more ideathreads... ");
         $.ajax({
             type: "post",
             url: "includes/ajaxDispatcher.php",
-            data: {last_id:last_id, dispatcher: 'load-more'},
+            data: {AjaxHit:AjaxHit, dispatcher: 'load-more'},
             error: function (req, text, error) {
                 alert('Error AJAX: ' + text + ' | ' + error);
             },
             success: function (data) {
-                if (data.result == 'OK') {
-                   $('body').find('.load-more').val('End Of Data');
-                    //$('.homepage-showcase').append(data);
-
+                console.log(data);
+                if (data) {
+                    $('.showmore').append(data);
+                    current.val("View More");
+                    current.parent().appendTo($('body').find('div .showmore').last());
+                    AjaxHit=AjaxHit + 5;
+                    current.attr('data-id',AjaxHit);
                 }else {
-                    if (data.result == 'OK') {
-                        $('body').find('.load-more').val('End Of Data');
-                    }else{
-                    current.remove();
-                    $('.showmore').append(data);}
+                    $('body').find('.load-more').last().css('display', 'none');
+                    return;
                 }
             },
             //dataType: "json"
@@ -1190,31 +1190,42 @@ $('body').on('click','.close-me',function(){
     $('body').on('click','.view-more',function(){
         var last_id = $(this).attr('data-id');
         var current =$(this);
+        var block = current.parent().parent();
+        console.log(block);
+        var countHit =parseInt($(this).attr('data-id'),10);
+        current.text("Loading.... ");
+        $.ajax({
+            type: "post",
+            url: "includes/ajaxDispatcher.php",
+            data: {countHit:countHit, dispatcher: 'view-more-trend'},
+            error: function (req, text, error) {
+                alert('Error AJAX: ' + text + ' | ' + error);
+            },
+            success: function (data) {
+                if (data.result == 'OK') {
 
-        current.text("Loading Please Wait.. ")
-        //$.ajax({
-        //    type: "post",
-        //    url: "includes/ajaxDispatcher.php",
-        //    data: {last_id:last_id, dispatcher: 'load-more'},
-        //    error: function (req, text, error) {
-        //        alert('Error AJAX: ' + text + ' | ' + error);
-        //    },
-        //    success: function (data) {
-        //        if (data.result == 'OK') {
-        //            $('body').find('.load-more').val('End Of Data');
-        //            //$('.homepage-showcase').append(data);
-        //
-        //        }else {
-        //            if (data.result == 'OK') {
-        //                $('body').find('.load-more').val('End Of Data');
-        //            }else{
-        //                current.remove();
-        //                $('.showmore').append(data);}
-        //        }
-        //    },
-        //    //dataType: "json"
-        //});
-
+                    $('body').find('.view-more').last().val("End");
+                    return;
+                    //$('body').find('.load-more').val('End Of Data');
+                    //$('.homepage-showcase').append(data);
+                }else {
+                    //if (data.result == 'OK') {
+                    //    current.val("End");
+                    //    //$('body').find('.load-more').val('End Of Data');
+                    //}else{
+                    block.hide();
+                    $('body').find('.viewmore').last().append(data);
+                    current.text("Text More");
+                    $('body').find('.viewmore').last().append(block);
+                    //current.prependTo($('body').find('div .viewmore').last());
+                    countHit=countHit + 1;
+                    current.attr('data-id',countHit);
+                    block.show();
+                    //}
+                }
+            },
+            //dataType: "json"
+        });
     });
 
 

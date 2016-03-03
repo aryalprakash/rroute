@@ -730,12 +730,12 @@ float: left;
 overflow: hidden;
 padding: 30px 0 30px 0;
 margin: 0 auto;}
+
+
 .load-more{
-    float: left;
-    width: 100px;
-    margin-top: -69px;
+    margin: auto;
     height: 35px;
-    margin-left: 40%;
+    margin-bottom: 20px;
     background: #FF4F00;
     border: 1px solid #FF4F00;
     color: #FFFFFF;
@@ -776,4 +776,10 @@ margin: 0 auto;}
     margin-left: 8px;
     cursor: pointer;
     float: left
+}
+
+.more-idea{
+    width: 100%;
+    float: left;
+    text-align: center;
 }

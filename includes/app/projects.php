@@ -1955,6 +1955,25 @@ function getProjectsInTrend()
 
     return $db_con->sql2array($query);
 }
+function getProjectsInTrendIndex()
+{
+    global $db_con;
+
+    $query = 'SELECT `project_id` FROM `trend` WHERE `h11` >= `r11` AND h11 <> 0 ORDER BY h11 DESC LIMIT 5';
+    // $query = 'SELECT `project_id` FROM `trend` WHERE `h1` >= `r1` ';
+
+    return $db_con->sql2array($query);
+}
+function getViewMoreTrend($hit)
+{
+    global $db_con;
+
+    $query = "SELECT `project_id` FROM `trend` WHERE `h11` >= `r11` AND h11 <> 0 ORDER BY h11 DESC LIMIT ".$hit.",1";
+//    $query = "SELECT `project_id` FROM `trend` WHERE `h11` >= `r11`  ORDER BY h11 DESC LIMIT ".$hit.",1";
+    // $query = 'SELECT `project_id` FROM `trend` WHERE `h1` >= `r1` ';
+
+    return $db_con->sql2array($query);
+}
 function getAllProjectsInTrend()
 {
     global $db_con;
@@ -2104,8 +2123,8 @@ function getIdeas($user)
     global $db_con;
 
     if ($user == 'all') {
-       // $query = "SELECT * FROM `ideathreads` WHERE `status` = 'approved' ORDER BY `interactions` DESC LIMIT 0 ,5";
-        $query = "SELECT * FROM `ideathreads` WHERE `status` = 'approved' ORDER BY `ideathread_id` DESC LIMIT 5";
+        $query = "SELECT * FROM `ideathreads` WHERE `status` = 'approved' ORDER BY `interactions` DESC LIMIT 0 ,5";
+//        $query = "SELECT * FROM `ideathreads` WHERE `status` = 'approved' ORDER BY `ideathread_id` DESC LIMIT 5";
         $a = $db_con->sql2array($query);
     }
 //    else if($user='count') {
@@ -2126,15 +2145,14 @@ function getIdeas($user)
         $user = $user;
         $query = "SELECT * FROM `ideathreads` WHERE (`created_by` = $user)";
         $a = $db_con->sql2array($query);
+
     }
 
     return $a;
 }
-function getLoadMoreIdea($id){
+function getLoadMoreIdea($hit){
     global $db_con;
-
-        $query = "SELECT * FROM `ideathreads` WHERE `status` = 'approved' AND `ideathread_id`<$id ORDER BY `ideathread_id` DESC LIMIT 5";
-//        print_r($query);
+    $query = "SELECT * FROM `ideathreads` WHERE `status` = 'approved'  ORDER BY `interactions` DESC LIMIT ".$hit.",5";
     $a = $db_con->sql2array($query);
     return $a;
 }

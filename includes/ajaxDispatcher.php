@@ -847,12 +847,20 @@ switch ($action) {
         require_once(DIR_APP . 'users.php');
         require_once(DIR_APP . 'projects.php');
         global $project_exists;
-        $id = $_POST['last_id'];
-        $ideas = getLoadMoreIdea($id);
-        global $project_exists;//aded to remove error random line code
-        if ($ideas) {
+//        $id = $_POST['last_id'];
+        $hit=$_POST['AjaxHit'];
+//        $hit  = isset($_POST["AjaxHit"]) ? $_POST["AjaxHit"] : 0;
 
-            foreach ($ideas as $idea) {
+        $hit=$hit+5;
+        $ideas = getLoadMoreIdea($hit);
+        global $project_exists;//aded to remove error random line code
+        if($ideas==false||empty($ideas)){
+//            $responce['result'] = 'OK';
+            return null;
+        }
+        else {
+
+                foreach ($ideas as $idea) {
                 $title = $idea['ideathread_title'];
                 $description = $idea['description'];
                 $time = TimeAgo(date('Y-m-d', strtotime($idea['created_on'])));
@@ -962,16 +970,75 @@ switch ($action) {
                 <div class="line index"></div>
 
                 <?php
-                $last_id = $idea['ideathread_id'];
             }
+//            $responce['result']=="FALSE";
+        }
+
+//          json_encode($responce);
+        break;
+
+
+    case 'view-more-trend':
+        require_once(DIR_APP . 'users.php');
+        require_once(DIR_APP . 'projects.php');
+        global $project_exists;
+        $hit=$_POST['countHit'];
+        $hit=$hit+1;
+        $projects = getViewMoreTrend($hit);
+
+        if ($projects) {
+
+            foreach ($projects as $pr) {
+
+                $project = getProjectById($pr['project_id']);
+
+                $title = $project['project_title'];
+                $user = getUserData($project['created_by']);
+
+                if (strlen($title) < 20)
+                    $short_title = $title;
+                else
+                    $short_title = substr($title, 0, 19) . '...';
+                ?>
+                <div class="recent-project-item index">
+
+                    <?php $image = getFeaturingImage($project['project_id']);
+                    if (!empty($image)) {
+                        ?>
+                        <a href="view.php?pid=<?php echo $project['project_id']; ?>" class="recent-project-title index" title="<?php echo $title; ?>"><img
+                                src="<?php echo SITE_URL . '/uploads/images/thumbs/' . $image; ?>" alt=""></a>
+                    <?php } else { ?>
+                        <a href="view.php?pid=<?php echo $project['project_id']; ?>" class="recent-project-title index" title="<?php echo $title; ?>"><img
+                                src="<?php echo SITE_URL . '/uploads/avatars/nophoto.jpg'; ?>" alt=""></a>
+                    <?php } ?>
+
+                    <div class="project-bottom-details index">
+                        <a href="view.php?pid=<?php echo $project['project_id']; ?>" class="recent-project-title index"
+                           title="<?php echo $title; ?>"><?php echo $short_title; ?></a>
+                        <span class="project-rating index"><?php echo calculateRating($project['project_id']); ?></span>
+                    </div> <!-- project-bottom-details -->
+
+                    <div class="project-author index"><?php echo TimeAgo(date('Y-m-d', strtotime($project['created_on']))); ?>
+                        by <a href="user.php?uid=<?php echo $project['created_by']; ?>" class=""><?php echo $user['display_name']; ?></a></div>
+
+                </div>
+                <?php
+            }
+            $responce['result']='OK';
             ?>
-            <input type="button" class="load-more" value="Load More" data-id="<?php echo $last_id; ?>"/>
+<!--            <div class="recent-project-item index" style="background-color: #ECECEC;">-->
+<!---->
+<!--                <div class="see-more index" style="font-size: x-large;    margin: 115px auto;    text-align: center;">-->
+<!---->
+<!--                    <a href="avascript:void(0)" class="view-more" data-id="0" class = "view-more" style="text-decoration: none; color: #615651;">View More</a>-->
+<!--                </div>-->
+<!--            </div>-->
             <?php
 
-        } else {
-            $responce['result'] = 'OK';
+        }else{
+
+            $responce['result']='OK';
         }
-        $responce['result'] = 'FALSE';
         json_encode($responce);
         break;
 
