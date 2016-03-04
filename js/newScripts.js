@@ -1189,7 +1189,7 @@ $('body').on('click','.close-me',function(){
 
     });
 
-//for load more trending
+//for load more ideathread
     $('body').on('click','.load-more',function(){
         //var last_id = $(this).attr('data-id');
         var current =$(this);
