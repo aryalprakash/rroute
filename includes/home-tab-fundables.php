@@ -124,10 +124,11 @@ else
         </div>
         <div class="bottom-part" id="pid<?php echo $project['project_id']; ?>" style="">
             <div style="width: 100%; height: 50px;">
-                <div class="highlight"><?php
+                <div class="highlights"style="background:<?php if($raised_amount>=$startup_amount) echo "#ffffff";else echo"#E4E2E2"; ?>;"><?php
                     if($raised_amount<$startup_amount) {
-                        if ($a['fund_status'] == 0) echo $a['days_rem'] . ' days remaining.';
-                        else echo "funding.";
+//                        if ($a['fund_status'] == 0)
+                            echo $a['days_rem'] . ' days remaining.';
+//                        else echo "funding.";
 
 //
                     }else{
@@ -190,6 +191,10 @@ else
     }
 
     ?>
+
+
+
+
 
     <script type="text/javascript">
 

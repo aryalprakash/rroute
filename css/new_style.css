@@ -799,3 +799,10 @@ margin: 0 auto;}
     overflow-y: hidden;
     overflow-x:auto;
 }
+.highlights{
+    width: 50%;
+    float: right;
+    text-align: right;
+    padding: 5px;
+    font-size: 17px;
+}
