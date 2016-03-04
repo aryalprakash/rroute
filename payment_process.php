@@ -38,7 +38,7 @@ updateFundableStatus($_POST['pid']);
 updateFundingsStatus($_POST['pid'],$_POST['amount'],$_POST['type'],$reward_type);
 //return $id;
 //echo "Payment Succesfull!";
-$url =SITE_URL.'/project_details?pid='.$_POST['pid'];
+$url =SITE_URL.'/project_details.php?pid='.$_POST['pid'];
 echo $url;
 redirect($url);
 exit;
