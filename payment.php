@@ -208,7 +208,7 @@ if (!empty($_POST['stripeToken'])) {
                 </ul>
 
                 <div class="content-block">
-                    <form action="payment_process.php" method="post" id="card-payment">
+                    <form action="<?php echo SITE_URL; ?>/payment_process.php" method="post" id="card-payment">
 
                         <input type="hidden" name="pid" value="<?php echo $_POST['pid']; ?>"/>
                         <input type="hidden" name="type" value="<?php echo $_POST['type']; ?>"/>

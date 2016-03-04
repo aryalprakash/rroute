@@ -393,7 +393,7 @@ $(document).ready(function () {
 
 
        // post_to_url("../rangeenroute/payment.php", { amount: amount,pid:pid ,type:type,eq_pc:eq_pc,fin_pro:fin_pro,user_choice:user_choice});
-        post_to_url("../payment.php", { amount: amount,pid:pid ,type:type,eq_pc:eq_pc,fin_pro:fin_pro,user_choice:user_choice});
+        post_to_url("./payment.php", { amount: amount,pid:pid ,type:type,eq_pc:eq_pc,fin_pro:fin_pro,user_choice:user_choice});
         function post_to_url(path, params, method) {
             method = method || "post";
 
@@ -463,11 +463,12 @@ $(document).ready(function () {
                 success: function (data) {
                     if (data['result'] == 'OK') {
                         //console.log(project_id,investor_id);
-                        $(".apply-success").css('display', 'block');
+                        //$(".apply-success").css('display', 'block');
+                        $('.apply-success').fadeIn('slow');
                         $(".apply-project-area").delay(1500).slideUp('slow');
-                        $('.apply-success').css('display', 'none');
+                       $('.apply-success').fadeOut(1500);
 
-                    }
+                    }else{console.log ("error");}
                 },
                 dataType: "json"
             });
@@ -1113,44 +1114,77 @@ $('body').on('click','.close-me',function(){
     //admin assign raters ends
 
     //get profiled
+    function validateEmail($email) {
+        var emailReg = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return emailReg.test( $email );
+    }
     $('#profiled_id').on('click',function(){
        var name =$('#profiled_name').val();
        var  email =$('#profiled_email').val();
        var location =$("#profiled_loc").val();
         console.log(name,email,location);
         if (!name || !email || !location) {
-            alert("fill all columns");
+            $("#profiled-message ").attr('title','Error!')
+            $("#profiled-message ").find('h3').text('Fill All Columns!');
+
+            $(function() {
+                $( "#profiled-message" ).dialog({
+                    modal: true,
+                    buttons: {
+                        Ok: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                });
+            });
         }
         else{
+            if( validateEmail(email)) {
+                $(function() {
 
-            $.ajax({
-                type: "post",
-                url: "includes/ajaxDispatcher.php",
-                data: {name:name,email:email,location:location, dispatcher: 'register-profiled'},
-                error: function (req, text, error) {
-                    alert('Error AJAX: ' + text + ' | ' + error);
-                },
-                success: function (data) {
-                    if (data.result == 'OK') {
-                        $('#profiled_name').val('');
-                        $('#profiled_email').val('');
-                        $("#profiled_loc").val('');
-                        $("#profiled-message ").find('h3').text('Your information has been submitted!');
-
-                        $(function() {
-                            $( "#profiled-message" ).dialog({
-                                modal: true,
-                                buttons: {
-                                    Ok: function() {
-                                        $( this ).dialog( "close" );
+                $.ajax({
+                    type: "post",
+                    url: "includes/ajaxDispatcher.php",
+                    data: {name: name, email: email, location: location, dispatcher: 'register-profiled'},
+                    error: function (req, text, error) {
+                        alert('Error AJAX: ' + text + ' | ' + error);
+                    },
+                    success: function (data) {
+                        if (data.result == 'OK') {
+                            $('#profiled_name').val('');
+                            $('#profiled_email').val('');
+                            $("#profiled_loc").val('');
+                            $("#profiled-message ").find('h3').text('Your information has been submitted!');
+                                $("#profiled-message").dialog({
+                                    modal: true,
+                                    buttons: {
+                                        Ok: function () {
+                                            $(this).dialog("close");
+                                        }
                                     }
-                                }
-                            });
-                        });
-                    }
-                },
-                //dataType: "json"
+                                });
+
+                        }
+                    },
+                    dataType: "json"
+                });
             });
+            }else{
+                $("#profiled-message ").attr('title','Error!')
+                $("#profiled-message ").find('h3').text('Enter Valid Email!');
+
+                $(function() {
+                    $( "#profiled-message" ).dialog({
+                        modal: true,
+                        buttons: {
+                            Ok: function() {
+                                $( this ).dialog( "close" );
+                            }
+                        }
+                    });
+                });
+            }
+
         }
 
     });
@@ -1202,25 +1236,24 @@ $('body').on('click','.close-me',function(){
                 alert('Error AJAX: ' + text + ' | ' + error);
             },
             success: function (data) {
-                if (data.result == 'OK') {
+                if (data) {
+                    block.hide();
+                    $('body').find('.trendviewmore:last-child').prepend(data);
+                    current.text("More");
+                    $('body').find('.trendviewmore:last-child').append(block);
+                    countHit=countHit + 1;
+                    current.attr('data-id',countHit);
+                    block.show();
 
-                    $('body').find('.view-more').last().val("End");
-                    return;
-                    //$('body').find('.load-more').val('End Of Data');
-                    //$('.homepage-showcase').append(data);
                 }else {
+                    current.text("End");
+                    //$('body').find('.view-more').last().val("End");
+                    return;
                     //if (data.result == 'OK') {
                     //    current.val("End");
                     //    //$('body').find('.load-more').val('End Of Data');
                     //}else{
-                    block.hide();
-                    $('body').find('.viewmore').last().append(data);
-                    current.text("Text More");
-                    $('body').find('.viewmore').last().append(block);
-                    //current.prependTo($('body').find('div .viewmore').last());
-                    countHit=countHit + 1;
-                    current.attr('data-id',countHit);
-                    block.show();
+
                     //}
                 }
             },

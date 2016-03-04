@@ -9,7 +9,7 @@ if (isset($_POST['title'])) {
         echo '<span style="color: rgb(255, 79, 3);font-size: 16px;">' . $message . '</span>';
     }
 
-    header("Refresh:3;URL=../admin.php");
+    header("Refresh:2;URL=../admin.php");
     exit;
 }
 elseif (isset($_POST['name'])) {
@@ -19,7 +19,7 @@ elseif (isset($_POST['name'])) {
         echo '<span style="color: rgb(255, 79, 3);font-size: 16px;">' . $message . '</span>';
     }
 
-    header("Refresh:3;URL=../admin.php");
+    header("Refresh:2;URL=../admin.php");
     exit;
 }
 

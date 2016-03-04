@@ -23,7 +23,6 @@ function updateFundStatusProject($id)
     $q = "SELECT `investor_count` as c FROM `projects` WHERE `project_id`=" . $id;
     $res = $db_con->fetch_array($db_con->query($q));
     $count =intval($res['c']);
-    echo "first ";print_r($count);
     $count++;
     global $db_con;
     $query = "UPDATE `projects` SET `fund_status`='funding',`investor_count`='".$count."' WHERE `project_id`=" . $id;
@@ -1959,17 +1958,16 @@ function getProjectsInTrendIndex()
 {
     global $db_con;
 
-    $query = 'SELECT `project_id` FROM `trend` WHERE `h11` >= `r11` AND h11 <> 0 ORDER BY h11 DESC LIMIT 5';
-    // $query = 'SELECT `project_id` FROM `trend` WHERE `h1` >= `r1` ';
-
+//    $query = 'SELECT `project_id` FROM `trend` WHERE `h11` >= `r11` AND h11 <> 0 ORDER BY h11 DESC LIMIT 1';
+     $query = 'SELECT `project_id` FROM `trend` WHERE `h1` >= `r1` ORDER BY h11 DESC LIMIT 2';
     return $db_con->sql2array($query);
 }
 function getViewMoreTrend($hit)
 {
     global $db_con;
 
-    $query = "SELECT `project_id` FROM `trend` WHERE `h11` >= `r11` AND h11 <> 0 ORDER BY h11 DESC LIMIT ".$hit.",1";
-//    $query = "SELECT `project_id` FROM `trend` WHERE `h11` >= `r11`  ORDER BY h11 DESC LIMIT ".$hit.",1";
+//    $query = "SELECT `project_id` FROM `trend` WHERE `h11` >= `r11` AND h11 <> 0 ORDER BY h11 DESC LIMIT ".$hit.",1";
+    $query = "SELECT `project_id` FROM `trend` WHERE `h11` >= `r11`  ORDER BY h11 DESC LIMIT ".$hit.",1";
     // $query = 'SELECT `project_id` FROM `trend` WHERE `h1` >= `r1` ';
 
     return $db_con->sql2array($query);

@@ -1024,22 +1024,14 @@ switch ($action) {
                 </div>
                 <?php
             }
-            $responce['result']='OK';
+
             ?>
-<!--            <div class="recent-project-item index" style="background-color: #ECECEC;">-->
-<!---->
-<!--                <div class="see-more index" style="font-size: x-large;    margin: 115px auto;    text-align: center;">-->
-<!---->
-<!--                    <a href="avascript:void(0)" class="view-more" data-id="0" class = "view-more" style="text-decoration: none; color: #615651;">View More</a>-->
-<!--                </div>-->
-<!--            </div>-->
             <?php
 
         }else{
-
-            $responce['result']='OK';
+            return null;
         }
-        json_encode($responce);
+
         break;
 
 }

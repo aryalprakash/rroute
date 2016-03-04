@@ -33,8 +33,9 @@
 .recent-project-item.index {
     box-shadow: 0 -1px 0 #EDF2F7, 0 0 2px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .24);
     border: none;
-    margin-right: 10px;
-    height: 257px;
+    margin-right: 18px;
+    margin-right: 18px;
+    height: 258px;
 }
 
 .project-bottom-details.index {
@@ -320,6 +321,9 @@ h2.home-welcome {
 }
 .apply-success{
     display:none;
+    font-weight: 100;
+    font-size: 18px;
+    color:Green;
 }
 .content-title-search{
     font-family: 'museo_sans100';
@@ -788,4 +792,10 @@ margin: 0 auto;}
     width: 100%;
     float: left;
     text-align: center;
+}
+.trendviewmore{
+    width: 100%;
+    max-height: 277px;
+    overflow-y: hidden;
+    overflow-x:auto;
 }

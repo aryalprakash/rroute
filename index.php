@@ -5,27 +5,7 @@ if (!empty($_SESSION['logged_in']))
 	redirect('home.php');
 
 $msg = '';
-//$promsg='';
-//if(isset($_POST['profiled-email'])&&isset($_POST['profiled-loc'])&&isset($_POST['profiled-name']))
-//{
-//	if ( registerProfile($_POST)) {
-//		//redirect('home.php');
-//		$promsg = 'Your Information has been submitted.';
-//		echo '<script>
-//             $(function() {
-//				$( "#profiled-message" ).dialog({
-//				modal: true,
-//				buttons: {
-//				Ok: function() {
-//				$( this ).dialog( "close" );
-//				}
-//				}
-//				});
-//			});</script>';
-//	}
-//}
-
-//if (isset($_POST["signup"]) && !empty($_POST["signup"]))
+if (isset($_POST["signup"]) && !empty($_POST["signup"]))
 if($_SERVER['REQUEST_METHOD']=='POST'){
 	if ( registerUser($_POST)) {
 		//redirect('home.php');
@@ -78,12 +58,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 					<input type="email" id="profiled_email"placeholder="Email" />
 					<input type="text" id="profiled_loc" placeholder="Location" />
 					<input type="button" id="profiled_id" value="[Get Profiled]"/>
-					<form>
+					</form>
 			</div>
 
 			<div class="homepage-showcase viewmore" style="width: 100%; margin-top: 70px;">
 				<h2 class="home-welcome">Trending Projects</h2>
+				<div class="trendviewmore" >
 				<?php include 'includes/index-page-trend.php'; ?>
+				</div>
 			</div>
 
 			<div class="homepage-showcase showmore" style="width: 100%; margin-top: 20px; float: left;">
