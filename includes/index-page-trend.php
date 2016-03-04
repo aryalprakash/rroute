@@ -47,13 +47,13 @@ if ($projects) {
         <?php
     } ?>
 
-    <div class="recent-project-item index viewmoreblock" style="background-color: #ECECEC;">
+<!--    <div class="recent-project-item index viewmoreblock" style="background-color: #ECECEC;">-->
 
-        <div class="see-more index" style="font-size: x-large;    margin: 115px auto;    text-align: center;">
+        <div class="see-more index" style="font-size: x-large;    margin: 115px auto;">
 
-            <a href="avascript:void(0)" class="view-more" data-id="0" class = "view-more" style="text-decoration: none; color: #615651;">View More</a>
+            <a href="avascript:void(0)" class="view-more" data-id="0" class = "view-more" style="text-decoration: none; color: #615651;margin-left:40px;"> More</a>
         </div>
-    </div>
+<!--    </div>-->
 <?php
 
 } else {

@@ -983,7 +983,7 @@ switch ($action) {
         require_once(DIR_APP . 'projects.php');
         global $project_exists;
         $hit=$_POST['countHit'];
-        $hit=$hit+1;
+        $hit=$hit+5;
         $projects = getViewMoreTrend($hit);
 
         if ($projects) {

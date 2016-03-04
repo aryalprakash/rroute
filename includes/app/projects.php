@@ -1959,7 +1959,7 @@ function getProjectsInTrendIndex()
     global $db_con;
 
 //    $query = 'SELECT `project_id` FROM `trend` WHERE `h11` >= `r11` AND h11 <> 0 ORDER BY h11 DESC LIMIT 1';
-     $query = 'SELECT `project_id` FROM `trend` WHERE `h1` >= `r1` ORDER BY h11 DESC LIMIT 2';
+     $query = 'SELECT `project_id` FROM `trend` WHERE `h1` >= `r1` ORDER BY h11 DESC LIMIT 5';
     return $db_con->sql2array($query);
 }
 function getViewMoreTrend($hit)
