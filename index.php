@@ -72,15 +72,16 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 			</div>
 
 			<div class="profile-input" >
+				<div class="inves-call">Incubators, Accelerators, VCs, Accredited Investing Companies </div>
 				<form >
-					<input type="text" id="profiled_name"placeholder="Company Name" required/>
-					<input type="email" id="profiled_email"placeholder="Email" required/>
-					<input type="text" id="profiled_loc" placeholder="Location" required/>
+					<input type="text" id="profiled_name"placeholder="Company Name" />
+					<input type="email" id="profiled_email"placeholder="Email" />
+					<input type="text" id="profiled_loc" placeholder="Location" />
 					<input type="button" id="profiled_id" value="[Get Profiled]"/>
 					<form>
 			</div>
 
-			<div class="homepage-showcase viewmore" style="width: 100%; margin-top: 50px;">
+			<div class="homepage-showcase viewmore" style="width: 100%; margin-top: 70px;">
 				<h2 class="home-welcome">Trending Projects</h2>
 				<?php include 'includes/index-page-trend.php'; ?>
 			</div>
