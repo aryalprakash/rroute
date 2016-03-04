@@ -266,6 +266,8 @@ else
        href="mailto:?Subject=<?php echo $title; ?>&Body=<?php echo substr($description, 0, 50) . ' for more visit. ' . SITE_URL . '/home.php?iid=' . $ideathread_id;
        ?>"
        title="Click to share"><img src="./images/icons/email.png" width="40"
+
                                    height="40"></a>
 </div>
+
 
